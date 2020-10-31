@@ -4,9 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon ./index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "apollo-server": "^2.19.0",
+    "graphql": "^15.4.0",
+    "joigoose": "^8.0.0",
+    "mongoose": "^5.10.11",
+    "nodemon": "^2.0.6",
+    "typescript": "^4.0.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint": "^7.12.1",
+    "prettier": "^2.1.2",
+    "ts-node-dev": "^1.0.0"
+  }
 }
