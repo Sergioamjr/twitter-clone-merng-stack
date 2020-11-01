@@ -1,9 +1,14 @@
 import mongoose from "mongoose";
-const localDB = "mongodb://localhost/testee";
+import { User } from "./User/schema";
+const localDB = "mongodb://localhost/twitter";
 
 const url = process.env.MONGODB_URI || localDB;
 
-export const dbConnect = mongoose.connect(url, {
+const dbConnect = mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+const models = { User };
+
+export { dbConnect, models };

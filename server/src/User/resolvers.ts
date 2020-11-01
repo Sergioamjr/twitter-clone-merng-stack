@@ -8,6 +8,8 @@ const user = {
 };
 
 export const query: QueryResolvers = {
-  getUsers: (_, args, context) => [user],
+  getUsers: (_, args, context) => {
+    return context.dataSources.User.find({});
+  },
   getUserById: (_, args, context) => ({ ...user, token: "31231" }),
 };
