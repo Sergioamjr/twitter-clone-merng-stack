@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only ./index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "typescript": "^4.0.5"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.19.0",
     "@types/joigoose": "^2.0.4",
     "@types/mongoose": "^5.7.37",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
@@ -28,6 +30,10 @@
     "eslint": "^7.12.1",
     "prettier": "^2.1.2",
     "ts-node": "^9.0.0",
-    "ts-node-dev": "^1.0.0"
+    "ts-node-dev": "^1.0.0",
+    "@graphql-codegen/typescript-resolvers": "1.17.10",
+    "@graphql-codegen/typescript-mongodb": "1.17.8",
+    "@graphql-codegen/typescript": "1.17.11",
+    "@graphql-codegen/introspection": "1.18.0"
   }
 }
