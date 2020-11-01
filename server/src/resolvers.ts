@@ -1,9 +1,10 @@
+import { QueryResolvers } from "./generated/graphql";
 import { query } from "./User/resolvers";
 
-const Query = {
+const Query: QueryResolvers = {
   ...query,
 };
 
-const Mutation = {};
+// const Mutation = {};
 
-export default { Query, Mutation };
+export default { Query };
