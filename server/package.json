@@ -16,8 +16,10 @@
     "@hapi/joi": "^17.1.1",
     "@types/hapi__joi": "^17.1.6",
     "apollo-server": "^2.19.0",
+    "bcrypt": "^5.0.0",
     "graphql": "^15.4.0",
     "joigoose": "^7.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.11",
     "nodemon": "^2.0.6",
     "typescript": "^4.0.5"
@@ -28,6 +30,7 @@
     "@graphql-codegen/typescript": "1.17.11",
     "@graphql-codegen/typescript-mongodb": "1.17.8",
     "@graphql-codegen/typescript-resolvers": "1.17.10",
+    "@types/bcrypt": "^3.0.0",
     "@types/joigoose": "^2.0.4",
     "@types/mongoose": "^5.7.37",
     "@typescript-eslint/eslint-plugin": "^4.6.0",

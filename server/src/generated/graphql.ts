@@ -26,6 +26,7 @@ export type Query = {
   root?: Maybe<Scalars['String']>;
   getUsers?: Maybe<Array<Maybe<User>>>;
   getUserById?: Maybe<User>;
+  validateToken?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -33,9 +34,29 @@ export type QueryGetUserByIdArgs = {
   _id?: Maybe<Scalars['String']>;
 };
 
+
+export type QueryValidateTokenArgs = {
+  token?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   root?: Maybe<Scalars['String']>;
+  login?: Maybe<LoggedUser>;
+  saveUser?: Maybe<LoggedUser>;
+};
+
+
+export type MutationLoginArgs = {
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationSaveUserArgs = {
+  name: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type User = {
@@ -43,7 +64,6 @@ export type User = {
   _id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
 };
 
 export type LoggedUser = {
@@ -51,7 +71,6 @@ export type LoggedUser = {
   _id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
 };
 
@@ -147,6 +166,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
@@ -154,20 +174,19 @@ export type ResolversTypes = ResolversObject<{
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   AdditionalEntityFields: AdditionalEntityFields;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
   String: Scalars['String'];
+  Boolean: Scalars['Boolean'];
   Mutation: {};
   User: User;
   ID: Scalars['ID'];
   LoggedUser: LoggedUser;
   Upload: Scalars['Upload'];
   AdditionalEntityFields: AdditionalEntityFields;
-  Boolean: Scalars['Boolean'];
 }>;
 
 export type UnionDirectiveArgs = {   discriminatorField?: Maybe<Scalars['String']>;
@@ -209,17 +228,19 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   getUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
   getUserById?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, never>>;
+  validateToken?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryValidateTokenArgs, never>>;
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  login?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
+  saveUser?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'name' | 'email' | 'password'>>;
 }>;
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -227,7 +248,6 @@ export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversP
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
