@@ -3,7 +3,10 @@ import {
   query as userQueries,
   mutation as userMutations,
 } from "./User/resolvers";
-import { query as tweetQueries } from "./Tweet/resolvers";
+import {
+  query as tweetQueries,
+  mutation as tweetMutations,
+} from "./Tweet/resolvers";
 
 const Query: QueryResolvers = {
   ...userQueries,
@@ -12,6 +15,7 @@ const Query: QueryResolvers = {
 
 const Mutation: MutationResolvers = {
   ...userMutations,
+  ...tweetMutations,
 };
 
 export default { Query, Mutation };

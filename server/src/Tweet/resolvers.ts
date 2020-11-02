@@ -6,4 +6,13 @@ export const query: QueryResolvers = {
   },
 };
 
-export const mutation: MutationResolvers = {};
+export const mutation: MutationResolvers = {
+  newTweet: async (_, { content }, context) => {
+    const mockedTweet = {
+      authorId: "id",
+      createdAt: new Date(),
+      content,
+    };
+    return await new context.dataSources.Tweet(mockedTweet).save();
+  },
+};
