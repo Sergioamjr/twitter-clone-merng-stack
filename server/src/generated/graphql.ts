@@ -27,6 +27,7 @@ export type Query = {
   getUsers?: Maybe<Array<Maybe<User>>>;
   getUserById?: Maybe<User>;
   validateToken?: Maybe<Scalars['Boolean']>;
+  getTweets?: Maybe<Array<Maybe<Tweet>>>;
 };
 
 
@@ -72,6 +73,20 @@ export type LoggedUser = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
+};
+
+export type LikedBy = {
+  __typename?: 'likedBy';
+  _id?: Maybe<Scalars['ID']>;
+};
+
+export type Tweet = {
+  __typename?: 'Tweet';
+  _id?: Maybe<Scalars['ID']>;
+  authorId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  likedBy?: Maybe<Array<Maybe<LikedBy>>>;
 };
 
 export enum CacheControlScope {
@@ -171,6 +186,8 @@ export type ResolversTypes = ResolversObject<{
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   LoggedUser: ResolverTypeWrapper<LoggedUser>;
+  likedBy: ResolverTypeWrapper<LikedBy>;
+  Tweet: ResolverTypeWrapper<Tweet>;
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   AdditionalEntityFields: AdditionalEntityFields;
@@ -185,6 +202,8 @@ export type ResolversParentTypes = ResolversObject<{
   User: User;
   ID: Scalars['ID'];
   LoggedUser: LoggedUser;
+  likedBy: LikedBy;
+  Tweet: Tweet;
   Upload: Scalars['Upload'];
   AdditionalEntityFields: AdditionalEntityFields;
 }>;
@@ -229,6 +248,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
   getUserById?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, never>>;
   validateToken?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryValidateTokenArgs, never>>;
+  getTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
@@ -252,6 +272,20 @@ export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversP
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type LikedByResolvers<ContextType = any, ParentType extends ResolversParentTypes['likedBy'] = ResolversParentTypes['likedBy']> = ResolversObject<{
+  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type TweetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tweet'] = ResolversParentTypes['Tweet']> = ResolversObject<{
+  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  likedBy?: Resolver<Maybe<Array<Maybe<ResolversTypes['likedBy']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload';
 }
@@ -261,6 +295,8 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   LoggedUser?: LoggedUserResolvers<ContextType>;
+  likedBy?: LikedByResolvers<ContextType>;
+  Tweet?: TweetResolvers<ContextType>;
   Upload?: GraphQLScalarType;
 }>;
 

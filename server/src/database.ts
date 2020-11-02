@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { User } from "./User/schema";
+import { Tweet } from "./Tweet/schema";
 const localDB = "mongodb://localhost/twitter";
 
 const url = process.env.MONGODB_URI || localDB;
@@ -9,6 +10,6 @@ const dbConnect = mongoose.connect(url, {
   useUnifiedTopology: true,
 });
 
-const models = { User };
+const models = { User, Tweet };
 
 export { dbConnect, models };

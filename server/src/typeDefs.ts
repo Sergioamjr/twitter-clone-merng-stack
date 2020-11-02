@@ -1,5 +1,6 @@
 import { gql } from "apollo-server";
-import { types } from "./User/types";
+import { types as userTypes } from "./User/types";
+import { types as tweetTypes } from "./Tweet/types";
 
 const root = gql`
   type Query {
@@ -10,4 +11,4 @@ const root = gql`
   }
 `;
 
-export default [root, types];
+export default [root, userTypes, tweetTypes];

@@ -1,12 +1,17 @@
 import { QueryResolvers, MutationResolvers } from "./generated/graphql";
-import { query, mutation } from "./User/resolvers";
+import {
+  query as userQueries,
+  mutation as userMutations,
+} from "./User/resolvers";
+import { query as tweetQueries } from "./Tweet/resolvers";
 
 const Query: QueryResolvers = {
-  ...query,
+  ...userQueries,
+  ...tweetQueries,
 };
 
 const Mutation: MutationResolvers = {
-  ...mutation,
+  ...userMutations,
 };
 
 export default { Query, Mutation };
