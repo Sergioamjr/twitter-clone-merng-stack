@@ -8,6 +8,7 @@ const url = process.env.MONGODB_URI || localDB;
 const dbConnect = mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 const models = { User, Tweet };

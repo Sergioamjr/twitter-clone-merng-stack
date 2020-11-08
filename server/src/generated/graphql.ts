@@ -47,6 +47,8 @@ export type Mutation = {
   saveUser?: Maybe<LoggedUser>;
   getTweetByUserID?: Maybe<Array<Maybe<Tweet>>>;
   newTweet?: Maybe<Tweet>;
+  like?: Maybe<Tweet>;
+  deslike?: Maybe<Tweet>;
 };
 
 
@@ -71,6 +73,18 @@ export type MutationGetTweetByUserIdArgs = {
 export type MutationNewTweetArgs = {
   content?: Maybe<Scalars['String']>;
   token: Scalars['String'];
+};
+
+
+export type MutationLikeArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationDeslikeArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
 };
 
 export type User = {
@@ -263,6 +277,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   saveUser?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'name' | 'email' | 'password'>>;
   getTweetByUserID?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType, RequireFields<MutationGetTweetByUserIdArgs, '_id'>>;
   newTweet?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationNewTweetArgs, 'token'>>;
+  like?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationLikeArgs, never>>;
+  deslike?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationDeslikeArgs, never>>;
 }>;
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
