@@ -64,6 +64,7 @@ export type MutationSaveUserArgs = {
 
 export type MutationNewTweetArgs = {
   content?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
 };
 
 export type User = {

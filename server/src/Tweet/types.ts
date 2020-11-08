@@ -14,6 +14,6 @@ export const types = gql`
   }
 
   extend type Mutation {
-    newTweet(content: String): Tweet
+    newTweet(content: String, token: String!): Tweet
   }
 `;
