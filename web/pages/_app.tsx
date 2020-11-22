@@ -1,4 +1,15 @@
-import "../styles/globals.css";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body, #__next {
+    height: 100%;
+  }
+`;
 
 type Props = {
   Component: any;
@@ -6,7 +17,12 @@ type Props = {
 };
 
 function MyApp({ Component, pageProps }: Props): JSX.Element {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp;

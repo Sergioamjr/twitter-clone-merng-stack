@@ -1,14 +1,26 @@
 import Head from "next/head";
-const test;
+import * as S from "./styled";
 
-export default function Home() {
+const Home = (): JSX.Element => {
   return (
-    <div>
+    <>
       <Head>
-        <title>Create Next App</title>
+        <title>Explore / Twitter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <p>Hello Next!</p>
-    </div>
+      <S.Content>
+        <S.Column>
+          <p>Perfil</p>
+        </S.Column>
+        <S.Column>
+          <p>Content</p>
+        </S.Column>
+        <S.Column>
+          <p>Explorer</p>
+        </S.Column>
+      </S.Content>
+    </>
   );
-}
+};
+
+export default Home;
