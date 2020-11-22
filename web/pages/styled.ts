@@ -1,7 +1,8 @@
+import { colors } from "./../theme/index";
 import styled from "styled-components";
 
 export const Content = styled.div`
-  background: #15202b;
+  background: ${colors.darkBackground};
   display: grid;
   height: 100%;
   grid-template-columns: 1fr 600px 1fr;
@@ -9,6 +10,10 @@ export const Content = styled.div`
 
 export const Column = styled.div`
   &:not(:last-child) {
-    border-right: 1px solid rgb(56, 68, 77);
+    border-right: 1px solid ${colors.light};
   }
+`;
+
+export const Text = styled.p`
+  color: ${colors.white};
 `;

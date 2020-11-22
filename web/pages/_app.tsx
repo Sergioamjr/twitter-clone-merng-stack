@@ -1,28 +1,34 @@
+import Head from "next/head";
 import { createGlobalStyle } from "styled-components";
-
-const GlobalStyle = createGlobalStyle`
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  html, body, #__next {
-    height: 100%;
-  }
-`;
 
 type Props = {
   Component: any;
   pageProps: any;
 };
 
-function MyApp({ Component, pageProps }: Props): JSX.Element {
+const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
   return (
     <>
+      <Head>
+        <title>Explore / Twitter</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <GlobalStyle />
       <Component {...pageProps} />
     </>
   );
-}
+};
 
 export default MyApp;
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+  }
+
+  html, body, #__next {
+    height: 100%;
+  }
+`;

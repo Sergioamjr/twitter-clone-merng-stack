@@ -1,25 +1,18 @@
-import Head from "next/head";
 import * as S from "./styled";
 
 const Home = (): JSX.Element => {
   return (
-    <>
-      <Head>
-        <title>Explore / Twitter</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <S.Content>
-        <S.Column>
-          <p>Perfil</p>
-        </S.Column>
-        <S.Column>
-          <p>Content</p>
-        </S.Column>
-        <S.Column>
-          <p>Explorer</p>
-        </S.Column>
-      </S.Content>
-    </>
+    <S.Content>
+      <S.Column>
+        <S.Text>Perfil</S.Text>
+      </S.Column>
+      <S.Column>
+        <S.Text>Content</S.Text>
+      </S.Column>
+      <S.Column>
+        <S.Text>Explorer</S.Text>
+      </S.Column>
+    </S.Content>
   );
 };
 
