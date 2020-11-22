@@ -4,6 +4,23 @@ import jwt from "jsonwebtoken";
 export const secret =
   "4AB2475373A1A60B30837F84BCA73DF072DA24D7A0A6AFD5B7C99059F63D9F12";
 
+export type TokenDecoded = {
+  _id?: string;
+};
+
+export const verifyToken = (
+  token?: string
+): Promise<TokenDecoded | "string"> => {
+  return new Promise((resolve, reject) => {
+    try {
+      const decoded = jwt.verify(token ?? "", secret);
+      return resolve(decoded as TokenDecoded);
+    } catch (err) {
+      return reject("Token inválido.");
+    }
+  });
+};
+
 export const query: QueryResolvers = {
   getUsers: async (_, args, context) => {
     return await context.dataSources.User.find();
