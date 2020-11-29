@@ -21,7 +21,7 @@ const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
 
 export default MyApp;
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;

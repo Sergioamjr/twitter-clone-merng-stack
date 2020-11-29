@@ -2,7 +2,7 @@ import { colors } from "./../../theme/index";
 import styled, { css } from "styled-components";
 import { darken } from "polished";
 
-const ButtonStyle = css`
+export const BaseButton = css`
   border: 0;
   border-radius: 50px;
   padding: 5px 15px;
@@ -17,5 +17,5 @@ const ButtonStyle = css`
 `;
 
 export const Button = styled.button`
-  ${ButtonStyle};
+  ${BaseButton};
 `;
