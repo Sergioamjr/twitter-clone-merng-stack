@@ -12,6 +12,7 @@ export const mutation: MutationResolvers = {
     try {
       const decoded = await verifyToken(token as string);
       const tweet = await context.dataSources.Tweet.findOne({ _id });
+      if (!tweet) Error("Tweet não existe");
       const likes = new Set(tweet.likedBy);
       likes.add((<TokenDecoded>decoded)._id);
       tweet.likedBy = [...likes];
@@ -25,6 +26,7 @@ export const mutation: MutationResolvers = {
     try {
       const decoded = await verifyToken(token as string);
       const tweet = await context.dataSources.Tweet.findOne({ _id });
+      if (!tweet) Error("Tweet não existe");
       const newLikedBy = tweet.likedBy.filter(
         (id: string) => id !== (<TokenDecoded>decoded)._id
       );
@@ -49,6 +51,18 @@ export const mutation: MutationResolvers = {
         createdAt: new Date(),
         content,
       }).save();
+    } catch (err) {
+      throw Error(err);
+    }
+  },
+  deleteTweet: async (_, { _id, token }, context) => {
+    try {
+      const decoded = await verifyToken(token as string);
+      await context.dataSources.User.findOne({
+        _id: (<TokenDecoded>decoded)._id,
+      });
+      await context.dataSources.Tweet.deleteOne({ _id });
+      return true;
     } catch (err) {
       throw Error(err);
     }

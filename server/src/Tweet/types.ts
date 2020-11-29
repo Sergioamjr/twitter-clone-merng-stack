@@ -16,6 +16,7 @@ export const types = gql`
   extend type Mutation {
     getTweetByUserID(_id: String!): [Tweet]
     newTweet(content: String, token: String!): Tweet
+    deleteTweet(_id: String, token: String): Boolean
     like(_id: String, token: String): Tweet
     deslike(_id: String, token: String): Tweet
   }
