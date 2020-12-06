@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { colors, fontSizes, spacings } from "../../theme";
 import ButtonBase from "./../button";
 
-export const Input = styled.textarea`
+export const Input = styled.textarea<{ hasError: boolean }>`
   width: 100%;
-  border: 1px solid ${colors.whiteDarken};
+  border: ${({ hasError }) =>
+    `1px solid ${hasError ? colors.redLighten : colors.whiteDarken}`};
   resize: none;
   padding: 5px;
   border-radius: 4px;
