@@ -1,6 +1,14 @@
-import { Story, Meta } from "@storybook/react/types-6-0";
-import Tweet, { Props } from ".";
+import { Meta } from "@storybook/react/types-6-0";
+import Tweet from ".";
 import { colors } from "../../theme";
+
+const state = {
+  name: "Sérgio Júnior",
+  user: "sergioamjr_",
+  content:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel sodales nibh, vel egestas orci. Praesent mauris leo, pellentesque non malesuada non, sollicitudin dignissim neque. Fusce ornare nibh eget risus ullamcorper scelerisque. Nulla et pellentesque ligula, a maximus purus. Donec at odio quis dolor efficitur malesuada.",
+  _id: "123",
+};
 
 export default {
   title: "Tweet",
@@ -13,13 +21,15 @@ export default {
   component: Tweet,
 } as Meta;
 
-const Template: Story<Props> = (args) => <Tweet {...args} />;
+export const Primary = (): JSX.Element => {
+  return <Tweet {...state} />;
+};
 
-export const Primary = Template.bind({});
-Primary.args = {
-  name: "Sérgio Júnior",
-  user: "sergioamjr_",
-  content:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel sodales nibh, vel egestas orci. Praesent mauris leo, pellentesque non malesuada non, sollicitudin dignissim neque. Fusce ornare nibh eget risus ullamcorper scelerisque. Nulla et pellentesque ligula, a maximus purus. Donec at odio quis dolor efficitur malesuada.",
-  _id: "123",
+export const MultipleTweets = (): JSX.Element => {
+  return (
+    <>
+      <Tweet {...state} />
+      <Tweet {...state} />
+    </>
+  );
 };

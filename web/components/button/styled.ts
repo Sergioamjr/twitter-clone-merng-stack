@@ -1,6 +1,5 @@
 import { colors } from "./../../theme/index";
 import styled, { css } from "styled-components";
-import { darken } from "polished";
 
 export const BaseButton = css`
   border: 0;
@@ -12,7 +11,7 @@ export const BaseButton = css`
   font-size: 1rem;
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: ${darken(0.2, colors.blue)};
+    background-color: ${colors.blueDarken};
   }
 `;
 

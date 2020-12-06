@@ -1,3 +1,4 @@
+import { Heart } from "../../icons";
 import * as S from "./styled";
 
 export type Props = {
@@ -26,9 +27,18 @@ const Tweet = ({ name, user, content, _id }: Props): JSX.Element => {
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
-          <S.Like onClick={onClickHandler}>S</S.Like>
-          <S.Like onClick={onClickHandler}>V</S.Like>
-          <S.Like onClick={onClickHandler}>C</S.Like>
+          <S.Like onClick={onClickHandler}>
+            <Heart width={20} />
+          </S.Like>
+          <S.Like onClick={onClickHandler}>
+            <Heart width={20} />
+          </S.Like>
+          <S.Like onClick={onClickHandler}>
+            <Heart width={20} />
+          </S.Like>
+          <S.Like onClick={onClickHandler}>
+            <Heart width={20} />
+          </S.Like>
         </S.Footer>
       </div>
     </S.Card>
