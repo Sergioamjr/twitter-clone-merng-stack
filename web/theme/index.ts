@@ -4,6 +4,7 @@ const diff = 0.2;
 
 export const defaultColors = {
   white: "#fff",
+  dark: "#333",
   darkBackground: "#15202b",
   light: "rgb(56, 68, 77)",
   blue: "#39a2f2",
@@ -14,6 +15,7 @@ export const defaultColors = {
 
 export const colors = {
   ...defaultColors,
+  darkDarken: darken(diff, defaultColors.dark),
   redDarken: darken(diff, defaultColors.red),
   whiteDarken: darken(diff, defaultColors.white),
   darkBackgroundDarken: darken(diff, defaultColors.darkBackground),
@@ -28,6 +30,7 @@ export const colors = {
   blueLighten: lighten(diff, defaultColors.blue),
   avatarLighten: lighten(diff, defaultColors.avatar),
   greenLighten: lighten(diff, defaultColors.green),
+  darkLighten: lighten(diff, defaultColors.dark),
 };
 
 export const spacings = {
@@ -36,4 +39,12 @@ export const spacings = {
   medium: "16px",
   large: "24px",
   extraLarge: "32px",
+};
+
+export const fontSizes = {
+  extraSmall: ".8rem",
+  small: "1rem",
+  normal: "1.3rem",
+  large: "1.7rem",
+  extraLarge: "2.2rem",
 };

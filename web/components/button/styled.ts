@@ -13,6 +13,10 @@ export const BaseButton = css`
   &:hover {
     background-color: ${colors.blueDarken};
   }
+  &:disabled {
+    background-color: ${colors.blueLighten};
+    cursor: not-allowed;
+  }
 `;
 
 export const Button = styled.button`

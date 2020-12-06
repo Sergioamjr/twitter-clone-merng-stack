@@ -2,9 +2,21 @@ import { Heart } from "../../icons";
 import * as S from "./styled";
 
 export type Props = {
+  /**
+   User name
+  */
   name: string;
+  /**
+   User @
+  */
   user: string;
+  /**
+   Tweet content
+  */
   content: string;
+  /**
+   Tweet ID
+  */
   _id: string;
 };
 
