@@ -12,9 +12,3 @@ const [Tweet, tweetSchema] = createDBSchema(
 );
 
 export { Tweet, tweetSchema };
-
-// Ideal
-//   Tweet
-//   Curtir
-//   Comentar
-//   Retweetar
