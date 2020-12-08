@@ -39,16 +39,16 @@ const Tweet = ({ name, user, content, _id }: Props): JSX.Element => {
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
-          <S.Like onClick={onClickHandler}>
+          <S.Like aria-label="like" onClick={onClickHandler}>
             <Heart width={20} />
           </S.Like>
-          <S.Like onClick={onClickHandler}>
+          <S.Like aria-label="like" onClick={onClickHandler}>
             <Heart width={20} />
           </S.Like>
-          <S.Like onClick={onClickHandler}>
+          <S.Like aria-label="like" onClick={onClickHandler}>
             <Heart width={20} />
           </S.Like>
-          <S.Like onClick={onClickHandler}>
+          <S.Like aria-label="like" onClick={onClickHandler}>
             <Heart width={20} />
           </S.Like>
         </S.Footer>

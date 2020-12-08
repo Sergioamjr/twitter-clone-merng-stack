@@ -6,7 +6,10 @@ type SVG = {
   height?: number;
 };
 
-export const Heart = ({ color = colors.light, ...props }: SVG): JSX.Element => (
+export const Heart = ({
+  color = colors.lightLighten,
+  ...props
+}: SVG): JSX.Element => (
   <svg
     {...props}
     viewBox="0 -28 512.001 512"

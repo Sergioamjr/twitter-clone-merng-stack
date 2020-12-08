@@ -11,15 +11,21 @@ export const Input = styled.textarea<{ hasError: boolean }>`
   border-radius: 4px;
   margin-bottom: 15px;
   font-size: ${fontSizes.small};
-  color: ${colors.dark};
+  color: ${colors.white};
+  background: ${colors.darkBackgroundLighten};
+  &::placeholder {
+    color: ${colors.whiteDarken};
+  }
 `;
 
 export const Button = styled(ButtonBase)``;
 
-export const Box = styled.div``;
+export const Box = styled.div`
+  padding: 15px;
+`;
 
 export const Counter = styled.span`
   margin-left: ${spacings.small};
   font-size: ${fontSizes.extraSmall};
-  color: ${colors.darkLighten};
+  color: ${colors.whiteDarken};
 `;

@@ -8,7 +8,7 @@ type Props = {
 
 const TweetInput = ({
   contentDefault = "",
-  tweetLimit = 10,
+  tweetLimit = 150,
 }: Props): JSX.Element => {
   const [content, setContent] = useState(contentDefault);
 
@@ -25,6 +25,7 @@ const TweetInput = ({
   return (
     <S.Box>
       <S.Input
+        placeholder="what's going on?"
         hasError={isInvalid}
         rows="4"
         onChange={onChangeTweet}

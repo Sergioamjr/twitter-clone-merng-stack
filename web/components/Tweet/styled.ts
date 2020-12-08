@@ -8,13 +8,16 @@ export const Card = styled.section`
   &:not(:last-child) {
     border-bottom: 0;
   }
+  border-left: 0;
+  border-right: 0;
   padding: ${spacings.small};
   display: grid;
   grid-template-columns: 50px 1fr;
 `;
 
 export const Text = styled.p`
-  color: ${colors.white};
+  line-height: 1.4;
+  color: ${colors.whiteLighten};
 `;
 
 export const Name = styled.a`
@@ -22,7 +25,7 @@ export const Name = styled.a`
 `;
 
 export const Username = styled.p`
-  color: ${colors.light};
+  color: ${colors.lightLighten};
   margin-left: ${spacings.small};
 `;
 
