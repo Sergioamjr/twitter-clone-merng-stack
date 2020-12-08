@@ -1,4 +1,4 @@
-query {
+query getTweets {
   getTweets {
     content
     _id

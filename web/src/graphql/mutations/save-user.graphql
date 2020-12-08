@@ -1,0 +1,7 @@
+mutation saveUser($name: String!, $password: String!, $email: String!) {
+  saveUser(name: $name, password: $password, email: $email) {
+    name
+    token
+    email
+  }
+}

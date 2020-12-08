@@ -1,0 +1,8 @@
+mutation like($_id: String, $token: String!) {
+  like(_id: $_id, token: $token) {
+    _id
+    content
+    createdAt
+    likedBy
+  }
+}

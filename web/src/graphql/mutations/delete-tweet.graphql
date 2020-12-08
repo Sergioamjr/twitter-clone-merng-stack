@@ -1,0 +1,3 @@
+mutation deleteTweet($_id: String, $token: String!) {
+  deleteTweet(_id: $_id, token: $token)
+}

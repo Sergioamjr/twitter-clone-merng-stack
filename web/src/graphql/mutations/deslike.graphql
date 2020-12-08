@@ -1,0 +1,8 @@
+mutation deslike($_id: String, $token: String!) {
+  deslike(_id: $_id, token: $token) {
+    _id
+    content
+    createdAt
+    likedBy
+  }
+}
