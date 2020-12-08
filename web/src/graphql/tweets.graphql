@@ -1,0 +1,9 @@
+query {
+  getTweets {
+    content
+    _id
+    authorId
+    likedBy
+    createdAt
+  }
+}

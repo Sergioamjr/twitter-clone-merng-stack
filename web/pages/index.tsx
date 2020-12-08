@@ -1,3 +1,3 @@
-import Home from "./../features/home/";
+import Home from "./../src/features/home";
 
 export default Home;

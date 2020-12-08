@@ -1,5 +1,5 @@
-import Tweet from "../../components/Tweet";
-import TweetInput from "../../components/TweetInput";
+import Tweet from "./../../components/Tweet";
+import TweetInput from "./../../components/TweetInput";
 import * as S from "./styled";
 
 const Home = (): JSX.Element => {
