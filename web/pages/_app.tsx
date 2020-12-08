@@ -1,5 +1,12 @@
 import Head from "next/head";
 import { createGlobalStyle } from "styled-components";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+const SERVER_URL = "http://localhost:4000/";
+const client = new ApolloClient({
+  uri: SERVER_URL,
+  cache: new InMemoryCache(),
+});
 
 type Props = {
   Component: any;
@@ -14,7 +21,9 @@ const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
-      <Component {...pageProps} />
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />
+      </ApolloProvider>
     </>
   );
 };

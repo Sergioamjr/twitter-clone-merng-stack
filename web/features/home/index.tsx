@@ -3,7 +3,6 @@ import TweetInput from "../../components/TweetInput";
 import * as S from "./styled";
 
 const Home = (): JSX.Element => {
-  const twees = new Array(10);
   return (
     <S.Content>
       <S.Column>
