@@ -5,16 +5,17 @@ import { Tweet } from "./../../generated/graphql";
 
 type HomeProps = {
   tweets?: Tweet[];
+  onSubmitNewTweet: (s: string) => void;
 };
 
-const Home = ({ tweets = [] }: HomeProps): JSX.Element => {
+const Home = ({ onSubmitNewTweet, tweets = [] }: HomeProps): JSX.Element => {
   return (
     <S.Content>
       <S.Column>
         <S.Text>Perfil</S.Text>
       </S.Column>
       <S.Column>
-        <TweetInput />
+        <TweetInput onSubmitNewTweet={onSubmitNewTweet} />
         {tweets.map(({ _id, content, userName, name }) => {
           return (
             <TweetCard
