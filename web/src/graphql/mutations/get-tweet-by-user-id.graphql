@@ -3,5 +3,7 @@ mutation getTweetByUserID($_id: String!) {
     _id
     content
     createdAt
+    name
+    userName
   }
 }

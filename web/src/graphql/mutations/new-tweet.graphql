@@ -3,5 +3,7 @@ mutation newTweet($content: String, $token: String!) {
     _id
     likedBy
     content
+    name
+    userName
   }
 }

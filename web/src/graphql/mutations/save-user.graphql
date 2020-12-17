@@ -1,5 +1,15 @@
-mutation saveUser($name: String!, $password: String!, $email: String!) {
-  saveUser(name: $name, password: $password, email: $email) {
+mutation saveUser(
+  $userName: String!
+  $name: String!
+  $password: String!
+  $email: String!
+) {
+  saveUser(
+    userName: $userName
+    name: $name
+    password: $password
+    email: $email
+  ) {
     name
     token
     email

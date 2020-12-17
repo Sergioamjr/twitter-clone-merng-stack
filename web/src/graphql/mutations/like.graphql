@@ -4,5 +4,7 @@ mutation like($_id: String, $token: String!) {
     content
     createdAt
     likedBy
+    name
+    userName
   }
 }

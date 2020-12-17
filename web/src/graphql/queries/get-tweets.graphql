@@ -3,6 +3,8 @@ query getTweets {
     content
     _id
     authorId
+    name
+    userName
     likedBy
     createdAt
   }
