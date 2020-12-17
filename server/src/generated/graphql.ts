@@ -116,6 +116,8 @@ export type Tweet = {
   __typename?: 'Tweet';
   _id?: Maybe<Scalars['ID']>;
   authorId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
   likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -312,6 +314,8 @@ export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversP
 export type TweetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tweet'] = ResolversParentTypes['Tweet']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   likedBy?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;

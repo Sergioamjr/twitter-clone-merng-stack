@@ -43,13 +43,15 @@ export const mutation: MutationResolvers = {
   newTweet: async (_, { content, token }, context) => {
     try {
       const decoded = await verifyToken(token as string);
-      await context.dataSources.User.findOne({
+      const { userName, name } = await context.dataSources.User.findOne({
         _id: (<TokenDecoded>decoded)._id,
       });
       return await new context.dataSources.Tweet({
         authorId: (<TokenDecoded>decoded)._id,
         createdAt: new Date(),
         content,
+        userName,
+        name,
       }).save();
     } catch (err) {
       throw Error(err);

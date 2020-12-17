@@ -4,6 +4,8 @@ export const types = gql`
   type Tweet {
     _id: ID
     authorId: String
+    name: String
+    userName: String
     createdAt: String
     content: String
     likedBy: [String]
