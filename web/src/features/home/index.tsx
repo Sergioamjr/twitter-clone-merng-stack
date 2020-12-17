@@ -4,11 +4,10 @@ import * as S from "./styled";
 import { Tweet } from "./../../generated/graphql";
 
 type HomeProps = {
-  tweets: Tweet[];
+  tweets?: Tweet[];
 };
 
-const Home = ({ tweets }: HomeProps): JSX.Element => {
-  console.log(tweets);
+const Home = ({ tweets = [] }: HomeProps): JSX.Element => {
   return (
     <S.Content>
       <S.Column>
@@ -16,12 +15,12 @@ const Home = ({ tweets }: HomeProps): JSX.Element => {
       </S.Column>
       <S.Column>
         <TweetInput />
-        {tweets.map(({ _id, content }) => {
+        {tweets.map(({ _id, content, userName, name }) => {
           return (
             <TweetCard
               key={_id}
-              name="Sérgio Júnior"
-              user="sergioamjr_"
+              name={name}
+              user={userName}
               content={content}
               _id={_id}
             />
