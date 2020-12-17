@@ -4,12 +4,14 @@ export const types = gql`
   type User {
     _id: ID
     name: String
+    userName: String
     email: String
   }
 
   type LoggedUser {
     _id: ID
     name: String
+    userName: String
     email: String
     token: String
   }
@@ -22,6 +24,11 @@ export const types = gql`
 
   extend type Mutation {
     login(email: String, password: String): LoggedUser
-    saveUser(name: String!, email: String!, password: String!): LoggedUser
+    saveUser(
+      userName: String!
+      name: String!
+      email: String!
+      password: String!
+    ): LoggedUser
   }
 `;

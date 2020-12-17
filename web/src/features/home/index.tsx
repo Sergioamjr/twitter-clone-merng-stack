@@ -1,8 +1,14 @@
-import Tweet from "./../../components/Tweet";
+import TweetCard from "./../../components/Tweet";
 import TweetInput from "./../../components/TweetInput";
 import * as S from "./styled";
+import { Tweet } from "./../../generated/graphql";
 
-const Home = (): JSX.Element => {
+type HomeProps = {
+  tweets: Tweet[];
+};
+
+const Home = ({ tweets }: HomeProps): JSX.Element => {
+  console.log(tweets);
   return (
     <S.Content>
       <S.Column>
@@ -10,14 +16,14 @@ const Home = (): JSX.Element => {
       </S.Column>
       <S.Column>
         <TweetInput />
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
+        {tweets.map(({ _id, content }) => {
           return (
-            <Tweet
-              key={i}
+            <TweetCard
+              key={_id}
               name="Sérgio Júnior"
               user="sergioamjr_"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel sodales nibh, vel egestas orci. Praesent mauris leo, pellentesque non malesuada non, sollicitudin dignissim neque. Fusce ornare nibh eget risus ullamcorper scelerisque. Nulla et pellentesque ligula, a maximus purus. Donec at odio quis dolor efficitur malesuada."
-              _id="123"
+              content={content}
+              _id={_id}
             />
           );
         })}

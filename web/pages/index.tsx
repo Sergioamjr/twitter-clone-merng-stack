@@ -1,3 +1,7 @@
+import { useGetTweetsQuery } from "../src/generated/graphql";
 import Home from "./../src/features/home";
 
-export default Home;
+export default function HomePage(): JSX.Element {
+  const { data } = useGetTweetsQuery();
+  return <Home tweets={data.getTweets} />;
+}

@@ -43,15 +43,22 @@ export const query: QueryResolvers = {
 };
 
 export const mutation: MutationResolvers = {
-  saveUser: async (_, { name, email, password }, { dataSources }) => {
+  saveUser: async (_, { name, email, password, userName }, { dataSources }) => {
     const isRegistered = await dataSources.User.findOne({ email });
+    const invalidUserName = await dataSources.User.findOne({ userName });
+
     if (isRegistered) {
       throw Error("Usuário já cadastrado. Tente recuperar sua senha.");
     }
+    if (invalidUserName) {
+      throw Error("Nome de usuário inválido.");
+    }
+
     const hash = bcrypt.hashSync(password, 10);
     await new dataSources.User({
       name,
       email,
+      userName,
       password: hash,
     }).save();
 

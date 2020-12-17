@@ -60,6 +60,7 @@ export type MutationLoginArgs = {
 
 
 export type MutationSaveUserArgs = {
+  userName: Scalars['String'];
   name: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
@@ -98,6 +99,7 @@ export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
 };
 
@@ -105,6 +107,7 @@ export type LoggedUser = {
   __typename?: 'LoggedUser';
   _id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
 };
@@ -281,7 +284,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   login?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
-  saveUser?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'name' | 'email' | 'password'>>;
+  saveUser?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'userName' | 'name' | 'email' | 'password'>>;
   getTweetByUserID?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType, RequireFields<MutationGetTweetByUserIdArgs, '_id'>>;
   newTweet?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationNewTweetArgs, 'token'>>;
   deleteTweet?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteTweetArgs, never>>;
@@ -292,6 +295,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -299,6 +303,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoggedUser'] = ResolversParentTypes['LoggedUser']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
