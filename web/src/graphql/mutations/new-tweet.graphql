@@ -1,9 +1,0 @@
-mutation newTweet($content: String, $token: String!) {
-  newTweet(content: $content, token: $token) {
-    _id
-    likedBy
-    content
-    name
-    userName
-  }
-}

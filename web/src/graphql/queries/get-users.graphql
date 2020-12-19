@@ -1,8 +1,0 @@
-query getUsers {
-  getUsers {
-    email
-    name
-    userName
-    _id
-  }
-}

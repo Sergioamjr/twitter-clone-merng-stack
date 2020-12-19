@@ -1,9 +1,0 @@
-mutation getTweetByUserID($_id: String!) {
-  getTweetByUserID(_id: $_id) {
-    _id
-    content
-    createdAt
-    name
-    userName
-  }
-}

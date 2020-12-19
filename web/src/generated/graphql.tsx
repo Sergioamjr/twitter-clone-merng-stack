@@ -123,6 +123,21 @@ export enum CacheControlScope {
 }
 
 
+export type LoggedUserFragment = (
+  { __typename?: 'LoggedUser' }
+  & Pick<LoggedUser, '_id' | 'name' | 'token' | 'email' | 'userName'>
+);
+
+export type TweetFragment = (
+  { __typename?: 'Tweet' }
+  & Pick<Tweet, 'content' | '_id' | 'authorId' | 'name' | 'userName' | 'likedBy' | 'createdAt'>
+);
+
+export type UserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'email' | 'name' | 'userName' | '_id'>
+);
+
 export type DeleteTweetMutationVariables = Exact<{
   _id?: Maybe<Scalars['String']>;
   token: Scalars['String'];
@@ -144,7 +159,7 @@ export type DeslikeMutation = (
   { __typename?: 'Mutation' }
   & { deslike?: Maybe<(
     { __typename?: 'Tweet' }
-    & Pick<Tweet, '_id' | 'content' | 'createdAt' | 'likedBy' | 'name' | 'userName'>
+    & TweetFragment
   )> }
 );
 
@@ -157,7 +172,7 @@ export type GetTweetByUserIdMutation = (
   { __typename?: 'Mutation' }
   & { getTweetByUserID?: Maybe<Array<Maybe<(
     { __typename?: 'Tweet' }
-    & Pick<Tweet, '_id' | 'content' | 'createdAt' | 'name' | 'userName'>
+    & TweetFragment
   )>>> }
 );
 
@@ -171,7 +186,7 @@ export type LikeMutation = (
   { __typename?: 'Mutation' }
   & { like?: Maybe<(
     { __typename?: 'Tweet' }
-    & Pick<Tweet, '_id' | 'content' | 'createdAt' | 'likedBy' | 'name' | 'userName'>
+    & TweetFragment
   )> }
 );
 
@@ -185,7 +200,7 @@ export type LoginMutation = (
   { __typename?: 'Mutation' }
   & { login?: Maybe<(
     { __typename?: 'LoggedUser' }
-    & Pick<LoggedUser, 'name' | 'token' | 'email' | 'userName'>
+    & LoggedUserFragment
   )> }
 );
 
@@ -199,7 +214,7 @@ export type NewTweetMutation = (
   { __typename?: 'Mutation' }
   & { newTweet?: Maybe<(
     { __typename?: 'Tweet' }
-    & Pick<Tweet, '_id' | 'likedBy' | 'content' | 'name' | 'userName'>
+    & TweetFragment
   )> }
 );
 
@@ -215,7 +230,7 @@ export type SaveUserMutation = (
   { __typename?: 'Mutation' }
   & { saveUser?: Maybe<(
     { __typename?: 'LoggedUser' }
-    & Pick<LoggedUser, 'name' | 'token' | 'email'>
+    & LoggedUserFragment
   )> }
 );
 
@@ -226,7 +241,7 @@ export type GetTweetsQuery = (
   { __typename?: 'Query' }
   & { getTweets?: Maybe<Array<Maybe<(
     { __typename?: 'Tweet' }
-    & Pick<Tweet, 'content' | '_id' | 'authorId' | 'name' | 'userName' | 'likedBy' | 'createdAt'>
+    & TweetFragment
   )>>> }
 );
 
@@ -237,11 +252,38 @@ export type GetUsersQuery = (
   { __typename?: 'Query' }
   & { getUsers?: Maybe<Array<Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'email' | 'name' | 'userName' | '_id'>
+    & UserFragment
   )>>> }
 );
 
-
+export const LoggedUserFragmentDoc = gql`
+    fragment LoggedUser on LoggedUser {
+  _id
+  name
+  token
+  email
+  userName
+}
+    `;
+export const TweetFragmentDoc = gql`
+    fragment Tweet on Tweet {
+  content
+  _id
+  authorId
+  name
+  userName
+  likedBy
+  createdAt
+}
+    `;
+export const UserFragmentDoc = gql`
+    fragment User on User {
+  email
+  name
+  userName
+  _id
+}
+    `;
 export const DeleteTweetDocument = gql`
     mutation deleteTweet($_id: String, $token: String!) {
   deleteTweet(_id: $_id, token: $token)
@@ -276,15 +318,10 @@ export type DeleteTweetMutationOptions = Apollo.BaseMutationOptions<DeleteTweetM
 export const DeslikeDocument = gql`
     mutation deslike($_id: String, $token: String!) {
   deslike(_id: $_id, token: $token) {
-    _id
-    content
-    createdAt
-    likedBy
-    name
-    userName
+    ...Tweet
   }
 }
-    `;
+    ${TweetFragmentDoc}`;
 export type DeslikeMutationFn = Apollo.MutationFunction<DeslikeMutation, DeslikeMutationVariables>;
 
 /**
@@ -314,14 +351,10 @@ export type DeslikeMutationOptions = Apollo.BaseMutationOptions<DeslikeMutation,
 export const GetTweetByUserIdDocument = gql`
     mutation getTweetByUserID($_id: String!) {
   getTweetByUserID(_id: $_id) {
-    _id
-    content
-    createdAt
-    name
-    userName
+    ...Tweet
   }
 }
-    `;
+    ${TweetFragmentDoc}`;
 export type GetTweetByUserIdMutationFn = Apollo.MutationFunction<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>;
 
 /**
@@ -350,15 +383,10 @@ export type GetTweetByUserIdMutationOptions = Apollo.BaseMutationOptions<GetTwee
 export const LikeDocument = gql`
     mutation like($_id: String, $token: String!) {
   like(_id: $_id, token: $token) {
-    _id
-    content
-    createdAt
-    likedBy
-    name
-    userName
+    ...Tweet
   }
 }
-    `;
+    ${TweetFragmentDoc}`;
 export type LikeMutationFn = Apollo.MutationFunction<LikeMutation, LikeMutationVariables>;
 
 /**
@@ -388,13 +416,10 @@ export type LikeMutationOptions = Apollo.BaseMutationOptions<LikeMutation, LikeM
 export const LoginDocument = gql`
     mutation login($password: String!, $email: String!) {
   login(password: $password, email: $email) {
-    name
-    token
-    email
-    userName
+    ...LoggedUser
   }
 }
-    `;
+    ${LoggedUserFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
@@ -424,14 +449,10 @@ export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, Log
 export const NewTweetDocument = gql`
     mutation newTweet($content: String, $token: String!) {
   newTweet(content: $content, token: $token) {
-    _id
-    likedBy
-    content
-    name
-    userName
+    ...Tweet
   }
 }
-    `;
+    ${TweetFragmentDoc}`;
 export type NewTweetMutationFn = Apollo.MutationFunction<NewTweetMutation, NewTweetMutationVariables>;
 
 /**
@@ -461,12 +482,10 @@ export type NewTweetMutationOptions = Apollo.BaseMutationOptions<NewTweetMutatio
 export const SaveUserDocument = gql`
     mutation saveUser($userName: String!, $name: String!, $password: String!, $email: String!) {
   saveUser(userName: $userName, name: $name, password: $password, email: $email) {
-    name
-    token
-    email
+    ...LoggedUser
   }
 }
-    `;
+    ${LoggedUserFragmentDoc}`;
 export type SaveUserMutationFn = Apollo.MutationFunction<SaveUserMutation, SaveUserMutationVariables>;
 
 /**
@@ -498,16 +517,10 @@ export type SaveUserMutationOptions = Apollo.BaseMutationOptions<SaveUserMutatio
 export const GetTweetsDocument = gql`
     query getTweets {
   getTweets {
-    content
-    _id
-    authorId
-    name
-    userName
-    likedBy
-    createdAt
+    ...Tweet
   }
 }
-    `;
+    ${TweetFragmentDoc}`;
 
 /**
  * __useGetTweetsQuery__
@@ -536,13 +549,10 @@ export type GetTweetsQueryResult = Apollo.QueryResult<GetTweetsQuery, GetTweetsQ
 export const GetUsersDocument = gql`
     query getUsers {
   getUsers {
-    email
-    name
-    userName
-    _id
+    ...User
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 
 /**
  * __useGetUsersQuery__
