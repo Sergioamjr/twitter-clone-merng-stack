@@ -39,6 +39,7 @@ export type Mutation = {
   root?: Maybe<Scalars['String']>;
   login?: Maybe<LoggedUser>;
   saveUser?: Maybe<LoggedUser>;
+  getMyFriendsTweets?: Maybe<Array<Maybe<Tweet>>>;
   getTweetByUserID?: Maybe<Array<Maybe<Tweet>>>;
   newTweet?: Maybe<Tweet>;
   deleteTweet?: Maybe<Scalars['Boolean']>;
@@ -58,6 +59,11 @@ export type MutationSaveUserArgs = {
   name: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationGetMyFriendsTweetsArgs = {
+  _id: Scalars['String'];
 };
 
 
@@ -161,6 +167,19 @@ export type DeslikeMutation = (
     { __typename?: 'Tweet' }
     & TweetFragment
   )> }
+);
+
+export type GetMyFriendsTweetsMutationVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type GetMyFriendsTweetsMutation = (
+  { __typename?: 'Mutation' }
+  & { getMyFriendsTweets?: Maybe<Array<Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )>>> }
 );
 
 export type GetTweetByUserIdMutationVariables = Exact<{
@@ -348,6 +367,38 @@ export function useDeslikeMutation(baseOptions?: Apollo.MutationHookOptions<Desl
 export type DeslikeMutationHookResult = ReturnType<typeof useDeslikeMutation>;
 export type DeslikeMutationResult = Apollo.MutationResult<DeslikeMutation>;
 export type DeslikeMutationOptions = Apollo.BaseMutationOptions<DeslikeMutation, DeslikeMutationVariables>;
+export const GetMyFriendsTweetsDocument = gql`
+    mutation getMyFriendsTweets($_id: String!) {
+  getMyFriendsTweets(_id: $_id) {
+    ...Tweet
+  }
+}
+    ${TweetFragmentDoc}`;
+export type GetMyFriendsTweetsMutationFn = Apollo.MutationFunction<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>;
+
+/**
+ * __useGetMyFriendsTweetsMutation__
+ *
+ * To run a mutation, you first call `useGetMyFriendsTweetsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetMyFriendsTweetsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getMyFriendsTweetsMutation, { data, loading, error }] = useGetMyFriendsTweetsMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useGetMyFriendsTweetsMutation(baseOptions?: Apollo.MutationHookOptions<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>) {
+        return Apollo.useMutation<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>(GetMyFriendsTweetsDocument, baseOptions);
+      }
+export type GetMyFriendsTweetsMutationHookResult = ReturnType<typeof useGetMyFriendsTweetsMutation>;
+export type GetMyFriendsTweetsMutationResult = Apollo.MutationResult<GetMyFriendsTweetsMutation>;
+export type GetMyFriendsTweetsMutationOptions = Apollo.BaseMutationOptions<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>;
 export const GetTweetByUserIdDocument = gql`
     mutation getTweetByUserID($_id: String!) {
   getTweetByUserID(_id: $_id) {
