@@ -6,6 +6,7 @@ export const types = gql`
     name: String
     userName: String
     email: String
+    friends: [String]
   }
 
   type LoggedUser {
@@ -14,6 +15,7 @@ export const types = gql`
     userName: String
     email: String
     token: String
+    friends: [String]
   }
 
   extend type Query {
@@ -23,6 +25,12 @@ export const types = gql`
   }
 
   extend type Mutation {
+    addToFriends(_id: String!, newFriendId: String!, token: String!): LoggedUser
+    removeFromFriends(
+      _id: String!
+      friendId: String!
+      token: String!
+    ): LoggedUser
     login(email: String, password: String): LoggedUser
     saveUser(
       userName: String!

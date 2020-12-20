@@ -43,6 +43,42 @@ export const query: QueryResolvers = {
 };
 
 export const mutation: MutationResolvers = {
+  addToFriends: async (_, { _id, newFriendId, token }, { dataSources }) => {
+    await verifyToken(token as string);
+    const currentUser = await dataSources.User.findOne({ _id });
+    const newFriend = await dataSources.User.findOne({
+      _id: newFriendId,
+    });
+
+    const currentUserFriends = new Set(currentUser.friends);
+    currentUserFriends.add(newFriendId);
+    currentUser.friends = [...currentUserFriends];
+
+    const newFriendFriends = new Set(newFriend.friends);
+    newFriendFriends.add(_id);
+    newFriend.friends = [...newFriendFriends];
+
+    await dataSources.User.findOneAndUpdate({ _id: newFriendId }, newFriend);
+    await dataSources.User.findOneAndUpdate({ _id }, currentUser);
+    return await dataSources.User.findOne({ _id });
+  },
+  removeFromFriends: async (_, { _id, friendId, token }, { dataSources }) => {
+    await verifyToken(token as string);
+    const currentUser = await dataSources.User.findOne({ _id });
+    const newFriend = await dataSources.User.findOne({
+      _id: friendId,
+    });
+
+    currentUser.friends = currentUser.friends.filter(
+      (id: string) => id !== friendId
+    );
+
+    newFriend.friends = newFriend.friends.filter((id: string) => id !== _id);
+
+    await dataSources.User.findOneAndUpdate({ _id: friendId }, newFriend);
+    await dataSources.User.findOneAndUpdate({ _id }, currentUser);
+    return await dataSources.User.findOne({ _id: friendId });
+  },
   saveUser: async (_, { name, email, password, userName }, { dataSources }) => {
     const isRegistered = await dataSources.User.findOne({ email });
     const invalidUserName = await dataSources.User.findOne({ userName });

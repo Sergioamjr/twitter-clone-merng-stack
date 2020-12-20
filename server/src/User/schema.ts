@@ -7,6 +7,7 @@ const [User, userSchema] = createDBSchema(
     userName: joi.string().required(),
     email: joi.string().required(),
     password: joi.string().required(),
+    friends: joi.array().items(joi.string()),
   },
   "User"
 );
