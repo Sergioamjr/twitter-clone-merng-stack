@@ -37,6 +37,8 @@ export type QueryValidateTokenArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   root?: Maybe<Scalars['String']>;
+  addToFriends?: Maybe<LoggedUser>;
+  removeFromFriends?: Maybe<LoggedUser>;
   login?: Maybe<LoggedUser>;
   saveUser?: Maybe<LoggedUser>;
   getMyFriendsTweets?: Maybe<Array<Maybe<Tweet>>>;
@@ -45,6 +47,20 @@ export type Mutation = {
   deleteTweet?: Maybe<Scalars['Boolean']>;
   like?: Maybe<Tweet>;
   deslike?: Maybe<Tweet>;
+};
+
+
+export type MutationAddToFriendsArgs = {
+  _id: Scalars['String'];
+  newFriendId: Scalars['String'];
+  token: Scalars['String'];
+};
+
+
+export type MutationRemoveFromFriendsArgs = {
+  _id: Scalars['String'];
+  friendId: Scalars['String'];
+  token: Scalars['String'];
 };
 
 
@@ -101,6 +117,7 @@ export type User = {
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  friends?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type LoggedUser = {
@@ -110,6 +127,7 @@ export type LoggedUser = {
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
+  friends?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type Tweet = {
@@ -131,7 +149,7 @@ export enum CacheControlScope {
 
 export type LoggedUserFragment = (
   { __typename?: 'LoggedUser' }
-  & Pick<LoggedUser, '_id' | 'name' | 'token' | 'email' | 'userName'>
+  & Pick<LoggedUser, '_id' | 'name' | 'token' | 'email' | 'userName' | 'friends'>
 );
 
 export type TweetFragment = (
@@ -141,7 +159,22 @@ export type TweetFragment = (
 
 export type UserFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'email' | 'name' | 'userName' | '_id'>
+  & Pick<User, 'email' | 'name' | 'userName' | '_id' | 'friends'>
+);
+
+export type AddToFriendsMutationVariables = Exact<{
+  _id: Scalars['String'];
+  newFriendId: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type AddToFriendsMutation = (
+  { __typename?: 'Mutation' }
+  & { addToFriends?: Maybe<(
+    { __typename?: 'LoggedUser' }
+    & LoggedUserFragment
+  )> }
 );
 
 export type DeleteTweetMutationVariables = Exact<{
@@ -237,6 +270,21 @@ export type NewTweetMutation = (
   )> }
 );
 
+export type RemoveFromFriendsMutationVariables = Exact<{
+  _id: Scalars['String'];
+  friendId: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type RemoveFromFriendsMutation = (
+  { __typename?: 'Mutation' }
+  & { removeFromFriends?: Maybe<(
+    { __typename?: 'LoggedUser' }
+    & LoggedUserFragment
+  )> }
+);
+
 export type SaveUserMutationVariables = Exact<{
   userName: Scalars['String'];
   name: Scalars['String'];
@@ -282,6 +330,7 @@ export const LoggedUserFragmentDoc = gql`
   token
   email
   userName
+  friends
 }
     `;
 export const TweetFragmentDoc = gql`
@@ -301,8 +350,43 @@ export const UserFragmentDoc = gql`
   name
   userName
   _id
+  friends
 }
     `;
+export const AddToFriendsDocument = gql`
+    mutation addToFriends($_id: String!, $newFriendId: String!, $token: String!) {
+  addToFriends(_id: $_id, newFriendId: $newFriendId, token: $token) {
+    ...LoggedUser
+  }
+}
+    ${LoggedUserFragmentDoc}`;
+export type AddToFriendsMutationFn = Apollo.MutationFunction<AddToFriendsMutation, AddToFriendsMutationVariables>;
+
+/**
+ * __useAddToFriendsMutation__
+ *
+ * To run a mutation, you first call `useAddToFriendsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddToFriendsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addToFriendsMutation, { data, loading, error }] = useAddToFriendsMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *      newFriendId: // value for 'newFriendId'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useAddToFriendsMutation(baseOptions?: Apollo.MutationHookOptions<AddToFriendsMutation, AddToFriendsMutationVariables>) {
+        return Apollo.useMutation<AddToFriendsMutation, AddToFriendsMutationVariables>(AddToFriendsDocument, baseOptions);
+      }
+export type AddToFriendsMutationHookResult = ReturnType<typeof useAddToFriendsMutation>;
+export type AddToFriendsMutationResult = Apollo.MutationResult<AddToFriendsMutation>;
+export type AddToFriendsMutationOptions = Apollo.BaseMutationOptions<AddToFriendsMutation, AddToFriendsMutationVariables>;
 export const DeleteTweetDocument = gql`
     mutation deleteTweet($_id: String, $token: String!) {
   deleteTweet(_id: $_id, token: $token)
@@ -530,6 +614,40 @@ export function useNewTweetMutation(baseOptions?: Apollo.MutationHookOptions<New
 export type NewTweetMutationHookResult = ReturnType<typeof useNewTweetMutation>;
 export type NewTweetMutationResult = Apollo.MutationResult<NewTweetMutation>;
 export type NewTweetMutationOptions = Apollo.BaseMutationOptions<NewTweetMutation, NewTweetMutationVariables>;
+export const RemoveFromFriendsDocument = gql`
+    mutation removeFromFriends($_id: String!, $friendId: String!, $token: String!) {
+  removeFromFriends(_id: $_id, friendId: $friendId, token: $token) {
+    ...LoggedUser
+  }
+}
+    ${LoggedUserFragmentDoc}`;
+export type RemoveFromFriendsMutationFn = Apollo.MutationFunction<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>;
+
+/**
+ * __useRemoveFromFriendsMutation__
+ *
+ * To run a mutation, you first call `useRemoveFromFriendsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveFromFriendsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeFromFriendsMutation, { data, loading, error }] = useRemoveFromFriendsMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *      friendId: // value for 'friendId'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useRemoveFromFriendsMutation(baseOptions?: Apollo.MutationHookOptions<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>) {
+        return Apollo.useMutation<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>(RemoveFromFriendsDocument, baseOptions);
+      }
+export type RemoveFromFriendsMutationHookResult = ReturnType<typeof useRemoveFromFriendsMutation>;
+export type RemoveFromFriendsMutationResult = Apollo.MutationResult<RemoveFromFriendsMutation>;
+export type RemoveFromFriendsMutationOptions = Apollo.BaseMutationOptions<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>;
 export const SaveUserDocument = gql`
     mutation saveUser($userName: String!, $name: String!, $password: String!, $email: String!) {
   saveUser(userName: $userName, name: $name, password: $password, email: $email) {

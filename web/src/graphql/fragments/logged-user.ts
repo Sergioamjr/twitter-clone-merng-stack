@@ -7,5 +7,6 @@ export default gql`
     token
     email
     userName
+    friends
   }
 `;
