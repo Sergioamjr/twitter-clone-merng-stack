@@ -3,6 +3,7 @@ import {
   useGetTweetsQuery,
   useLoginMutation,
   useNewTweetMutation,
+  useDeleteTweetMutation,
 } from "../src/generated/graphql";
 import Home from "./../src/features/home";
 import { LoggedUser } from "./../src/generated/graphql";
@@ -13,10 +14,11 @@ const userAuthentication = {
 };
 
 export default function HomePage(): JSX.Element {
+  const [user, setUser] = useState<Partial<LoggedUser>>({});
   const { data, refetch } = useGetTweetsQuery();
   const [fn] = useNewTweetMutation();
   const [login] = useLoginMutation();
-  const [user, setUser] = useState<Partial<LoggedUser>>({});
+  const [onDeleteTweet] = useDeleteTweetMutation();
 
   useEffect(() => {
     (async () => {
@@ -42,5 +44,21 @@ export default function HomePage(): JSX.Element {
     refetch();
   };
 
-  return <Home onSubmitNewTweet={onSubmitNewTweet} tweets={data?.getTweets} />;
+  const onDeleteTweetHandler = async (_id: string) => {
+    await onDeleteTweet({
+      variables: {
+        _id,
+        token: user.token,
+      },
+    });
+    refetch();
+  };
+
+  return (
+    <Home
+      onDeleteTweet={onDeleteTweetHandler}
+      onSubmitNewTweet={onSubmitNewTweet}
+      tweets={data?.getTweets}
+    />
+  );
 }

@@ -18,9 +18,16 @@ export type Props = {
    Tweet ID
   */
   _id: string;
+  onDeleteTweet: (id: string) => void;
 };
 
-const Tweet = ({ name, user, content, _id }: Props): JSX.Element => {
+const Tweet = ({
+  onDeleteTweet,
+  name,
+  user,
+  content,
+  _id,
+}: Props): JSX.Element => {
   const onClickHandler = () => {
     console.log(_id);
   };
@@ -48,7 +55,7 @@ const Tweet = ({ name, user, content, _id }: Props): JSX.Element => {
           <S.Like aria-label="like" onClick={onClickHandler}>
             <Heart width={20} />
           </S.Like>
-          <S.Like aria-label="like" onClick={onClickHandler}>
+          <S.Like aria-label="like" onClick={() => onDeleteTweet(_id)}>
             <Heart width={20} />
           </S.Like>
         </S.Footer>

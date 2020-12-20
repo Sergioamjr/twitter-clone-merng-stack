@@ -6,9 +6,14 @@ import { Tweet } from "./../../generated/graphql";
 type HomeProps = {
   tweets?: Tweet[];
   onSubmitNewTweet: (s: string) => void;
+  onDeleteTweet: (id: string) => void;
 };
 
-const Home = ({ onSubmitNewTweet, tweets = [] }: HomeProps): JSX.Element => {
+const Home = ({
+  onDeleteTweet,
+  onSubmitNewTweet,
+  tweets = [],
+}: HomeProps): JSX.Element => {
   return (
     <S.Content>
       <S.Column>
@@ -19,6 +24,7 @@ const Home = ({ onSubmitNewTweet, tweets = [] }: HomeProps): JSX.Element => {
         {tweets.map(({ _id, content, userName, name }) => {
           return (
             <TweetCard
+              onDeleteTweet={onDeleteTweet}
               key={_id}
               name={name}
               user={userName}
