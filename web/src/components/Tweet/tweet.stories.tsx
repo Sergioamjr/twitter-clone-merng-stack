@@ -1,10 +1,15 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Meta } from "@storybook/react/types-6-0";
 import Tweet from ".";
-import { colors } from "../../theme";
+import { colors } from "~theme";
 
 const state = {
+  onDeleteTweet: () => {},
+  onLikeTweetHandler: () => {},
+  onDeslikeTweetHandler: () => {},
   name: "Sérgio Júnior",
   user: "sergioamjr_",
+  likedBy: [],
   content:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel sodales nibh, vel egestas orci. Praesent mauris leo, pellentesque non malesuada non, sollicitudin dignissim neque. Fusce ornare nibh eget risus ullamcorper scelerisque. Nulla et pellentesque ligula, a maximus purus. Donec at odio quis dolor efficitur malesuada.",
   _id: "123",

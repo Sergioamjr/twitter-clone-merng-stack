@@ -1,7 +1,6 @@
-import { BaseButton } from "./../button/styled";
+import { BaseButton } from "~components/button/styled";
 import styled from "styled-components";
-
-import { colors, spacings } from "../../theme";
+import { colors, spacings } from "~theme";
 
 export const Card = styled.section`
   border: 1px solid ${colors.light};

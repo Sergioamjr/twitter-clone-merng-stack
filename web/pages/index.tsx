@@ -6,9 +6,9 @@ import {
   useDeleteTweetMutation,
   useLikeMutation,
   useDeslikeMutation,
-} from "../src/generated/graphql";
-import Home from "./../src/features/home";
-import { LoggedUser } from "./../src/generated/graphql";
+} from "~generated/graphql";
+import Home from "~features/home";
+import { LoggedUser } from "~generated/graphql";
 
 const userAuthentication = {
   email: "sergio@gmail.com",
