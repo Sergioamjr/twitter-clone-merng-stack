@@ -1,37 +1,30 @@
-import { Heart } from "../../icons";
+import { Heart, Bin } from "../../icons";
 import * as S from "./styled";
+import { HomeProps } from "./../../features/home";
+import { colors } from "../../theme";
 
-export type Props = {
-  /**
-   User name
-  */
+export type TweetProps = {
+  likedBy: string[];
   name: string;
-  /**
-   User @
-  */
   user: string;
-  /**
-   Tweet content
-  */
   content: string;
-  /**
-   Tweet ID
-  */
   _id: string;
-  onDeleteTweet: (id: string) => void;
-};
+} & Pick<
+  HomeProps,
+  "onDeleteTweet" | "onLikeTweetHandler" | "onDeslikeTweetHandler"
+>;
 
 const Tweet = ({
   onDeleteTweet,
+  onLikeTweetHandler,
+  likedBy,
+  // onDeslikeTweetHandler,
   name,
   user,
   content,
   _id,
-}: Props): JSX.Element => {
-  const onClickHandler = () => {
-    console.log(_id);
-  };
-
+}: TweetProps): JSX.Element => {
+  console.log(likedBy);
   return (
     <S.Card tabIndex={0}>
       <S.Avatar>SJ</S.Avatar>
@@ -46,18 +39,17 @@ const Tweet = ({
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
-          <S.Like aria-label="like" onClick={onClickHandler}>
-            <Heart width={20} />
-          </S.Like>
-          <S.Like aria-label="like" onClick={onClickHandler}>
-            <Heart width={20} />
-          </S.Like>
-          <S.Like aria-label="like" onClick={onClickHandler}>
-            <Heart width={20} />
-          </S.Like>
-          <S.Like aria-label="like" onClick={() => onDeleteTweet(_id)}>
-            <Heart width={20} />
-          </S.Like>
+          <S.ActionBtnGroup>
+            <S.ActionBtn aria-label="Like" onClick={onLikeTweetHandler}>
+              <Heart width={20} color={colors.red} />
+            </S.ActionBtn>
+            {!!likedBy.length && (
+              <S.HowManyLikes>{likedBy.length}</S.HowManyLikes>
+            )}
+          </S.ActionBtnGroup>
+          <S.ActionBtn aria-label="Exclude" onClick={onDeleteTweet}>
+            <Bin width={20} />
+          </S.ActionBtn>
         </S.Footer>
       </div>
     </S.Card>

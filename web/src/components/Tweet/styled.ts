@@ -5,14 +5,14 @@ import { colors, spacings } from "../../theme";
 
 export const Card = styled.section`
   border: 1px solid ${colors.light};
-  &:not(:last-child) {
-    border-bottom: 0;
-  }
   border-left: 0;
   border-right: 0;
   padding: ${spacings.small};
   display: grid;
   grid-template-columns: 50px 1fr;
+  &:not(:last-child) {
+    border-bottom: 0;
+  }
 `;
 
 export const Text = styled.p`
@@ -56,12 +56,11 @@ export const Avatar = styled.div`
   background: ${colors.avatar};
 `;
 
-export const Like = styled.button`
+export const ActionBtn = styled.button`
   ${BaseButton};
   width: 30px;
   padding: 0;
   border-radius: 50%;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,4 +72,13 @@ export const Like = styled.button`
       fill: ${colors.greenDarken};
     }
   }
+`;
+
+export const HowManyLikes = styled.p`
+  color: ${colors.lightLighten};
+  margin-left: 10px;
+`;
+
+export const ActionBtnGroup = styled.div`
+  display: flex;
 `;

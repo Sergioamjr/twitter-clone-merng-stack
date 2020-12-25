@@ -4,6 +4,8 @@ import {
   useLoginMutation,
   useNewTweetMutation,
   useDeleteTweetMutation,
+  useLikeMutation,
+  useDeslikeMutation,
 } from "../src/generated/graphql";
 import Home from "./../src/features/home";
 import { LoggedUser } from "./../src/generated/graphql";
@@ -19,6 +21,8 @@ export default function HomePage(): JSX.Element {
   const [fn] = useNewTweetMutation();
   const [login] = useLoginMutation();
   const [onDeleteTweet] = useDeleteTweetMutation();
+  const [onLikeTweet] = useLikeMutation();
+  const [onDeslikeTweet] = useDeslikeMutation();
 
   useEffect(() => {
     (async () => {
@@ -54,8 +58,30 @@ export default function HomePage(): JSX.Element {
     refetch();
   };
 
+  const onLikeTweetHandler = async (_id: string) => {
+    await onLikeTweet({
+      variables: {
+        _id,
+        token: user.token,
+      },
+    });
+    refetch();
+  };
+
+  const onDeslikeTweetHandler = async (_id: string) => {
+    await onDeslikeTweet({
+      variables: {
+        _id,
+        token: user.token,
+      },
+    });
+    refetch();
+  };
+
   return (
     <Home
+      onLikeTweetHandler={onLikeTweetHandler}
+      onDeslikeTweetHandler={onDeslikeTweetHandler}
       onDeleteTweet={onDeleteTweetHandler}
       onSubmitNewTweet={onSubmitNewTweet}
       tweets={data?.getTweets}
