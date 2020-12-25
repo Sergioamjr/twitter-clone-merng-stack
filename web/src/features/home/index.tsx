@@ -1,7 +1,8 @@
+import { connect } from "react-redux";
 import TweetCard from "~components/Tweet";
 import TweetInput from "~components/TweetInput";
 import * as S from "./styled";
-import { Tweet } from "~generated/graphql";
+import { Tweet, LoggedUser } from "~generated/graphql";
 
 export type HomeProps = {
   tweets?: Tweet[];
@@ -9,6 +10,7 @@ export type HomeProps = {
   onDeleteTweet: (id: string) => void;
   onLikeTweetHandler: (id: string) => void;
   onDeslikeTweetHandler: (id: string) => void;
+  user: LoggedUser;
 };
 
 const Home = ({
@@ -17,23 +19,23 @@ const Home = ({
   onLikeTweetHandler,
   onDeslikeTweetHandler,
   tweets = [],
+  user,
 }: HomeProps): JSX.Element => {
   return (
     <S.Content>
-      <S.Column>
-        <S.Text>Perfil</S.Text>
-      </S.Column>
+      <S.Column />
       <S.Column>
         <TweetInput onSubmitNewTweet={onSubmitNewTweet} />
         {tweets.map(({ _id, content, userName, name, likedBy }) => {
           return (
             <TweetCard
+              haveLikedTweet={likedBy.includes(user._id)}
               onLikeTweetHandler={() => onLikeTweetHandler(_id)}
               onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
               onDeleteTweet={() => onDeleteTweet(_id)}
               key={_id}
               name={name}
-              user={userName}
+              userName={userName}
               content={content}
               _id={_id}
               likedBy={likedBy}
@@ -41,11 +43,9 @@ const Home = ({
           );
         })}
       </S.Column>
-      <S.Column>
-        <S.Text>Explorer</S.Text>
-      </S.Column>
+      <S.Column />
     </S.Content>
   );
 };
 
-export default Home;
+export default connect(({ user }, props) => ({ user, ...props }))(Home);

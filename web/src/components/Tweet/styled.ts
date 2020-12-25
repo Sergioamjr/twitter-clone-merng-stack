@@ -66,9 +66,9 @@ export const ActionBtn = styled.button`
   background: ${colors.darkBackground};
   transition: all 0.4s ease;
   &:hover {
-    background: ${colors.greenLighten};
+    background: transparent;
     svg path {
-      fill: ${colors.greenDarken};
+      fill: ${colors.blue};
     }
   }
 `;

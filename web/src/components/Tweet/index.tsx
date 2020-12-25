@@ -2,29 +2,26 @@ import { Heart, Bin } from "~icons";
 import * as S from "./styled";
 import { HomeProps } from "~features/home";
 import { colors } from "~theme";
+import { Tweet as TweetType } from "~generated/graphql";
 
-export type TweetProps = {
-  likedBy: string[];
-  name: string;
-  user: string;
-  content: string;
-  _id: string;
+export type TweetProps = TweetType & {
+  haveLikedTweet?: boolean;
 } & Pick<
-  HomeProps,
-  "onDeleteTweet" | "onLikeTweetHandler" | "onDeslikeTweetHandler"
->;
+    HomeProps,
+    "onDeleteTweet" | "onLikeTweetHandler" | "onDeslikeTweetHandler"
+  >;
 
 const Tweet = ({
   onDeleteTweet,
   onLikeTweetHandler,
   likedBy,
-  // onDeslikeTweetHandler,
+  haveLikedTweet,
+  onDeslikeTweetHandler,
   name,
-  user,
+  userName,
   content,
   _id,
 }: TweetProps): JSX.Element => {
-  console.log(likedBy);
   return (
     <S.Card tabIndex={0}>
       <S.Avatar>SJ</S.Avatar>
@@ -33,15 +30,23 @@ const Tweet = ({
           <S.Name href={`/${_id}`} tabIndex={0}>
             {name}
           </S.Name>
-          <S.Username>@ {user}</S.Username>
+          <S.Username>@ {userName}</S.Username>
         </S.Header>
         <S.Content>
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
           <S.ActionBtnGroup>
-            <S.ActionBtn aria-label="Like" onClick={onLikeTweetHandler}>
-              <Heart width={20} color={colors.red} />
+            <S.ActionBtn
+              aria-label="Like"
+              onClick={
+                haveLikedTweet ? onDeslikeTweetHandler : onLikeTweetHandler
+              }
+            >
+              <Heart
+                width={20}
+                color={haveLikedTweet ? colors.red : colors.lightLighten}
+              />
             </S.ActionBtn>
             {!!likedBy.length && (
               <S.HowManyLikes>{likedBy.length}</S.HowManyLikes>
