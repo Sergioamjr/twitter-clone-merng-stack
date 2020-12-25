@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { connect } from "react-redux";
 import {
   useGetTweetsQuery,
   useLoginMutation,
@@ -9,14 +10,16 @@ import {
 } from "~generated/graphql";
 import Home from "~features/home";
 import { LoggedUser } from "~generated/graphql";
+import { actions } from "~store";
 
 const userAuthentication = {
   email: "sergio@gmail.com",
   password: "S3nh4!@#",
 };
 
-export default function HomePage(): JSX.Element {
-  const [user, setUser] = useState<Partial<LoggedUser>>({});
+type HomePageType = Partial<LoggedUser>;
+
+function HomePage(props: HomePageType): JSX.Element {
   const { data, refetch } = useGetTweetsQuery();
   const [fn] = useNewTweetMutation();
   const [login] = useLoginMutation();
@@ -34,14 +37,20 @@ export default function HomePage(): JSX.Element {
           login: { userName, name, email, token, _id },
         },
       } = auth;
-      setUser({ userName, name, email, token, _id });
+      actions.setUserNameAction({
+        userName,
+        name,
+        email,
+        token,
+        _id,
+      });
     })();
   }, []);
 
   const onSubmitNewTweet = async (content) => {
     await fn({
       variables: {
-        token: user.token,
+        token: props.token,
         content,
       },
     });
@@ -52,7 +61,7 @@ export default function HomePage(): JSX.Element {
     await onDeleteTweet({
       variables: {
         _id,
-        token: user.token,
+        token: props.token,
       },
     });
     refetch();
@@ -62,7 +71,7 @@ export default function HomePage(): JSX.Element {
     await onLikeTweet({
       variables: {
         _id,
-        token: user.token,
+        token: props.token,
       },
     });
     refetch();
@@ -72,7 +81,7 @@ export default function HomePage(): JSX.Element {
     await onDeslikeTweet({
       variables: {
         _id,
-        token: user.token,
+        token: props.token,
       },
     });
     refetch();
@@ -88,3 +97,5 @@ export default function HomePage(): JSX.Element {
     />
   );
 }
+
+export default connect(({ user }) => user)(HomePage);

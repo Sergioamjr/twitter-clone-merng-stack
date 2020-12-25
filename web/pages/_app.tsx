@@ -1,6 +1,8 @@
 import Head from "next/head";
+import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import store from "~store";
 
 const SERVER_URL = "http://localhost:4000/";
 const client = new ApolloClient({
@@ -21,9 +23,11 @@ const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
-      </ApolloProvider>
+      <Provider store={store}>
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </Provider>
     </>
   );
 };

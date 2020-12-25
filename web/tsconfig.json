@@ -4,10 +4,11 @@
     "paths": {
       "~components/*": ["components/*"],
       "~features/*": ["features/*"],
-      "~icons": ["icons"],
-      "~theme": ["theme"],
       "~graphql/*": ["graphql/*"],
       "~generated/*": ["generated/*"],
+      "~icons": ["icons"],
+      "~theme": ["theme"],
+      "~store": ["store"],
     },
     "target": "es5",
     "lib": [
