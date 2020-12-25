@@ -1,7 +1,7 @@
-import { Heart, Bin } from "../../icons";
+import { Heart, Bin } from "~icons";
 import * as S from "./styled";
-import { HomeProps } from "./../../features/home";
-import { colors } from "../../theme";
+import { HomeProps } from "~features/home";
+import { colors } from "~theme";
 
 export type TweetProps = {
   likedBy: string[];

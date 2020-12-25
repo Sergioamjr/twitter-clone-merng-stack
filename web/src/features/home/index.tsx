@@ -1,7 +1,7 @@
-import TweetCard from "./../../components/Tweet";
-import TweetInput from "./../../components/TweetInput";
+import TweetCard from "~components/Tweet";
+import TweetInput from "~components/TweetInput";
 import * as S from "./styled";
-import { Tweet } from "./../../generated/graphql";
+import { Tweet } from "~generated/graphql";
 
 export type HomeProps = {
   tweets?: Tweet[];
