@@ -11,6 +11,7 @@ import {
 import Home from "~features/home";
 import { LoggedUser } from "~generated/graphql";
 import { actions } from "~store";
+import { Page, Column } from "~components/template";
 
 const userAuthentication = {
   email: "sergio@gmail.com",
@@ -88,13 +89,19 @@ function HomePage(props: HomePageType): JSX.Element {
   };
 
   return (
-    <Home
-      onLikeTweetHandler={onLikeTweetHandler}
-      onDeslikeTweetHandler={onDeslikeTweetHandler}
-      onDeleteTweet={onDeleteTweetHandler}
-      onSubmitNewTweet={onSubmitNewTweet}
-      tweets={data?.getTweets}
-    />
+    <Page>
+      <Column />
+      <Column>
+        <Home
+          onLikeTweetHandler={onLikeTweetHandler}
+          onDeslikeTweetHandler={onDeslikeTweetHandler}
+          onDeleteTweet={onDeleteTweetHandler}
+          onSubmitNewTweet={onSubmitNewTweet}
+          tweets={data?.getTweets}
+        />
+      </Column>
+      <Column />
+    </Page>
   );
 }
 

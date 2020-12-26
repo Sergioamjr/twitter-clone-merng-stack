@@ -3,9 +3,9 @@
 - [x] Posting
 - [x] Deleting
 - [x] Listing tweets
-- [ ] Changing icons
-- [ ] Likeing/Desleking
+- [x] Changing icons
+- [x] Likeing/Desleking
 - [ ] Viewing user profile
-- [ ] Adding/Removing as a - [ ] friend
+- [ ] Adding/Removing as a friend
 - [ ] Creating account, login automagic
 - [ ] Documentation
