@@ -5,6 +5,7 @@ import { Page, Column } from "~components/template";
 import { useGetTweetByUserIdMutation } from "~generated/graphql";
 import { LoggedUser } from "~generated/graphql";
 import User from "~features/user";
+import Authentication from "~features/Authentication";
 
 type UserPageType = {
   user: Partial<LoggedUser>;
@@ -15,31 +16,35 @@ function UserPage({ user }: UserPageType): JSX.Element {
   const [getUserTweets] = useGetTweetByUserIdMutation();
   const router = useRouter();
   const { id } = router.query;
+
+  const fetch = async () => {
+    try {
+      const response = await getUserTweets({
+        variables: { _id: id as string },
+      });
+      setTweets(response.data.getTweetByUserID);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     if (id) {
-      (async () => {
-        try {
-          const response = await getUserTweets({
-            variables: { _id: id as string },
-          });
-          setTweets(response.data.getTweetByUserID);
-          console.log(response);
-        } catch (err) {
-          console.log(err);
-        }
-      })();
+      fetch();
     }
   }, [id]);
 
   return (
-    <Page>
-      <Column />
-      <Column>
-        <User tweets={tweets} user={user} />
-      </Column>
-      <Column />
-    </Page>
+    <Authentication>
+      <Page>
+        <Column />
+        <Column>
+          <User refetch={fetch} tweets={tweets} user={user} />
+        </Column>
+        <Column />
+      </Page>
+    </Authentication>
   );
 }
 
-export default connect(({ user }) => user)(UserPage);
+export default connect(({ user }, props) => ({ user, ...props }))(UserPage);

@@ -1,15 +1,14 @@
 import { Heart, Bin } from "~icons";
 import * as S from "./styled";
-import { HomeProps } from "~features/home";
 import { colors } from "~theme";
 import { Tweet as TweetType } from "~generated/graphql";
 
 export type TweetProps = TweetType & {
   haveLikedTweet?: boolean;
-} & Pick<
-    HomeProps,
-    "onDeleteTweet" | "onLikeTweetHandler" | "onDeslikeTweetHandler"
-  >;
+  onLikeTweetHandler: (id: string) => void;
+  onDeleteTweet: (id: string) => void;
+  onDeslikeTweetHandler: (id: string) => void;
+};
 
 const Tweet = ({
   onDeleteTweet,
@@ -20,14 +19,14 @@ const Tweet = ({
   name,
   userName,
   content,
-  _id,
+  authorId,
 }: TweetProps): JSX.Element => {
   return (
     <S.Card tabIndex={0}>
       <S.Avatar>SJ</S.Avatar>
       <div>
         <S.Header>
-          <S.Name href={`/${_id}`} tabIndex={0}>
+          <S.Name href={`/user/${authorId}`} tabIndex={0}>
             {name}
           </S.Name>
           <S.Username>@ {userName}</S.Username>

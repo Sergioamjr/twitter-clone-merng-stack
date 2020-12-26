@@ -11,9 +11,14 @@ import { Column } from "~components/template";
 export type UserProps = {
   tweets?: Tweet[];
   user: Partial<LoggedUser>;
+  refetch: () => void;
 };
 
-export default function User({ tweets = [], user }: UserProps): JSX.Element {
+export default function User({
+  tweets = [],
+  user,
+  refetch,
+}: UserProps): JSX.Element {
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
@@ -25,6 +30,7 @@ export default function User({ tweets = [], user }: UserProps): JSX.Element {
         token: user.token,
       },
     });
+    refetch();
   };
 
   const onLikeTweetHandler = async (_id: string) => {
@@ -34,6 +40,7 @@ export default function User({ tweets = [], user }: UserProps): JSX.Element {
         token: user.token,
       },
     });
+    refetch();
   };
 
   const onDeslikeTweetHandler = async (_id: string) => {
@@ -43,6 +50,7 @@ export default function User({ tweets = [], user }: UserProps): JSX.Element {
         token: user.token,
       },
     });
+    refetch();
   };
 
   return (
@@ -50,6 +58,7 @@ export default function User({ tweets = [], user }: UserProps): JSX.Element {
       {tweets.map(({ _id, content, userName, name, likedBy }) => {
         return (
           <TweetCard
+            haveLikedTweet={likedBy.includes(user._id)}
             onLikeTweetHandler={() => onLikeTweetHandler(_id)}
             onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
             onDeleteTweet={() => onDeleteTweetHandler(_id)}

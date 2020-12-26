@@ -68,7 +68,7 @@ export default function Home({
   return (
     <Column>
       <TweetInput onSubmitNewTweet={onSubmitNewTweetHandler} />
-      {tweets.map(({ _id, content, userName, name, likedBy }) => {
+      {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
         return (
           <TweetCard
             haveLikedTweet={likedBy.includes(user._id)}
@@ -81,6 +81,7 @@ export default function Home({
             content={content}
             _id={_id}
             likedBy={likedBy}
+            authorId={authorId}
           />
         );
       })}
