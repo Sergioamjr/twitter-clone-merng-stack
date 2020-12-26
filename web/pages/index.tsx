@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { useGetTweetsQuery, LoggedUser } from "~generated/graphql";
+import { useGetTweetsQuery, LoggedUser } from "~graphql/generated/graphql";
 import Home from "~features/home";
 
 import { Page, Column } from "~components/template";

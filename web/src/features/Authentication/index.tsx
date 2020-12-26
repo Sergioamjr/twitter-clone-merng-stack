@@ -1,5 +1,5 @@
 import { useEffect, ReactNode, useState } from "react";
-import { useLoginMutation } from "~generated/graphql";
+import { useLoginMutation } from "~graphql/generated/graphql";
 import { actions } from "~store";
 
 const userAuthentication = {

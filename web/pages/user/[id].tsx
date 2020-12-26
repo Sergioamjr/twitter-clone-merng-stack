@@ -2,8 +2,10 @@ import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import { Page, Column } from "~components/template";
-import { useGetTweetByUserIdMutation } from "~generated/graphql";
-import { LoggedUser } from "~generated/graphql";
+import {
+  useGetTweetByUserIdMutation,
+  LoggedUser,
+} from "~graphql/generated/graphql";
 import User from "~features/user";
 import Authentication from "~features/Authentication";
 

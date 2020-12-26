@@ -7,7 +7,7 @@ import {
   useDeslikeMutation,
   Tweet,
   LoggedUser,
-} from "~generated/graphql";
+} from "~graphql/generated/graphql";
 import { Column } from "~components/template";
 
 export type HomeProps = {

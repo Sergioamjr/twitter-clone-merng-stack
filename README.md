@@ -5,7 +5,7 @@
 - [x] Listing tweets
 - [x] Changing icons
 - [x] Likeing/Desleking
-- [ ] Viewing user profile
+- [x] Viewing user profile
 - [ ] Adding/Removing as a friend
 - [ ] Creating account, login automagic
 - [ ] Documentation

@@ -5,7 +5,7 @@ import {
   useLikeMutation,
   useDeslikeMutation,
   LoggedUser,
-} from "~generated/graphql";
+} from "~graphql/generated/graphql";
 import { Column } from "~components/template";
 
 export type UserProps = {

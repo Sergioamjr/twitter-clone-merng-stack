@@ -1,7 +1,7 @@
 import { Heart, Bin } from "~icons";
 import * as S from "./styled";
 import { colors } from "~theme";
-import { Tweet as TweetType } from "~generated/graphql";
+import { Tweet as TweetType } from "~graphql/generated/graphql";
 
 export type TweetProps = TweetType & {
   haveLikedTweet?: boolean;
