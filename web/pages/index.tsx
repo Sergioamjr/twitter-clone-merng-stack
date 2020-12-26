@@ -3,13 +3,9 @@ import { connect } from "react-redux";
 import {
   useGetTweetsQuery,
   useLoginMutation,
-  useNewTweetMutation,
-  useDeleteTweetMutation,
-  useLikeMutation,
-  useDeslikeMutation,
+  LoggedUser,
 } from "~generated/graphql";
 import Home from "~features/home";
-import { LoggedUser } from "~generated/graphql";
 import { actions } from "~store";
 import { Page, Column } from "~components/template";
 
@@ -18,15 +14,13 @@ const userAuthentication = {
   password: "S3nh4!@#",
 };
 
-type HomePageType = Partial<LoggedUser>;
+type HomePageType = {
+  user: Partial<LoggedUser>;
+};
 
-function HomePage(props: HomePageType): JSX.Element {
+function HomePage({ user }: HomePageType): JSX.Element {
   const { data, refetch } = useGetTweetsQuery();
-  const [fn] = useNewTweetMutation();
   const [login] = useLoginMutation();
-  const [onDeleteTweet] = useDeleteTweetMutation();
-  const [onLikeTweet] = useLikeMutation();
-  const [onDeslikeTweet] = useDeslikeMutation();
 
   useEffect(() => {
     (async () => {
@@ -48,61 +42,15 @@ function HomePage(props: HomePageType): JSX.Element {
     })();
   }, []);
 
-  const onSubmitNewTweet = async (content) => {
-    await fn({
-      variables: {
-        token: props.token,
-        content,
-      },
-    });
-    refetch();
-  };
-
-  const onDeleteTweetHandler = async (_id: string) => {
-    await onDeleteTweet({
-      variables: {
-        _id,
-        token: props.token,
-      },
-    });
-    refetch();
-  };
-
-  const onLikeTweetHandler = async (_id: string) => {
-    await onLikeTweet({
-      variables: {
-        _id,
-        token: props.token,
-      },
-    });
-    refetch();
-  };
-
-  const onDeslikeTweetHandler = async (_id: string) => {
-    await onDeslikeTweet({
-      variables: {
-        _id,
-        token: props.token,
-      },
-    });
-    refetch();
-  };
-
   return (
     <Page>
       <Column />
       <Column>
-        <Home
-          onLikeTweetHandler={onLikeTweetHandler}
-          onDeslikeTweetHandler={onDeslikeTweetHandler}
-          onDeleteTweet={onDeleteTweetHandler}
-          onSubmitNewTweet={onSubmitNewTweet}
-          tweets={data?.getTweets}
-        />
+        <Home refetch={refetch} tweets={data?.getTweets} user={user} />
       </Column>
       <Column />
     </Page>
   );
 }
 
-export default connect(({ user }) => user)(HomePage);
+export default connect(({ user }, props) => ({ user, ...props }))(HomePage);

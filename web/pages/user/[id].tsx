@@ -16,18 +16,20 @@ function UserPage({ user }: UserPageType): JSX.Element {
   const router = useRouter();
   const { id } = router.query;
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await getUserTweets({
-          variables: { _id: id as string },
-        });
-        setTweets(response.data.getTweetByUserID);
-        console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+    if (id) {
+      (async () => {
+        try {
+          const response = await getUserTweets({
+            variables: { _id: id as string },
+          });
+          setTweets(response.data.getTweetByUserID);
+          console.log(response);
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  }, [id]);
 
   return (
     <Page>
