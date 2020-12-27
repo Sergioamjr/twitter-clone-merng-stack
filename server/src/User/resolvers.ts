@@ -27,7 +27,12 @@ export const query: QueryResolvers = {
   },
   getUserById: async (_, { _id }, context) => {
     try {
-      return await context.dataSources.User.findOne({ _id });
+      const user = await context.dataSources.User.findOne({ _id });
+      const tweets = await context.dataSources.Tweet.find({ authorId: _id });
+      return {
+        user,
+        tweets,
+      };
     } catch (err) {
       return null;
     }

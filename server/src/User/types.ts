@@ -18,10 +18,15 @@ export const types = gql`
     friends: [String]
   }
 
+  type UserAndTweets {
+    user: User
+    tweets: [Tweet]
+  }
+
   extend type Query {
     getUsers: [User]
-    getUserById(_id: String): User
-    validateToken(token: String): Boolean
+    getUserById(_id: String!): UserAndTweets
+    validateToken(token: String!): Boolean
   }
 
   extend type Mutation {

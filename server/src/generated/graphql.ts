@@ -25,19 +25,19 @@ export type Query = {
   __typename?: 'Query';
   root?: Maybe<Scalars['String']>;
   getUsers?: Maybe<Array<Maybe<User>>>;
-  getUserById?: Maybe<User>;
+  getUserById?: Maybe<UserAndTweets>;
   validateToken?: Maybe<Scalars['Boolean']>;
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
 };
 
 
 export type QueryGetUserByIdArgs = {
-  _id?: Maybe<Scalars['String']>;
+  _id: Scalars['String'];
 };
 
 
 export type QueryValidateTokenArgs = {
-  token?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
 };
 
 export type Mutation = {
@@ -134,6 +134,12 @@ export type LoggedUser = {
   email?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
   friends?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type UserAndTweets = {
+  __typename?: 'UserAndTweets';
+  user?: Maybe<User>;
+  tweets?: Maybe<Array<Maybe<Tweet>>>;
 };
 
 export type Tweet = {
@@ -244,6 +250,7 @@ export type ResolversTypes = ResolversObject<{
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   LoggedUser: ResolverTypeWrapper<LoggedUser>;
+  UserAndTweets: ResolverTypeWrapper<UserAndTweets>;
   Tweet: ResolverTypeWrapper<Tweet>;
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
@@ -259,6 +266,7 @@ export type ResolversParentTypes = ResolversObject<{
   User: User;
   ID: Scalars['ID'];
   LoggedUser: LoggedUser;
+  UserAndTweets: UserAndTweets;
   Tweet: Tweet;
   Upload: Scalars['Upload'];
   AdditionalEntityFields: AdditionalEntityFields;
@@ -302,8 +310,8 @@ export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDi
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   getUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
-  getUserById?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, never>>;
-  validateToken?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryValidateTokenArgs, never>>;
+  getUserById?: Resolver<Maybe<ResolversTypes['UserAndTweets']>, ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, '_id'>>;
+  validateToken?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryValidateTokenArgs, 'token'>>;
   getTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
 }>;
 
@@ -340,6 +348,12 @@ export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversP
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserAndTweetsResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAndTweets'] = ResolversParentTypes['UserAndTweets']> = ResolversObject<{
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  tweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type TweetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tweet'] = ResolversParentTypes['Tweet']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -360,6 +374,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   LoggedUser?: LoggedUserResolvers<ContextType>;
+  UserAndTweets?: UserAndTweetsResolvers<ContextType>;
   Tweet?: TweetResolvers<ContextType>;
   Upload?: GraphQLScalarType;
 }>;
