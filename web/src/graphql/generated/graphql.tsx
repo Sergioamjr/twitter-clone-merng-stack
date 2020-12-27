@@ -1,13 +1,9 @@
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -20,25 +16,27 @@ export type Scalars = {
 };
 
 export type Query = {
-  __typename?: "Query";
-  root?: Maybe<Scalars["String"]>;
+  __typename?: 'Query';
+  root?: Maybe<Scalars['String']>;
   getUsers?: Maybe<Array<Maybe<User>>>;
-  getUserById?: Maybe<User>;
-  validateToken?: Maybe<Scalars["Boolean"]>;
+  getUserById?: Maybe<UserAndTweets>;
+  validateToken?: Maybe<Scalars['Boolean']>;
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
 };
 
+
 export type QueryGetUserByIdArgs = {
-  _id?: Maybe<Scalars["String"]>;
+  _id: Scalars['String'];
 };
 
+
 export type QueryValidateTokenArgs = {
-  token?: Maybe<Scalars["String"]>;
+  token: Scalars['String'];
 };
 
 export type Mutation = {
-  __typename?: "Mutation";
-  root?: Maybe<Scalars["String"]>;
+  __typename?: 'Mutation';
+  root?: Maybe<Scalars['String']>;
   addToFriends?: Maybe<LoggedUser>;
   removeFromFriends?: Maybe<LoggedUser>;
   login?: Maybe<LoggedUser>;
@@ -46,264 +44,348 @@ export type Mutation = {
   getMyFriendsTweets?: Maybe<Array<Maybe<Tweet>>>;
   getTweetByUserID?: Maybe<Array<Maybe<Tweet>>>;
   newTweet?: Maybe<Tweet>;
-  deleteTweet?: Maybe<Scalars["Boolean"]>;
+  deleteTweet?: Maybe<Scalars['Boolean']>;
   like?: Maybe<Tweet>;
   deslike?: Maybe<Tweet>;
 };
 
+
 export type MutationAddToFriendsArgs = {
-  _id: Scalars["String"];
-  newFriendId: Scalars["String"];
-  token: Scalars["String"];
+  _id: Scalars['String'];
+  newFriendId: Scalars['String'];
+  token: Scalars['String'];
 };
+
 
 export type MutationRemoveFromFriendsArgs = {
-  _id: Scalars["String"];
-  friendId: Scalars["String"];
-  token: Scalars["String"];
+  _id: Scalars['String'];
+  friendId: Scalars['String'];
+  token: Scalars['String'];
 };
+
 
 export type MutationLoginArgs = {
-  email?: Maybe<Scalars["String"]>;
-  password?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
 };
+
 
 export type MutationSaveUserArgs = {
-  userName: Scalars["String"];
-  name: Scalars["String"];
-  email: Scalars["String"];
-  password: Scalars["String"];
+  userName: Scalars['String'];
+  name: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
+
 
 export type MutationGetMyFriendsTweetsArgs = {
-  _id: Scalars["String"];
+  _id: Scalars['String'];
 };
+
 
 export type MutationGetTweetByUserIdArgs = {
-  _id: Scalars["String"];
+  _id: Scalars['String'];
 };
+
 
 export type MutationNewTweetArgs = {
-  content?: Maybe<Scalars["String"]>;
-  token: Scalars["String"];
+  content?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
 };
+
 
 export type MutationDeleteTweetArgs = {
-  _id?: Maybe<Scalars["String"]>;
-  token?: Maybe<Scalars["String"]>;
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
 };
+
 
 export type MutationLikeArgs = {
-  _id?: Maybe<Scalars["String"]>;
-  token?: Maybe<Scalars["String"]>;
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
 };
 
+
 export type MutationDeslikeArgs = {
-  _id?: Maybe<Scalars["String"]>;
-  token?: Maybe<Scalars["String"]>;
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
 };
 
 export type User = {
-  __typename?: "User";
-  _id?: Maybe<Scalars["ID"]>;
-  name?: Maybe<Scalars["String"]>;
-  userName?: Maybe<Scalars["String"]>;
-  email?: Maybe<Scalars["String"]>;
-  friends?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  __typename?: 'User';
+  _id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  friends?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type LoggedUser = {
-  __typename?: "LoggedUser";
-  _id?: Maybe<Scalars["ID"]>;
-  name?: Maybe<Scalars["String"]>;
-  userName?: Maybe<Scalars["String"]>;
-  email?: Maybe<Scalars["String"]>;
-  token?: Maybe<Scalars["String"]>;
-  friends?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  __typename?: 'LoggedUser';
+  _id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  friends?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type UserAndTweets = {
+  __typename?: 'UserAndTweets';
+  user?: Maybe<User>;
+  tweets?: Maybe<Array<Maybe<Tweet>>>;
 };
 
 export type Tweet = {
-  __typename?: "Tweet";
-  _id?: Maybe<Scalars["ID"]>;
-  authorId?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
-  userName?: Maybe<Scalars["String"]>;
-  createdAt?: Maybe<Scalars["String"]>;
-  content?: Maybe<Scalars["String"]>;
-  likedBy?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  __typename?: 'Tweet';
+  _id?: Maybe<Scalars['ID']>;
+  authorId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export enum CacheControlScope {
-  Public = "PUBLIC",
-  Private = "PRIVATE",
+  Public = 'PUBLIC',
+  Private = 'PRIVATE'
 }
 
-export type LoggedUserFragment = { __typename?: "LoggedUser" } & Pick<
-  LoggedUser,
-  "_id" | "name" | "token" | "email" | "userName" | "friends"
->;
 
-export type TweetFragment = { __typename?: "Tweet" } & Pick<
-  Tweet,
-  "content" | "_id" | "authorId" | "name" | "userName" | "likedBy" | "createdAt"
->;
+export type LoggedUserFragment = (
+  { __typename?: 'LoggedUser' }
+  & Pick<LoggedUser, '_id' | 'name' | 'token' | 'email' | 'userName' | 'friends'>
+);
 
-export type UserFragment = { __typename?: "User" } & Pick<
-  User,
-  "email" | "name" | "userName" | "_id" | "friends"
->;
+export type TweetFragment = (
+  { __typename?: 'Tweet' }
+  & Pick<Tweet, 'content' | '_id' | 'authorId' | 'name' | 'userName' | 'likedBy' | 'createdAt'>
+);
+
+export type UserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'email' | 'name' | 'userName' | '_id' | 'friends'>
+);
 
 export type AddToFriendsMutationVariables = Exact<{
-  _id: Scalars["String"];
-  newFriendId: Scalars["String"];
-  token: Scalars["String"];
+  _id: Scalars['String'];
+  newFriendId: Scalars['String'];
+  token: Scalars['String'];
 }>;
 
-export type AddToFriendsMutation = { __typename?: "Mutation" } & {
-  addToFriends?: Maybe<{ __typename?: "LoggedUser" } & LoggedUserFragment>;
-};
+
+export type AddToFriendsMutation = (
+  { __typename?: 'Mutation' }
+  & { addToFriends?: Maybe<(
+    { __typename?: 'LoggedUser' }
+    & LoggedUserFragment
+  )> }
+);
 
 export type DeleteTweetMutationVariables = Exact<{
-  _id?: Maybe<Scalars["String"]>;
-  token: Scalars["String"];
+  _id?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
 }>;
 
-export type DeleteTweetMutation = { __typename?: "Mutation" } & Pick<
-  Mutation,
-  "deleteTweet"
->;
+
+export type DeleteTweetMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteTweet'>
+);
 
 export type DeslikeMutationVariables = Exact<{
-  _id?: Maybe<Scalars["String"]>;
-  token: Scalars["String"];
+  _id?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
 }>;
 
-export type DeslikeMutation = { __typename?: "Mutation" } & {
-  deslike?: Maybe<{ __typename?: "Tweet" } & TweetFragment>;
-};
+
+export type DeslikeMutation = (
+  { __typename?: 'Mutation' }
+  & { deslike?: Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )> }
+);
 
 export type GetMyFriendsTweetsMutationVariables = Exact<{
-  _id: Scalars["String"];
+  _id: Scalars['String'];
 }>;
 
-export type GetMyFriendsTweetsMutation = { __typename?: "Mutation" } & {
-  getMyFriendsTweets?: Maybe<
-    Array<Maybe<{ __typename?: "Tweet" } & TweetFragment>>
-  >;
-};
+
+export type GetMyFriendsTweetsMutation = (
+  { __typename?: 'Mutation' }
+  & { getMyFriendsTweets?: Maybe<Array<Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )>>> }
+);
 
 export type GetTweetByUserIdMutationVariables = Exact<{
-  _id: Scalars["String"];
+  _id: Scalars['String'];
 }>;
 
-export type GetTweetByUserIdMutation = { __typename?: "Mutation" } & {
-  getTweetByUserID?: Maybe<
-    Array<Maybe<{ __typename?: "Tweet" } & TweetFragment>>
-  >;
-};
+
+export type GetTweetByUserIdMutation = (
+  { __typename?: 'Mutation' }
+  & { getTweetByUserID?: Maybe<Array<Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )>>> }
+);
 
 export type LikeMutationVariables = Exact<{
-  _id?: Maybe<Scalars["String"]>;
-  token: Scalars["String"];
+  _id?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
 }>;
 
-export type LikeMutation = { __typename?: "Mutation" } & {
-  like?: Maybe<{ __typename?: "Tweet" } & TweetFragment>;
-};
+
+export type LikeMutation = (
+  { __typename?: 'Mutation' }
+  & { like?: Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )> }
+);
 
 export type LoginMutationVariables = Exact<{
-  password: Scalars["String"];
-  email: Scalars["String"];
+  password: Scalars['String'];
+  email: Scalars['String'];
 }>;
 
-export type LoginMutation = { __typename?: "Mutation" } & {
-  login?: Maybe<{ __typename?: "LoggedUser" } & LoggedUserFragment>;
-};
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login?: Maybe<(
+    { __typename?: 'LoggedUser' }
+    & LoggedUserFragment
+  )> }
+);
 
 export type NewTweetMutationVariables = Exact<{
-  content?: Maybe<Scalars["String"]>;
-  token: Scalars["String"];
+  content?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
 }>;
 
-export type NewTweetMutation = { __typename?: "Mutation" } & {
-  newTweet?: Maybe<{ __typename?: "Tweet" } & TweetFragment>;
-};
+
+export type NewTweetMutation = (
+  { __typename?: 'Mutation' }
+  & { newTweet?: Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )> }
+);
 
 export type RemoveFromFriendsMutationVariables = Exact<{
-  _id: Scalars["String"];
-  friendId: Scalars["String"];
-  token: Scalars["String"];
+  _id: Scalars['String'];
+  friendId: Scalars['String'];
+  token: Scalars['String'];
 }>;
 
-export type RemoveFromFriendsMutation = { __typename?: "Mutation" } & {
-  removeFromFriends?: Maybe<{ __typename?: "LoggedUser" } & LoggedUserFragment>;
-};
+
+export type RemoveFromFriendsMutation = (
+  { __typename?: 'Mutation' }
+  & { removeFromFriends?: Maybe<(
+    { __typename?: 'LoggedUser' }
+    & LoggedUserFragment
+  )> }
+);
 
 export type SaveUserMutationVariables = Exact<{
-  userName: Scalars["String"];
-  name: Scalars["String"];
-  password: Scalars["String"];
-  email: Scalars["String"];
+  userName: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+  email: Scalars['String'];
 }>;
 
-export type SaveUserMutation = { __typename?: "Mutation" } & {
-  saveUser?: Maybe<{ __typename?: "LoggedUser" } & LoggedUserFragment>;
-};
 
-export type GetTweetsQueryVariables = Exact<{ [key: string]: never }>;
+export type SaveUserMutation = (
+  { __typename?: 'Mutation' }
+  & { saveUser?: Maybe<(
+    { __typename?: 'LoggedUser' }
+    & LoggedUserFragment
+  )> }
+);
 
-export type GetTweetsQuery = { __typename?: "Query" } & {
-  getTweets?: Maybe<Array<Maybe<{ __typename?: "Tweet" } & TweetFragment>>>;
-};
+export type GetTweetsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetUsersQuery = { __typename?: "Query" } & {
-  getUsers?: Maybe<Array<Maybe<{ __typename?: "User" } & UserFragment>>>;
-};
+export type GetTweetsQuery = (
+  { __typename?: 'Query' }
+  & { getTweets?: Maybe<Array<Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )>>> }
+);
+
+export type GetUserByIdQueryVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type GetUserByIdQuery = (
+  { __typename?: 'Query' }
+  & { getUserById?: Maybe<(
+    { __typename?: 'UserAndTweets' }
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & UserFragment
+    )>, tweets?: Maybe<Array<Maybe<(
+      { __typename?: 'Tweet' }
+      & TweetFragment
+    )>>> }
+  )> }
+);
+
+export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUsersQuery = (
+  { __typename?: 'Query' }
+  & { getUsers?: Maybe<Array<Maybe<(
+    { __typename?: 'User' }
+    & UserFragment
+  )>>> }
+);
 
 export const LoggedUserFragmentDoc = gql`
-  fragment LoggedUser on LoggedUser {
-    _id
-    name
-    token
-    email
-    userName
-    friends
-  }
-`;
+    fragment LoggedUser on LoggedUser {
+  _id
+  name
+  token
+  email
+  userName
+  friends
+}
+    `;
 export const TweetFragmentDoc = gql`
-  fragment Tweet on Tweet {
-    content
-    _id
-    authorId
-    name
-    userName
-    likedBy
-    createdAt
-  }
-`;
+    fragment Tweet on Tweet {
+  content
+  _id
+  authorId
+  name
+  userName
+  likedBy
+  createdAt
+}
+    `;
 export const UserFragmentDoc = gql`
-  fragment User on User {
-    email
-    name
-    userName
-    _id
-    friends
-  }
-`;
+    fragment User on User {
+  email
+  name
+  userName
+  _id
+  friends
+}
+    `;
 export const AddToFriendsDocument = gql`
-  mutation addToFriends($_id: String!, $newFriendId: String!, $token: String!) {
-    addToFriends(_id: $_id, newFriendId: $newFriendId, token: $token) {
-      ...LoggedUser
-    }
+    mutation addToFriends($_id: String!, $newFriendId: String!, $token: String!) {
+  addToFriends(_id: $_id, newFriendId: $newFriendId, token: $token) {
+    ...LoggedUser
   }
-  ${LoggedUserFragmentDoc}
-`;
-export type AddToFriendsMutationFn = Apollo.MutationFunction<
-  AddToFriendsMutation,
-  AddToFriendsMutationVariables
->;
+}
+    ${LoggedUserFragmentDoc}`;
+export type AddToFriendsMutationFn = Apollo.MutationFunction<AddToFriendsMutation, AddToFriendsMutationVariables>;
 
 /**
  * __useAddToFriendsMutation__
@@ -324,34 +406,18 @@ export type AddToFriendsMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useAddToFriendsMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddToFriendsMutation,
-    AddToFriendsMutationVariables
-  >
-) {
-  return Apollo.useMutation<
-    AddToFriendsMutation,
-    AddToFriendsMutationVariables
-  >(AddToFriendsDocument, baseOptions);
-}
-export type AddToFriendsMutationHookResult = ReturnType<
-  typeof useAddToFriendsMutation
->;
+export function useAddToFriendsMutation(baseOptions?: Apollo.MutationHookOptions<AddToFriendsMutation, AddToFriendsMutationVariables>) {
+        return Apollo.useMutation<AddToFriendsMutation, AddToFriendsMutationVariables>(AddToFriendsDocument, baseOptions);
+      }
+export type AddToFriendsMutationHookResult = ReturnType<typeof useAddToFriendsMutation>;
 export type AddToFriendsMutationResult = Apollo.MutationResult<AddToFriendsMutation>;
-export type AddToFriendsMutationOptions = Apollo.BaseMutationOptions<
-  AddToFriendsMutation,
-  AddToFriendsMutationVariables
->;
+export type AddToFriendsMutationOptions = Apollo.BaseMutationOptions<AddToFriendsMutation, AddToFriendsMutationVariables>;
 export const DeleteTweetDocument = gql`
-  mutation deleteTweet($_id: String, $token: String!) {
-    deleteTweet(_id: $_id, token: $token)
-  }
-`;
-export type DeleteTweetMutationFn = Apollo.MutationFunction<
-  DeleteTweetMutation,
-  DeleteTweetMutationVariables
->;
+    mutation deleteTweet($_id: String, $token: String!) {
+  deleteTweet(_id: $_id, token: $token)
+}
+    `;
+export type DeleteTweetMutationFn = Apollo.MutationFunction<DeleteTweetMutation, DeleteTweetMutationVariables>;
 
 /**
  * __useDeleteTweetMutation__
@@ -371,37 +437,20 @@ export type DeleteTweetMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeleteTweetMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeleteTweetMutation,
-    DeleteTweetMutationVariables
-  >
-) {
-  return Apollo.useMutation<DeleteTweetMutation, DeleteTweetMutationVariables>(
-    DeleteTweetDocument,
-    baseOptions
-  );
-}
-export type DeleteTweetMutationHookResult = ReturnType<
-  typeof useDeleteTweetMutation
->;
+export function useDeleteTweetMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTweetMutation, DeleteTweetMutationVariables>) {
+        return Apollo.useMutation<DeleteTweetMutation, DeleteTweetMutationVariables>(DeleteTweetDocument, baseOptions);
+      }
+export type DeleteTweetMutationHookResult = ReturnType<typeof useDeleteTweetMutation>;
 export type DeleteTweetMutationResult = Apollo.MutationResult<DeleteTweetMutation>;
-export type DeleteTweetMutationOptions = Apollo.BaseMutationOptions<
-  DeleteTweetMutation,
-  DeleteTweetMutationVariables
->;
+export type DeleteTweetMutationOptions = Apollo.BaseMutationOptions<DeleteTweetMutation, DeleteTweetMutationVariables>;
 export const DeslikeDocument = gql`
-  mutation deslike($_id: String, $token: String!) {
-    deslike(_id: $_id, token: $token) {
-      ...Tweet
-    }
+    mutation deslike($_id: String, $token: String!) {
+  deslike(_id: $_id, token: $token) {
+    ...Tweet
   }
-  ${TweetFragmentDoc}
-`;
-export type DeslikeMutationFn = Apollo.MutationFunction<
-  DeslikeMutation,
-  DeslikeMutationVariables
->;
+}
+    ${TweetFragmentDoc}`;
+export type DeslikeMutationFn = Apollo.MutationFunction<DeslikeMutation, DeslikeMutationVariables>;
 
 /**
  * __useDeslikeMutation__
@@ -421,35 +470,20 @@ export type DeslikeMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeslikeMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeslikeMutation,
-    DeslikeMutationVariables
-  >
-) {
-  return Apollo.useMutation<DeslikeMutation, DeslikeMutationVariables>(
-    DeslikeDocument,
-    baseOptions
-  );
-}
+export function useDeslikeMutation(baseOptions?: Apollo.MutationHookOptions<DeslikeMutation, DeslikeMutationVariables>) {
+        return Apollo.useMutation<DeslikeMutation, DeslikeMutationVariables>(DeslikeDocument, baseOptions);
+      }
 export type DeslikeMutationHookResult = ReturnType<typeof useDeslikeMutation>;
 export type DeslikeMutationResult = Apollo.MutationResult<DeslikeMutation>;
-export type DeslikeMutationOptions = Apollo.BaseMutationOptions<
-  DeslikeMutation,
-  DeslikeMutationVariables
->;
+export type DeslikeMutationOptions = Apollo.BaseMutationOptions<DeslikeMutation, DeslikeMutationVariables>;
 export const GetMyFriendsTweetsDocument = gql`
-  mutation getMyFriendsTweets($_id: String!) {
-    getMyFriendsTweets(_id: $_id) {
-      ...Tweet
-    }
+    mutation getMyFriendsTweets($_id: String!) {
+  getMyFriendsTweets(_id: $_id) {
+    ...Tweet
   }
-  ${TweetFragmentDoc}
-`;
-export type GetMyFriendsTweetsMutationFn = Apollo.MutationFunction<
-  GetMyFriendsTweetsMutation,
-  GetMyFriendsTweetsMutationVariables
->;
+}
+    ${TweetFragmentDoc}`;
+export type GetMyFriendsTweetsMutationFn = Apollo.MutationFunction<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>;
 
 /**
  * __useGetMyFriendsTweetsMutation__
@@ -468,37 +502,20 @@ export type GetMyFriendsTweetsMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useGetMyFriendsTweetsMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    GetMyFriendsTweetsMutation,
-    GetMyFriendsTweetsMutationVariables
-  >
-) {
-  return Apollo.useMutation<
-    GetMyFriendsTweetsMutation,
-    GetMyFriendsTweetsMutationVariables
-  >(GetMyFriendsTweetsDocument, baseOptions);
-}
-export type GetMyFriendsTweetsMutationHookResult = ReturnType<
-  typeof useGetMyFriendsTweetsMutation
->;
+export function useGetMyFriendsTweetsMutation(baseOptions?: Apollo.MutationHookOptions<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>) {
+        return Apollo.useMutation<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>(GetMyFriendsTweetsDocument, baseOptions);
+      }
+export type GetMyFriendsTweetsMutationHookResult = ReturnType<typeof useGetMyFriendsTweetsMutation>;
 export type GetMyFriendsTweetsMutationResult = Apollo.MutationResult<GetMyFriendsTweetsMutation>;
-export type GetMyFriendsTweetsMutationOptions = Apollo.BaseMutationOptions<
-  GetMyFriendsTweetsMutation,
-  GetMyFriendsTweetsMutationVariables
->;
+export type GetMyFriendsTweetsMutationOptions = Apollo.BaseMutationOptions<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>;
 export const GetTweetByUserIdDocument = gql`
-  mutation getTweetByUserID($_id: String!) {
-    getTweetByUserID(_id: $_id) {
-      ...Tweet
-    }
+    mutation getTweetByUserID($_id: String!) {
+  getTweetByUserID(_id: $_id) {
+    ...Tweet
   }
-  ${TweetFragmentDoc}
-`;
-export type GetTweetByUserIdMutationFn = Apollo.MutationFunction<
-  GetTweetByUserIdMutation,
-  GetTweetByUserIdMutationVariables
->;
+}
+    ${TweetFragmentDoc}`;
+export type GetTweetByUserIdMutationFn = Apollo.MutationFunction<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>;
 
 /**
  * __useGetTweetByUserIdMutation__
@@ -517,37 +534,20 @@ export type GetTweetByUserIdMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useGetTweetByUserIdMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    GetTweetByUserIdMutation,
-    GetTweetByUserIdMutationVariables
-  >
-) {
-  return Apollo.useMutation<
-    GetTweetByUserIdMutation,
-    GetTweetByUserIdMutationVariables
-  >(GetTweetByUserIdDocument, baseOptions);
-}
-export type GetTweetByUserIdMutationHookResult = ReturnType<
-  typeof useGetTweetByUserIdMutation
->;
+export function useGetTweetByUserIdMutation(baseOptions?: Apollo.MutationHookOptions<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>) {
+        return Apollo.useMutation<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>(GetTweetByUserIdDocument, baseOptions);
+      }
+export type GetTweetByUserIdMutationHookResult = ReturnType<typeof useGetTweetByUserIdMutation>;
 export type GetTweetByUserIdMutationResult = Apollo.MutationResult<GetTweetByUserIdMutation>;
-export type GetTweetByUserIdMutationOptions = Apollo.BaseMutationOptions<
-  GetTweetByUserIdMutation,
-  GetTweetByUserIdMutationVariables
->;
+export type GetTweetByUserIdMutationOptions = Apollo.BaseMutationOptions<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>;
 export const LikeDocument = gql`
-  mutation like($_id: String, $token: String!) {
-    like(_id: $_id, token: $token) {
-      ...Tweet
-    }
+    mutation like($_id: String, $token: String!) {
+  like(_id: $_id, token: $token) {
+    ...Tweet
   }
-  ${TweetFragmentDoc}
-`;
-export type LikeMutationFn = Apollo.MutationFunction<
-  LikeMutation,
-  LikeMutationVariables
->;
+}
+    ${TweetFragmentDoc}`;
+export type LikeMutationFn = Apollo.MutationFunction<LikeMutation, LikeMutationVariables>;
 
 /**
  * __useLikeMutation__
@@ -567,32 +567,20 @@ export type LikeMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useLikeMutation(
-  baseOptions?: Apollo.MutationHookOptions<LikeMutation, LikeMutationVariables>
-) {
-  return Apollo.useMutation<LikeMutation, LikeMutationVariables>(
-    LikeDocument,
-    baseOptions
-  );
-}
+export function useLikeMutation(baseOptions?: Apollo.MutationHookOptions<LikeMutation, LikeMutationVariables>) {
+        return Apollo.useMutation<LikeMutation, LikeMutationVariables>(LikeDocument, baseOptions);
+      }
 export type LikeMutationHookResult = ReturnType<typeof useLikeMutation>;
 export type LikeMutationResult = Apollo.MutationResult<LikeMutation>;
-export type LikeMutationOptions = Apollo.BaseMutationOptions<
-  LikeMutation,
-  LikeMutationVariables
->;
+export type LikeMutationOptions = Apollo.BaseMutationOptions<LikeMutation, LikeMutationVariables>;
 export const LoginDocument = gql`
-  mutation login($password: String!, $email: String!) {
-    login(password: $password, email: $email) {
-      ...LoggedUser
-    }
+    mutation login($password: String!, $email: String!) {
+  login(password: $password, email: $email) {
+    ...LoggedUser
   }
-  ${LoggedUserFragmentDoc}
-`;
-export type LoginMutationFn = Apollo.MutationFunction<
-  LoginMutation,
-  LoginMutationVariables
->;
+}
+    ${LoggedUserFragmentDoc}`;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
  * __useLoginMutation__
@@ -612,35 +600,20 @@ export type LoginMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useLoginMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    LoginMutation,
-    LoginMutationVariables
-  >
-) {
-  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    baseOptions
-  );
-}
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<
-  LoginMutation,
-  LoginMutationVariables
->;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const NewTweetDocument = gql`
-  mutation newTweet($content: String, $token: String!) {
-    newTweet(content: $content, token: $token) {
-      ...Tweet
-    }
+    mutation newTweet($content: String, $token: String!) {
+  newTweet(content: $content, token: $token) {
+    ...Tweet
   }
-  ${TweetFragmentDoc}
-`;
-export type NewTweetMutationFn = Apollo.MutationFunction<
-  NewTweetMutation,
-  NewTweetMutationVariables
->;
+}
+    ${TweetFragmentDoc}`;
+export type NewTweetMutationFn = Apollo.MutationFunction<NewTweetMutation, NewTweetMutationVariables>;
 
 /**
  * __useNewTweetMutation__
@@ -660,39 +633,20 @@ export type NewTweetMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useNewTweetMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    NewTweetMutation,
-    NewTweetMutationVariables
-  >
-) {
-  return Apollo.useMutation<NewTweetMutation, NewTweetMutationVariables>(
-    NewTweetDocument,
-    baseOptions
-  );
-}
+export function useNewTweetMutation(baseOptions?: Apollo.MutationHookOptions<NewTweetMutation, NewTweetMutationVariables>) {
+        return Apollo.useMutation<NewTweetMutation, NewTweetMutationVariables>(NewTweetDocument, baseOptions);
+      }
 export type NewTweetMutationHookResult = ReturnType<typeof useNewTweetMutation>;
 export type NewTweetMutationResult = Apollo.MutationResult<NewTweetMutation>;
-export type NewTweetMutationOptions = Apollo.BaseMutationOptions<
-  NewTweetMutation,
-  NewTweetMutationVariables
->;
+export type NewTweetMutationOptions = Apollo.BaseMutationOptions<NewTweetMutation, NewTweetMutationVariables>;
 export const RemoveFromFriendsDocument = gql`
-  mutation removeFromFriends(
-    $_id: String!
-    $friendId: String!
-    $token: String!
-  ) {
-    removeFromFriends(_id: $_id, friendId: $friendId, token: $token) {
-      ...LoggedUser
-    }
+    mutation removeFromFriends($_id: String!, $friendId: String!, $token: String!) {
+  removeFromFriends(_id: $_id, friendId: $friendId, token: $token) {
+    ...LoggedUser
   }
-  ${LoggedUserFragmentDoc}
-`;
-export type RemoveFromFriendsMutationFn = Apollo.MutationFunction<
-  RemoveFromFriendsMutation,
-  RemoveFromFriendsMutationVariables
->;
+}
+    ${LoggedUserFragmentDoc}`;
+export type RemoveFromFriendsMutationFn = Apollo.MutationFunction<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>;
 
 /**
  * __useRemoveFromFriendsMutation__
@@ -713,47 +667,20 @@ export type RemoveFromFriendsMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useRemoveFromFriendsMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RemoveFromFriendsMutation,
-    RemoveFromFriendsMutationVariables
-  >
-) {
-  return Apollo.useMutation<
-    RemoveFromFriendsMutation,
-    RemoveFromFriendsMutationVariables
-  >(RemoveFromFriendsDocument, baseOptions);
-}
-export type RemoveFromFriendsMutationHookResult = ReturnType<
-  typeof useRemoveFromFriendsMutation
->;
+export function useRemoveFromFriendsMutation(baseOptions?: Apollo.MutationHookOptions<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>) {
+        return Apollo.useMutation<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>(RemoveFromFriendsDocument, baseOptions);
+      }
+export type RemoveFromFriendsMutationHookResult = ReturnType<typeof useRemoveFromFriendsMutation>;
 export type RemoveFromFriendsMutationResult = Apollo.MutationResult<RemoveFromFriendsMutation>;
-export type RemoveFromFriendsMutationOptions = Apollo.BaseMutationOptions<
-  RemoveFromFriendsMutation,
-  RemoveFromFriendsMutationVariables
->;
+export type RemoveFromFriendsMutationOptions = Apollo.BaseMutationOptions<RemoveFromFriendsMutation, RemoveFromFriendsMutationVariables>;
 export const SaveUserDocument = gql`
-  mutation saveUser(
-    $userName: String!
-    $name: String!
-    $password: String!
-    $email: String!
-  ) {
-    saveUser(
-      userName: $userName
-      name: $name
-      password: $password
-      email: $email
-    ) {
-      ...LoggedUser
-    }
+    mutation saveUser($userName: String!, $name: String!, $password: String!, $email: String!) {
+  saveUser(userName: $userName, name: $name, password: $password, email: $email) {
+    ...LoggedUser
   }
-  ${LoggedUserFragmentDoc}
-`;
-export type SaveUserMutationFn = Apollo.MutationFunction<
-  SaveUserMutation,
-  SaveUserMutationVariables
->;
+}
+    ${LoggedUserFragmentDoc}`;
+export type SaveUserMutationFn = Apollo.MutationFunction<SaveUserMutation, SaveUserMutationVariables>;
 
 /**
  * __useSaveUserMutation__
@@ -775,31 +702,19 @@ export type SaveUserMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useSaveUserMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    SaveUserMutation,
-    SaveUserMutationVariables
-  >
-) {
-  return Apollo.useMutation<SaveUserMutation, SaveUserMutationVariables>(
-    SaveUserDocument,
-    baseOptions
-  );
-}
+export function useSaveUserMutation(baseOptions?: Apollo.MutationHookOptions<SaveUserMutation, SaveUserMutationVariables>) {
+        return Apollo.useMutation<SaveUserMutation, SaveUserMutationVariables>(SaveUserDocument, baseOptions);
+      }
 export type SaveUserMutationHookResult = ReturnType<typeof useSaveUserMutation>;
 export type SaveUserMutationResult = Apollo.MutationResult<SaveUserMutation>;
-export type SaveUserMutationOptions = Apollo.BaseMutationOptions<
-  SaveUserMutation,
-  SaveUserMutationVariables
->;
+export type SaveUserMutationOptions = Apollo.BaseMutationOptions<SaveUserMutation, SaveUserMutationVariables>;
 export const GetTweetsDocument = gql`
-  query getTweets {
-    getTweets {
-      ...Tweet
-    }
+    query getTweets {
+  getTweets {
+    ...Tweet
   }
-  ${TweetFragmentDoc}
-`;
+}
+    ${TweetFragmentDoc}`;
 
 /**
  * __useGetTweetsQuery__
@@ -816,41 +731,61 @@ export const GetTweetsDocument = gql`
  *   },
  * });
  */
-export function useGetTweetsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>
-) {
-  return Apollo.useQuery<GetTweetsQuery, GetTweetsQueryVariables>(
-    GetTweetsDocument,
-    baseOptions
-  );
-}
-export function useGetTweetsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetTweetsQuery,
-    GetTweetsQueryVariables
-  >
-) {
-  return Apollo.useLazyQuery<GetTweetsQuery, GetTweetsQueryVariables>(
-    GetTweetsDocument,
-    baseOptions
-  );
-}
+export function useGetTweetsQuery(baseOptions?: Apollo.QueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>) {
+        return Apollo.useQuery<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, baseOptions);
+      }
+export function useGetTweetsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>) {
+          return Apollo.useLazyQuery<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, baseOptions);
+        }
 export type GetTweetsQueryHookResult = ReturnType<typeof useGetTweetsQuery>;
-export type GetTweetsLazyQueryHookResult = ReturnType<
-  typeof useGetTweetsLazyQuery
->;
-export type GetTweetsQueryResult = Apollo.QueryResult<
-  GetTweetsQuery,
-  GetTweetsQueryVariables
->;
-export const GetUsersDocument = gql`
-  query getUsers {
-    getUsers {
+export type GetTweetsLazyQueryHookResult = ReturnType<typeof useGetTweetsLazyQuery>;
+export type GetTweetsQueryResult = Apollo.QueryResult<GetTweetsQuery, GetTweetsQueryVariables>;
+export const GetUserByIdDocument = gql`
+    query getUserById($_id: String!) {
+  getUserById(_id: $_id) {
+    user {
       ...User
     }
+    tweets {
+      ...Tweet
+    }
   }
-  ${UserFragmentDoc}
-`;
+}
+    ${UserFragmentDoc}
+${TweetFragmentDoc}`;
+
+/**
+ * __useGetUserByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserByIdQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useGetUserByIdQuery(baseOptions: Apollo.QueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+        return Apollo.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, baseOptions);
+      }
+export function useGetUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+          return Apollo.useLazyQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, baseOptions);
+        }
+export type GetUserByIdQueryHookResult = ReturnType<typeof useGetUserByIdQuery>;
+export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLazyQuery>;
+export type GetUserByIdQueryResult = Apollo.QueryResult<GetUserByIdQuery, GetUserByIdQueryVariables>;
+export const GetUsersDocument = gql`
+    query getUsers {
+  getUsers {
+    ...User
+  }
+}
+    ${UserFragmentDoc}`;
 
 /**
  * __useGetUsersQuery__
@@ -867,30 +802,12 @@ export const GetUsersDocument = gql`
  *   },
  * });
  */
-export function useGetUsersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>
-) {
-  return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(
-    GetUsersDocument,
-    baseOptions
-  );
-}
-export function useGetUsersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetUsersQuery,
-    GetUsersQueryVariables
-  >
-) {
-  return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(
-    GetUsersDocument,
-    baseOptions
-  );
-}
+export function useGetUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, baseOptions);
+      }
+export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, baseOptions);
+        }
 export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
-export type GetUsersLazyQueryHookResult = ReturnType<
-  typeof useGetUsersLazyQuery
->;
-export type GetUsersQueryResult = Apollo.QueryResult<
-  GetUsersQuery,
-  GetUsersQueryVariables
->;
+export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
+export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;

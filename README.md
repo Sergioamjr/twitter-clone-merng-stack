@@ -9,3 +9,5 @@
 - [ ] Adding/Removing as a friend
 - [ ] Creating account, login automagic
 - [ ] Documentation
+- [ ] Deploy
+- [ ] Usar .env

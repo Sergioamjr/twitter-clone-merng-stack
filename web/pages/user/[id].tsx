@@ -1,11 +1,7 @@
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { useEffect, useState } from "react";
 import { Page, Column } from "~components/template";
-import {
-  useGetTweetByUserIdMutation,
-  LoggedUser,
-} from "~graphql/generated/graphql";
+import { LoggedUser, useGetUserByIdQuery } from "~graphql/generated/graphql";
 import User from "~features/user";
 import Authentication from "~features/Authentication";
 
@@ -14,34 +10,28 @@ type UserPageType = {
 };
 
 function UserPage({ user }: UserPageType): JSX.Element {
-  const [tweets, setTweets] = useState([]);
-  const [getUserTweets] = useGetTweetByUserIdMutation();
   const router = useRouter();
   const { id } = router.query;
-
-  const fetch = async () => {
-    try {
-      const response = await getUserTweets({
-        variables: { _id: id as string },
-      });
-      setTweets(response.data.getTweetByUserID);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    if (id) {
-      fetch();
-    }
-  }, [id]);
+  const { data, loading, refetch } = useGetUserByIdQuery({
+    variables: {
+      _id: id as string,
+    },
+  });
 
   return (
     <Authentication>
       <Page>
         <Column />
         <Column>
-          <User refetch={fetch} tweets={tweets} user={user} />
+          {!!loading && <p>Loading...</p>}
+          {!loading && data?.getUserById && (
+            <User
+              refetch={refetch}
+              tweets={data.getUserById.tweets}
+              user={user}
+            />
+          )}
+          {!loading && !data?.getUserById && <p>User not found :(</p>}
         </Column>
         <Column />
       </Page>

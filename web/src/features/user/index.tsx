@@ -53,8 +53,13 @@ export default function User({
     refetch();
   };
 
+  const onAddAsFriendHandler = () => {
+    console.log("Adiciona como amigo");
+  };
+
   return (
     <Column>
+      <button onClick={onAddAsFriendHandler}>Adicionar como amigo</button>
       {tweets.map(({ _id, content, userName, name, likedBy }) => {
         return (
           <TweetCard
