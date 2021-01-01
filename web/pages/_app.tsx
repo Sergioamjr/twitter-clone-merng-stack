@@ -1,12 +1,11 @@
 import Head from "next/head";
 import { Provider } from "react-redux";
-import { createGlobalStyle } from "styled-components";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import store from "~store";
+import { GlobalStyle } from "~theme";
 
-const SERVER_URL = "http://localhost:4000/";
 const client = new ApolloClient({
-  uri: SERVER_URL,
+  uri: process.env.NEXT_PUBLIC_SERVER_URL,
   cache: new InMemoryCache(),
 });
 
@@ -15,7 +14,7 @@ type Props = {
   pageProps: any;
 };
 
-const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
+export default function MyApp({ Component, pageProps }: Props): JSX.Element {
   return (
     <>
       <Head>
@@ -30,19 +29,4 @@ const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
       </Provider>
     </>
   );
-};
-
-export default MyApp;
-
-export const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
-  }
-
-  html, body, #__next {
-    height: 100%;
-  }
-`;
+}

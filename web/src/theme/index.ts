@@ -1,4 +1,18 @@
+import { createGlobalStyle } from "styled-components";
 import { darken, lighten } from "polished";
+
+export const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+  }
+
+  html, body, #__next {
+    height: 100%;
+  }
+`;
 
 const diff = 0.2;
 

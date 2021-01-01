@@ -2,11 +2,6 @@ import { useEffect, ReactNode, useState } from "react";
 import { useLoginMutation } from "~graphql/generated/graphql";
 import { actions } from "~store";
 
-const userAuthentication = {
-  email: "sergio@gmail.com",
-  password: "S3nh4!@#",
-};
-
 type AuthenticationProps = {
   children: ReactNode;
 };
@@ -20,7 +15,10 @@ export default function Authentication({
   useEffect(() => {
     (async () => {
       const auth = await login({
-        variables: userAuthentication,
+        variables: {
+          email: process.env.NEXT_PUBLIC_EMAIL,
+          password: process.env.NEXT_PUBLIC_PASSWORD,
+        },
       });
       const {
         data: {
