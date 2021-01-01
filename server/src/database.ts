@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 import { User } from "./User/schema";
 import { Tweet } from "./Tweet/schema";
-const localDB = "mongodb://localhost/twitter";
 
-const url = process.env.MONGODB_URI || localDB;
+const url = process.env.MONGODB_URI as string;
 
 const dbConnect = mongoose.connect(url, {
   useNewUrlParser: true,

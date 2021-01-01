@@ -1,8 +1,7 @@
 import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-export const secret =
-  "4AB2475373A1A60B30837F84BCA73DF072DA24D7A0A6AFD5B7C99059F63D9F12";
+export const secret = process.env.SECRET as string;
 
 export type TokenDecoded = {
   _id?: string;
