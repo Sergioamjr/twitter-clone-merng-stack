@@ -1,4 +1,4 @@
-# Web - Twitter Merng Stack
+# Server - Twitter Merng Stack
 
 ## Commands
 
@@ -28,21 +28,16 @@ npm run lint
 
 ## Stacks
 
-- ReactJS.
-- NextJS.
-- Redux.
+- NodeJS.
 - Typescript.
-- Apollo Client.
-- Styled Components.
+- Mongo DB.
+- Apollo Server.
+- Express.
 
 ## Validations
 
 - ESLint
 - Prettier
-
-## Store
-
-On Redux store is saved user data and a flag.
 
 ## Security
 
@@ -50,7 +45,32 @@ On Redux store is saved user data and a flag.
 - Passwords are encrypted before be saved on database.
 - A JWT token is created when user logged in, it's valid for 48h.
 - The JWT token is validated in all request that relies on the database.
-  
+
+## Models
+
+### User
+
+```ts
+_id: string;
+name: string
+userName: string,
+email: string
+password: string,
+friends: string[],
+```
+
+### Tweet
+
+```ts
+_id: string;
+authorId: string;
+createdAt: new Date;
+name: string;
+userName: string;
+content: string;
+likedBy: string[];
+```
+
 ## Deploy
 
-This server was deployed on Netlify.
+This server was deployed on Heroku.
