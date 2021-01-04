@@ -4,20 +4,23 @@ import {
   useDeleteTweetMutation,
   useLikeMutation,
   useDeslikeMutation,
-  LoggedUser,
+  User as UserType,
 } from "~graphql/generated/graphql";
 import { Column } from "~components/template";
+import UserIntro from "~components/userIntro";
 
 export type UserProps = {
   tweets?: Tweet[];
-  user: Partial<LoggedUser>;
+  user: Partial<UserType>;
   refetch: () => void;
+  token?: string;
 };
 
 export default function User({
   tweets = [],
   user,
   refetch,
+  token,
 }: UserProps): JSX.Element {
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
@@ -27,7 +30,7 @@ export default function User({
     await onDeleteTweet({
       variables: {
         _id,
-        token: user.token,
+        token: token,
       },
     });
     refetch();
@@ -37,7 +40,7 @@ export default function User({
     await onLikeTweet({
       variables: {
         _id,
-        token: user.token,
+        token: token,
       },
     });
     refetch();
@@ -47,22 +50,23 @@ export default function User({
     await onDeslikeTweet({
       variables: {
         _id,
-        token: user.token,
+        token: token,
       },
     });
     refetch();
   };
 
-  const onAddAsFriendHandler = () => {
-    console.log("Adiciona como amigo");
+  const onFollowHandler = (_id) => {
+    console.log("Adiciona como amigo", _id);
   };
 
   return (
     <Column>
-      <button onClick={onAddAsFriendHandler}>Adicionar como amigo</button>
-      {tweets.map(({ _id, content, userName, name, likedBy }) => {
+      <UserIntro {...user} onFollowHandler={onFollowHandler} />
+      {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
         return (
           <TweetCard
+            authorId={authorId}
             haveLikedTweet={likedBy.includes(user._id)}
             onLikeTweetHandler={() => onLikeTweetHandler(_id)}
             onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
