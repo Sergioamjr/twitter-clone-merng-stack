@@ -17,7 +17,6 @@ function UserPage({ user }: UserPageType): JSX.Element {
       _id: id as string,
     },
   });
-  console.log("data", data);
 
   return (
     <Authentication>
@@ -29,8 +28,8 @@ function UserPage({ user }: UserPageType): JSX.Element {
             <User
               refetch={refetch}
               tweets={data.getUserById.tweets}
-              user={data.getUserById.user}
-              token={user.token}
+              queriedUser={data.getUserById.user}
+              user={user}
             />
           )}
           {!loading && !data?.getUserById && <p>User not found :(</p>}
