@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Page, Column } from "~components/template";
 import { LoggedUser, useGetUserByIdQuery } from "~graphql/generated/graphql";
 import User from "~features/user";
-import Authentication from "~features/Authentication";
+import Authentication from "~features/authentication";
 
 type UserPageType = {
   user: Partial<LoggedUser>;

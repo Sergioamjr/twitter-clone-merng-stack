@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
 import { useGetTweetsQuery, LoggedUser } from "~graphql/generated/graphql";
 import Home from "~features/home";
-
+import Authentication from "~features/authentication";
 import { Page, Column } from "~components/template";
-import Authentication from "~features/Authentication";
 
 type HomePageType = {
   user: Partial<LoggedUser>;

@@ -6,8 +6,19 @@ export default {
   component: TweetInput,
 } as Meta;
 
-export const Primary = (): JSX.Element => <TweetInput />;
+export const Primary = (): JSX.Element => (
+  <TweetInput
+    onSubmitNewTweet={(e) => {
+      console.log("subit", e);
+    }}
+  />
+);
 
 export const WithError = (): JSX.Element => (
-  <TweetInput contentDefault="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam maximus quis metus quis pretium. Fusce nec lacinia nisl. Nam ullamcorper faucibus velit, in suscipit dui venenatis id." />
+  <TweetInput
+    onSubmitNewTweet={(e) => {
+      console.log("subit", e);
+    }}
+    contentDefault="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam maximus quis metus quis pretium. Fusce nec lacinia nisl. Nam ullamcorper faucibus velit, in suscipit dui venenatis id."
+  />
 );
