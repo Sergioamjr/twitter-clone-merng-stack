@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { useGetTweetsQuery, LoggedUser } from "~graphql/generated/graphql";
-import Authentication from "~features/authentication";
+import Auth from "~features/auth";
 import { Page, Column } from "~components/template";
 import Home from "~features/home";
 
@@ -12,7 +12,7 @@ function HomePage({ user }: HomePageType): JSX.Element {
   const { data, refetch } = useGetTweetsQuery();
 
   return (
-    <Authentication>
+    <Auth>
       <Page>
         <Column />
         <Column>
@@ -20,7 +20,7 @@ function HomePage({ user }: HomePageType): JSX.Element {
         </Column>
         <Column />
       </Page>
-    </Authentication>
+    </Auth>
   );
 }
 

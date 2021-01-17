@@ -2,13 +2,11 @@ import { useEffect, ReactNode, useState } from "react";
 import { useLoginMutation } from "~graphql/generated/graphql";
 import { actions } from "~store";
 
-type AuthenticationProps = {
+type AuthProps = {
   children: ReactNode;
 };
 
-export default function Authentication({
-  children,
-}: AuthenticationProps): JSX.Element {
+export default function Auth({ children }: AuthProps): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
   const [login] = useLoginMutation();
 
