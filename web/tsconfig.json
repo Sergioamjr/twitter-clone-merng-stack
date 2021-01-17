@@ -1,14 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src/",
+    "baseUrl": ".",
     "paths": {
-      "~components/*": ["components/*"],
-      "~features/*": ["features/*"],
-      "~graphql/*": ["graphql/*"],
-      "~generated/*": ["generated/*"],
-      "~icons": ["icons"],
-      "~theme": ["theme"],
-      "~store": ["store"],
+      "~*": ["src/*"],
     },
     "target": "es5",
     "lib": [
@@ -23,8 +17,8 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
+    "moduleResolution": "node",
     "isolatedModules": true,
     "jsx": "preserve"
   },
