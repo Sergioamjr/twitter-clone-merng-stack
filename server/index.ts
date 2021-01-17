@@ -27,14 +27,13 @@ app.get("/starter", (req, res) => {
   res.send("Hello World!");
 });
 
+app.listen({ port }, () => {
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+});
+
 dbConnect
   .then(() => {
     console.log("DB Connected");
-    app.listen({ port }, () => {
-      console.log(
-        `🚀 Server ready at http://localhost:4000${server.graphqlPath}`
-      );
-    });
   })
   .catch((err) => {
     console.log("Error to connect DB: ", err);
