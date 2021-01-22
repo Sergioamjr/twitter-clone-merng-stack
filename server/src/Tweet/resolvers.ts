@@ -1,20 +1,20 @@
-import { verifyToken, TokenDecoded } from "../User/resolvers";
-import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
+const { verifyToken, TokenDecoded } = require("../User/resolvers");
+const { QueryResolvers, MutationResolvers } = require("./../generated/graphql");
 
-export const query: QueryResolvers = {
+const query: typeof QueryResolvers = {
   getTweets: async (_, args, context) => {
     return await context.dataSources.Tweet.find().sort({ createdAt: 1 }).exec();
   },
 };
 
-export const mutation: MutationResolvers = {
+const mutation: typeof MutationResolvers = {
   like: async (_, { _id, token }, context) => {
     try {
       const decoded = await verifyToken(token as string);
       const tweet = await context.dataSources.Tweet.findOne({ _id });
       if (!tweet) Error("Tweet não existe");
       const likes = new Set(tweet.likedBy);
-      likes.add((<TokenDecoded>decoded)._id);
+      likes.add((<typeof TokenDecoded>decoded)._id);
       tweet.likedBy = [...likes];
       await context.dataSources.Tweet.findOneAndUpdate({ _id }, tweet);
       return await context.dataSources.Tweet.findOne({ _id });
@@ -28,7 +28,7 @@ export const mutation: MutationResolvers = {
       const tweet = await context.dataSources.Tweet.findOne({ _id });
       if (!tweet) Error("Tweet não existe");
       const newLikedBy = tweet.likedBy.filter(
-        (id: string) => id !== (<TokenDecoded>decoded)._id
+        (id: string) => id !== (<typeof TokenDecoded>decoded)._id
       );
       tweet.likedBy = newLikedBy;
       await context.dataSources.Tweet.findOneAndUpdate({ _id }, tweet);
@@ -47,10 +47,10 @@ export const mutation: MutationResolvers = {
     try {
       const decoded = await verifyToken(token as string);
       const { userName, name } = await context.dataSources.User.findOne({
-        _id: (<TokenDecoded>decoded)._id,
+        _id: (<typeof TokenDecoded>decoded)._id,
       });
       return await new context.dataSources.Tweet({
-        authorId: (<TokenDecoded>decoded)._id,
+        authorId: (<typeof TokenDecoded>decoded)._id,
         createdAt: new Date().toISOString(),
         content,
         userName,
@@ -64,7 +64,7 @@ export const mutation: MutationResolvers = {
     try {
       const decoded = await verifyToken(token as string);
       await context.dataSources.User.findOne({
-        _id: (<TokenDecoded>decoded)._id,
+        _id: (<typeof TokenDecoded>decoded)._id,
       });
       await context.dataSources.Tweet.deleteOne({ _id });
       return true;
@@ -72,4 +72,9 @@ export const mutation: MutationResolvers = {
       throw Error(err);
     }
   },
+};
+
+module.exports = {
+  query,
+  mutation,
 };

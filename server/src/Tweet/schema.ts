@@ -1,5 +1,5 @@
-import joi from "@hapi/joi";
-import createDBSchema from "../utils/createDBSchema";
+const joi = require("@hapi/joi");
+const createDBSchema = require("../utils/createDBSchema");
 
 const [Tweet, tweetSchema] = createDBSchema(
   {
@@ -13,4 +13,4 @@ const [Tweet, tweetSchema] = createDBSchema(
   "Tweet"
 );
 
-export { Tweet, tweetSchema };
+module.exports = { Tweet, tweetSchema };

@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import { User } from "./User/schema";
-import { Tweet } from "./Tweet/schema";
+const mongoose = require("mongoose");
+const { User } = require("./User/schema");
+const { Tweet } = require("./Tweet/schema");
 
 const url = process.env.MONGODB_URI as string;
 

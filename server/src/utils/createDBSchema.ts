@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const joigoose = require("joigoose")(mongoose);
 import joi from "@hapi/joi";
@@ -10,4 +10,4 @@ const createDBSchema = (object: any, name: string): any => {
   return [model, schema];
 };
 
-export default createDBSchema;
+module.exports = createDBSchema;
