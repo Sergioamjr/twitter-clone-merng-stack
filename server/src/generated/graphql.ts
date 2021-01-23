@@ -1,8 +1,6 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -166,7 +164,8 @@ export type AdditionalEntityFields = {
   type?: Maybe<Scalars['String']>;
 };
 
-
+export type WithIndex<TObject> = TObject & Record<string, any>;
+export type ResolversObject<TObject> = WithIndex<TObject>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -243,7 +242,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 /** Mapping between all available schema types and the resolvers types */
-export type ResolversTypes = {
+export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -256,10 +255,10 @@ export type ResolversTypes = {
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   AdditionalEntityFields: AdditionalEntityFields;
-};
+}>;
 
 /** Mapping between all available schema types and the resolvers parents */
-export type ResolversParentTypes = {
+export type ResolversParentTypes = ResolversObject<{
   Query: {};
   String: Scalars['String'];
   Boolean: Scalars['Boolean'];
@@ -271,7 +270,7 @@ export type ResolversParentTypes = {
   Tweet: Tweet;
   Upload: Scalars['Upload'];
   AdditionalEntityFields: AdditionalEntityFields;
-};
+}>;
 
 export type UnionDirectiveArgs = {   discriminatorField?: Maybe<Scalars['String']>;
   additionalFields?: Maybe<Array<Maybe<AdditionalEntityFields>>>; };
@@ -308,15 +307,15 @@ export type MapDirectiveArgs = {   path: Scalars['String']; };
 
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   getUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
   getUserById?: Resolver<Maybe<ResolversTypes['UserAndTweets']>, ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, '_id'>>;
   validateToken?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryValidateTokenArgs, 'token'>>;
   getTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
-};
+}>;
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   addToFriends?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationAddToFriendsArgs, '_id' | 'newFriendId' | 'token'>>;
   removeFromFriends?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationRemoveFromFriendsArgs, '_id' | 'friendId' | 'token'>>;
@@ -328,18 +327,18 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteTweet?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteTweetArgs, never>>;
   like?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationLikeArgs, never>>;
   deslike?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationDeslikeArgs, never>>;
-};
+}>;
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   friends?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoggedUser'] = ResolversParentTypes['LoggedUser']> = {
+export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoggedUser'] = ResolversParentTypes['LoggedUser']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -347,15 +346,15 @@ export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversP
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   friends?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type UserAndTweetsResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAndTweets'] = ResolversParentTypes['UserAndTweets']> = {
+export type UserAndTweetsResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAndTweets'] = ResolversParentTypes['UserAndTweets']> = ResolversObject<{
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   tweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type TweetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tweet'] = ResolversParentTypes['Tweet']> = {
+export type TweetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tweet'] = ResolversParentTypes['Tweet']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -364,13 +363,13 @@ export type TweetResolvers<ContextType = any, ParentType extends ResolversParent
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   likedBy?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload';
 }
 
-export type Resolvers<ContextType = any> = {
+export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
@@ -378,7 +377,7 @@ export type Resolvers<ContextType = any> = {
   UserAndTweets?: UserAndTweetsResolvers<ContextType>;
   Tweet?: TweetResolvers<ContextType>;
   Upload?: GraphQLScalarType;
-};
+}>;
 
 
 /**
@@ -386,7 +385,7 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
-export type DirectiveResolvers<ContextType = any> = {
+export type DirectiveResolvers<ContextType = any> = ResolversObject<{
   union?: UnionDirectiveResolver<any, any, ContextType>;
   abstractEntity?: AbstractEntityDirectiveResolver<any, any, ContextType>;
   entity?: EntityDirectiveResolver<any, any, ContextType>;
@@ -395,7 +394,7 @@ export type DirectiveResolvers<ContextType = any> = {
   link?: LinkDirectiveResolver<any, any, ContextType>;
   embedded?: EmbeddedDirectiveResolver<any, any, ContextType>;
   map?: MapDirectiveResolver<any, any, ContextType>;
-};
+}>;
 
 
 /**

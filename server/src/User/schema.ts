@@ -1,15 +1,15 @@
-const joii = require("@hapi/joi");
-const createDBSchemaa = require("../utils/createDBSchema");
+import joi from "@hapi/joi";
+import createDBSchema from "../utils/createDBSchema";
 
-const [User, userSchema] = createDBSchemaa(
+const [User, userSchema] = createDBSchema(
   {
-    name: joii.string().required(),
-    userName: joii.string().required(),
-    email: joii.string().required(),
-    password: joii.string().required(),
-    friends: joii.array().items(joii.string()),
+    name: joi.string().required(),
+    userName: joi.string().required(),
+    email: joi.string().required(),
+    password: joi.string().required(),
+    friends: joi.array().items(joi.string()),
   },
   "User"
 );
 
-module.exports = { User, userSchema };
+export { User, userSchema };

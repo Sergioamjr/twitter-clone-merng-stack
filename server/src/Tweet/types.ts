@@ -1,6 +1,6 @@
-const { gql } = require("apollo-server");
+import { gql } from "apollo-server";
 
-const types = gql`
+export const types = gql`
   type Tweet {
     _id: ID
     authorId: String
@@ -24,7 +24,3 @@ const types = gql`
     deslike(_id: String, token: String): Tweet
   }
 `;
-
-module.exports = {
-  types,
-};

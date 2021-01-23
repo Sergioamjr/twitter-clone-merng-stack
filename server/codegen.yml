@@ -1,5 +1,5 @@
 overwrite: true
-schema: "http://localhost:4000/graphql"
+schema: "http://localhost:4000"
 documents: null
 generates:
   src/generated/graphql.ts:
@@ -8,4 +8,7 @@ generates:
       - "typescript-resolvers"
       - "typescript-mongodb"
     config:
-      module: commonjs
+      useIndexSignature: true
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"

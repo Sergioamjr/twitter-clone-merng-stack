@@ -1,13 +1,15 @@
-const { QueryResolvers, MutationResolvers } = require("./../generated/graphql");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 export const secret = process.env.SECRET as string;
 
-type TokenDecoded = {
+export type TokenDecoded = {
   _id?: string;
 };
 
-const verifyToken = (token?: string): Promise<TokenDecoded | "string"> => {
+export const verifyToken = (
+  token?: string
+): Promise<TokenDecoded | "string"> => {
   return new Promise((resolve, reject) => {
     try {
       const decoded = jwt.verify(token ?? "", secret);
@@ -18,7 +20,7 @@ const verifyToken = (token?: string): Promise<TokenDecoded | "string"> => {
   });
 };
 
-const query: typeof QueryResolvers = {
+export const query: QueryResolvers = {
   getUsers: async (_, args, context) => {
     return await context.dataSources.User.find();
   },
@@ -44,7 +46,7 @@ const query: typeof QueryResolvers = {
   },
 };
 
-const mutation: typeof MutationResolvers = {
+export const mutation: MutationResolvers = {
   addToFriends: async (_, { _id, newFriendId, token }, { dataSources }) => {
     await verifyToken(token as string);
     const currentUser = await dataSources.User.findOne({ _id });
@@ -117,10 +119,4 @@ const mutation: typeof MutationResolvers = {
       throw Error("E-mail ou senha incorretos.");
     }
   },
-};
-
-module.exports = {
-  mutation,
-  verifyToken,
-  query,
 };
