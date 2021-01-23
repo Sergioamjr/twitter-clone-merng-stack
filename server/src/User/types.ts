@@ -1,3 +1,4 @@
+export {};
 const { gql } = require("apollo-server");
 
 const types = gql`
@@ -47,5 +48,3 @@ const types = gql`
 `;
 
 module.exports = { types };
-
-export {};

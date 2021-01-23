@@ -1,12 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
-const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
-const expressPlayground = require("graphql-playground-middleware-express")
-  .default;
-const typeDefs = require("./src/typeDefs");
-const resolvers = require("./src/resolvers");
-const { dbConnect, models } = require("./src/database");
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+import expressPlayground from "graphql-playground-middleware-express";
+import typeDefs from "./src/typeDefs";
+import resolvers from "./src/resolvers";
+import { dbConnect, models } from "./src/database";
 
 const port = process.env.PORT || 4000;
 const app = express();

@@ -1,6 +1,6 @@
-const { gql } = require("apollo-server");
-const { types: userTypes } = require("./User/types");
-const { types: tweetTypes } = require("./Tweet/types");
+import { gql } from "apollo-server";
+import { types as userTypes } from "./User/types";
+import { types as tweetTypes } from "./Tweet/types";
 
 const root = gql`
   type Query {
@@ -11,6 +11,4 @@ const root = gql`
   }
 `;
 
-module.exports = [root, userTypes, tweetTypes];
-
-export {};
+export default [root, userTypes, tweetTypes];
