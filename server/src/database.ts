@@ -12,4 +12,6 @@ const dbConnect = mongoose.connect(url, {
 
 const models = { User, Tweet };
 
-export { dbConnect, models };
+module.exports = { dbConnect, models };
+
+export {};

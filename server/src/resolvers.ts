@@ -1,21 +1,25 @@
-import { QueryResolvers, MutationResolvers } from "./generated/graphql";
-import {
-  query as userQueries,
-  mutation as userMutations,
-} from "./User/resolvers";
-import {
-  query as tweetQueries,
-  mutation as tweetMutations,
-} from "./Tweet/resolvers";
+const { QueryResolvers, MutationResolvers } = require("./generated/graphql");
+const {
+  query: userQueries,
+  mutation: userMutations,
+} = require("./User/resolvers");
+const {
+  query: tweetQueries,
+  mutation: tweetMutations,
+} = require("./Tweet/resolvers");
 
-const Query: QueryResolvers = {
+const Query: typeof QueryResolvers = {
   ...userQueries,
   ...tweetQueries,
 };
 
-const Mutation: MutationResolvers = {
+const Mutation: typeof MutationResolvers = {
   ...userMutations,
   ...tweetMutations,
 };
 
-export default { Query, Mutation };
+module.exports = {
+  Query, Mutation
+};
+
+export {};
