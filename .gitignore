@@ -1,4 +1,5 @@
 server/node_modules
+server/build
 web/node_modules
 web/.next
 **/*.env
