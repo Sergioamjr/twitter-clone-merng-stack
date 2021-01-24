@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { connect } from "react-redux";
 import { Heart, Bin } from "~icons";
 import * as S from "./styled";
@@ -6,11 +7,12 @@ import { Tweet as TweetType, User } from "~graphql/generated/graphql";
 import { getNameInitials } from "~utils";
 
 export type TweetProps = Required<TweetType> & {
-  haveLikedTweet?: boolean;
+  haveLikedTweet: boolean;
   onLikeTweetHandler: (id: string) => void;
   onDeleteTweet: (id: string) => void;
   onDeslikeTweetHandler: (id: string) => void;
   user?: Pick<User, "_id">;
+  showLikeButton: boolean;
 };
 
 const Tweet = ({
@@ -24,6 +26,7 @@ const Tweet = ({
   content,
   authorId,
   user,
+  showLikeButton,
 }: TweetProps): JSX.Element => {
   return (
     <S.Card tabIndex={0}>
@@ -39,7 +42,7 @@ const Tweet = ({
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
-          {user._id !== authorId && (
+          {showLikeButton && (
             <S.ActionBtnGroup>
               <S.ActionBtn
                 aria-label="Like"
@@ -68,4 +71,8 @@ const Tweet = ({
   );
 };
 
-export default connect(({ user }, props) => ({ user, ...props }))(Tweet);
+const MemorizedTweet = memo(Tweet);
+
+export default connect(({ user }, props) => ({ user, ...props }))(
+  MemorizedTweet
+);

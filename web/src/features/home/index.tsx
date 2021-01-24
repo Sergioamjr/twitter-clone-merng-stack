@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import TweetCard from "~components/Tweet";
 import TweetInput from "~components/TweetInput";
 import {
@@ -26,7 +27,7 @@ export default function Home({
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
 
-  const onSubmitNewTweetHandler = async (content) => {
+  const onSubmitNewTweetHandler = useCallback(async (content) => {
     await onSubmitNewTweet({
       variables: {
         token: user.token,
@@ -34,9 +35,9 @@ export default function Home({
       },
     });
     refetch();
-  };
+  }, []);
 
-  const onDeleteTweetHandler = async (_id: string) => {
+  const onDeleteTweetHandler = useCallback(async (_id: string) => {
     await onDeleteTweet({
       variables: {
         _id,
@@ -44,37 +45,37 @@ export default function Home({
       },
     });
     refetch();
-  };
+  }, []);
 
-  const onLikeTweetHandler = async (_id: string) => {
+  const onLikeTweetHandler = useCallback(async (_id: string) => {
     await onLikeTweet({
       variables: {
         _id,
         token: user.token,
       },
     });
-    refetch();
-  };
+  }, []);
 
-  const onDeslikeTweetHandler = async (_id: string) => {
+  const onDeslikeTweetHandler = useCallback(async (_id: string) => {
     await onDeslikeTweet({
       variables: {
         _id,
         token: user.token,
       },
     });
-    refetch();
-  };
+  }, []);
+
   return (
     <Column>
       <TweetInput onSubmitNewTweet={onSubmitNewTweetHandler} />
       {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
         return (
           <TweetCard
-            haveLikedTweet={likedBy.includes(user._id)}
             onLikeTweetHandler={() => onLikeTweetHandler(_id)}
             onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
             onDeleteTweet={() => onDeleteTweetHandler(_id)}
+            haveLikedTweet={likedBy.includes(user._id)}
+            showLikeButton={user._id !== authorId}
             key={_id}
             name={name}
             userName={userName}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import * as S from "./styled";
 
 type Props = {
@@ -7,11 +7,11 @@ type Props = {
   onSubmitNewTweet: (s: string) => void;
 };
 
-const TweetInput = ({
+function TweetInput({
   contentDefault = "",
   tweetLimit = 150,
   onSubmitNewTweet,
-}: Props): JSX.Element => {
+}: Props): JSX.Element {
   const [content, setContent] = useState(contentDefault);
 
   const onChangeTweet = ({ target: { value } }) => {
@@ -45,6 +45,6 @@ const TweetInput = ({
       {!!size && <S.Counter>{isInvalid ? invalid : valid}</S.Counter>}
     </S.Box>
   );
-};
+}
 
-export default TweetInput;
+export default memo(TweetInput);
