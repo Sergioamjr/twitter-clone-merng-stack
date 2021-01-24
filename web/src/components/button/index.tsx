@@ -1,6 +1,12 @@
 import * as S from "./styled";
 
-export type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
+export type CustomProps = {
+  variant?: "ghost";
+  rounded?: boolean;
+  noPadding?: boolean;
+};
+
+export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & CustomProps;
 
 const Button = ({ children, ...props }: Props): JSX.Element => {
   return <S.Button {...props}>{children}</S.Button>;

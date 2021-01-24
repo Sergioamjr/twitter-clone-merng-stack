@@ -12,6 +12,7 @@ import {
 import { Column } from "~components/template";
 import UserIntro from "~components/userIntro";
 import { actions } from "~store";
+import GoBackBar from "~components/GoBackBar";
 
 export type UserProps = {
   tweets?: Tweet[];
@@ -97,6 +98,7 @@ export default function User({
 
   return (
     <Column>
+      <GoBackBar />
       <UserIntro
         {...queriedUser}
         hideButton={hideButton}
