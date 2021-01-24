@@ -1,6 +1,8 @@
 import { useEffect, ReactNode, useState } from "react";
 import { useLoginMutation } from "~graphql/generated/graphql";
+import { Loading } from "~icons";
 import { actions } from "~store";
+import * as Styled from "./styles";
 
 type AuthProps = {
   children: ReactNode;
@@ -40,7 +42,11 @@ export default function Auth({ children }: AuthProps): JSX.Element {
     })();
   }, []);
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <Styled.LoadingWrapper>
+        <Loading />
+      </Styled.LoadingWrapper>
+    );
   }
   return <>{children}</>;
 }
