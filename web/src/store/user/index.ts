@@ -1,10 +1,20 @@
+import { LoggedUser } from "~graphql/generated/graphql";
 import store from "~store";
 
-const defaultUser = {};
+type Data = Omit<LoggedUser, "__typename">;
 
+type Action = {
+  type: string;
+  data?: Data;
+};
+
+const defaultUser = {};
 const SET_USERDATA = "SET_USERDATA";
 
-export default function userReducer(state = defaultUser, action) {
+export default function userReducer(
+  state = defaultUser,
+  action: Action
+): Partial<LoggedUser> {
   switch (action.type) {
     case SET_USERDATA: {
       return {
@@ -18,7 +28,7 @@ export default function userReducer(state = defaultUser, action) {
 }
 
 export const userActions = {
-  setUserNameAction: (data) => {
+  setUserNameAction: (data: Data): Action => {
     return store.dispatch({
       type: SET_USERDATA,
       data,

@@ -30,7 +30,7 @@
   "rules": {
     "react/prop-types": [2, { "ignore": ["children"] }],
     "react/react-in-jsx-scope": "off",
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],

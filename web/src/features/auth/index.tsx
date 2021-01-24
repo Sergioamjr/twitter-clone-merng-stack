@@ -21,7 +21,7 @@ export default function Auth({ children }: AuthProps): JSX.Element {
         });
         const {
           data: {
-            login: { userName, name, email, token, _id },
+            login: { userName, name, email, token, _id, friends },
           },
         } = auth;
 
@@ -31,6 +31,7 @@ export default function Auth({ children }: AuthProps): JSX.Element {
           email,
           token,
           _id,
+          friends,
         });
         setIsLoading(false);
       } catch (err) {

@@ -39,22 +39,24 @@ const Tweet = ({
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
-          <S.ActionBtnGroup>
-            <S.ActionBtn
-              aria-label="Like"
-              onClick={
-                haveLikedTweet ? onDeslikeTweetHandler : onLikeTweetHandler
-              }
-            >
-              <Heart
-                width={20}
-                color={haveLikedTweet ? colors.red : colors.lightLighten}
-              />
-            </S.ActionBtn>
-            {!!likedBy.length && (
-              <S.HowManyLikes>{likedBy.length}</S.HowManyLikes>
-            )}
-          </S.ActionBtnGroup>
+          {user._id !== authorId && (
+            <S.ActionBtnGroup>
+              <S.ActionBtn
+                aria-label="Like"
+                onClick={
+                  haveLikedTweet ? onDeslikeTweetHandler : onLikeTweetHandler
+                }
+              >
+                <Heart
+                  width={20}
+                  color={haveLikedTweet ? colors.red : colors.lightLighten}
+                />
+              </S.ActionBtn>
+              {!!likedBy.length && (
+                <S.HowManyLikes>{likedBy.length}</S.HowManyLikes>
+              )}
+            </S.ActionBtnGroup>
+          )}
           {user._id === authorId && (
             <S.ActionBtn aria-label="Exclude" onClick={onDeleteTweet}>
               <Bin width={20} />

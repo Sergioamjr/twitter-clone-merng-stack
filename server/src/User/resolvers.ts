@@ -81,7 +81,7 @@ export const mutation: MutationResolvers = {
 
     await dataSources.User.findOneAndUpdate({ _id: friendId }, newFriend);
     await dataSources.User.findOneAndUpdate({ _id }, currentUser);
-    return await dataSources.User.findOne({ _id: friendId });
+    return await dataSources.User.findOne({ _id });
   },
   saveUser: async (_, { name, email, password, userName }, { dataSources }) => {
     const isRegistered = await dataSources.User.findOne({ email });

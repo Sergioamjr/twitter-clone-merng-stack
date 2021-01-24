@@ -7,9 +7,11 @@ import {
   useAddToFriendsMutation,
   User as UserType,
   LoggedUser,
+  useRemoveFromFriendsMutation,
 } from "~graphql/generated/graphql";
 import { Column } from "~components/template";
 import UserIntro from "~components/userIntro";
+import { actions } from "~store";
 
 export type UserProps = {
   tweets?: Tweet[];
@@ -27,7 +29,14 @@ export default function User({
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
-  const [onAddToFriends] = useAddToFriendsMutation();
+  const [
+    onAddToFriends,
+    { loading: followLoading },
+  ] = useAddToFriendsMutation();
+  const [
+    onRemoveFromFriends,
+    { loading: unfollowLoading },
+  ] = useRemoveFromFriendsMutation();
 
   const onDeleteTweetHandler = async (_id: string) => {
     await onDeleteTweet({
@@ -59,19 +68,43 @@ export default function User({
     refetch();
   };
 
-  const onFollowHandler = (_id) => {
-    onAddToFriends({
+  const onFollowHandler = async (_id) => {
+    const { data } = await onAddToFriends({
       variables: {
         newFriendId: _id,
         _id: user._id,
         token: user.token,
       },
     });
+
+    actions.setUserNameAction({ friends: data.addToFriends.friends });
   };
+
+  const onUnfollowHandler = async (_id) => {
+    const { data } = await onRemoveFromFriends({
+      variables: {
+        friendId: _id,
+        _id: user._id,
+        token: user.token,
+      },
+    });
+
+    actions.setUserNameAction({ friends: data.removeFromFriends.friends });
+  };
+
+  const areFriends = user.friends.includes(queriedUser._id);
+  const hideButton = user._id === queriedUser._id;
 
   return (
     <Column>
-      <UserIntro {...queriedUser} onFollowHandler={onFollowHandler} />
+      <UserIntro
+        {...queriedUser}
+        hideButton={hideButton}
+        areFriends={areFriends}
+        onFollowHandler={onFollowHandler}
+        onUnfollowHandler={onUnfollowHandler}
+        disabledButton={followLoading || unfollowLoading}
+      />
       {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
         return (
           <TweetCard
