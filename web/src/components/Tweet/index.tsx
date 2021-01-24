@@ -3,6 +3,7 @@ import { Heart, Bin } from "~icons";
 import * as S from "./styled";
 import { colors } from "~theme";
 import { Tweet as TweetType, User } from "~graphql/generated/graphql";
+import { getNameInitials } from "~utils";
 
 export type TweetProps = Required<TweetType> & {
   haveLikedTweet?: boolean;
@@ -26,7 +27,7 @@ const Tweet = ({
 }: TweetProps): JSX.Element => {
   return (
     <S.Card tabIndex={0}>
-      <S.Avatar>SJ</S.Avatar>
+      <S.Avatar>{getNameInitials(name)}</S.Avatar>
       <div>
         <S.Header>
           <S.Name href={`/user/${authorId}`} tabIndex={0}>

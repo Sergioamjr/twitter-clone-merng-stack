@@ -1,5 +1,6 @@
 import * as Styles from "./style";
 import { Tweet } from "~graphql/generated/graphql";
+import { getNameInitials } from "~utils";
 
 type UserIntroProps = Pick<Tweet, "userName" | "_id" | "name"> & {
   onFollowHandler: (_id: string) => void;
@@ -16,7 +17,7 @@ export default function UserIntro({
       <Styles.Header />
       <Styles.Content>
         <Styles.Spacer>
-          <Styles.Avatar>SJ</Styles.Avatar>
+          <Styles.Avatar>{getNameInitials(name)}</Styles.Avatar>
           <Styles.Action onClick={() => onFollowHandler(_id)}>
             Follow
           </Styles.Action>
