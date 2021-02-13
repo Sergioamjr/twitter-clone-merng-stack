@@ -4,13 +4,15 @@ import { colors, fontSizes, spacings } from "~theme";
 
 export const Header = styled.div`
   height: 150px;
-  background: #333;
+  background-image: url(https://pcdn.sharethis.com/wp-content/uploads/2019/07/twitter-chatter-Converted-01-2.png);
+  background-position: center;
+  background-size: cover;
 `;
 
 export const Avatar = styled.div`
   width: 80px;
   height: 80px;
-  background: red;
+  background: #ea5959;
   border-radius: 50%;
   color: ${colors.white};
   display: flex;

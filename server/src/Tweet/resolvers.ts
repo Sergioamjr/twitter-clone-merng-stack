@@ -3,7 +3,9 @@ import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 
 export const query: QueryResolvers = {
   getTweets: async (_, args, context) => {
-    return await context.dataSources.Tweet.find().sort({ createdAt: 1 }).exec();
+    return await context.dataSources.Tweet.find()
+      .sort({ createdAt: -1 })
+      .exec();
   },
 };
 
@@ -38,7 +40,9 @@ export const mutation: MutationResolvers = {
     }
   },
   getTweetByUserID: async (_, { _id }, context) => {
-    return await context.dataSources.Tweet.find({ authorId: _id });
+    return await context.dataSources.Tweet.find({ authorId: _id })
+      .sort({ createdAt: -1 })
+      .exec();
   },
   getMyFriendsTweets: async (_, { _id }, context) => {
     return await context.dataSources.Tweet.find({ authorId: { $ne: _id } });

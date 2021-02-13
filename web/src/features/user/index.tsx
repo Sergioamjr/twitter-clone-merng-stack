@@ -13,8 +13,10 @@ import { Column } from "~components/template";
 import UserIntro from "~components/userIntro";
 import { actions } from "~store";
 import GoBackBar from "~components/GoBackBar";
+import UserNotFound from "~components/UserNotFound";
 
 export type UserProps = {
+  userNotFound: boolean;
   tweets?: Tweet[];
   queriedUser: UserType;
   refetch: () => void;
@@ -26,6 +28,7 @@ export default function User({
   queriedUser,
   refetch,
   user,
+  userNotFound,
 }: UserProps): JSX.Element {
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
@@ -93,37 +96,43 @@ export default function User({
     actions.setUserNameAction({ friends: data.removeFromFriends.friends });
   };
 
-  const areFriends = user.friends.includes(queriedUser._id);
-  const hideButton = user._id === queriedUser._id;
+  const areFriends = user.friends.includes(queriedUser?._id);
+  const hideButton = user._id === queriedUser?._id;
 
   return (
     <Column>
       <GoBackBar />
-      <UserIntro
-        {...queriedUser}
-        hideButton={hideButton}
-        areFriends={areFriends}
-        onFollowHandler={onFollowHandler}
-        onUnfollowHandler={onUnfollowHandler}
-        disabledButton={followLoading || unfollowLoading}
-      />
-      {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
-        return (
-          <TweetCard
-            authorId={authorId}
-            haveLikedTweet={likedBy.includes(user._id)}
-            onLikeTweetHandler={() => onLikeTweetHandler(_id)}
-            onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
-            onDeleteTweet={() => onDeleteTweetHandler(_id)}
-            key={_id}
-            name={name}
-            userName={userName}
-            content={content}
-            _id={_id}
-            likedBy={likedBy}
+      {userNotFound ? (
+        <UserNotFound />
+      ) : (
+        <>
+          <UserIntro
+            {...queriedUser}
+            hideButton={hideButton}
+            areFriends={areFriends}
+            onFollowHandler={onFollowHandler}
+            onUnfollowHandler={onUnfollowHandler}
+            disabledButton={followLoading || unfollowLoading}
           />
-        );
-      })}
+          {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
+            return (
+              <TweetCard
+                authorId={authorId}
+                haveLikedTweet={likedBy.includes(user._id)}
+                onLikeTweetHandler={() => onLikeTweetHandler(_id)}
+                onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
+                onDeleteTweet={() => onDeleteTweetHandler(_id)}
+                key={_id}
+                name={name}
+                userName={userName}
+                content={content}
+                _id={_id}
+                likedBy={likedBy}
+              />
+            );
+          })}
+        </>
+      )}
     </Column>
   );
 }

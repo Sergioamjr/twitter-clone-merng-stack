@@ -4,6 +4,7 @@ import { Page, Column } from "~components/template";
 import { LoggedUser, useGetUserByIdQuery } from "~graphql/generated/graphql";
 import User from "~features/user";
 import Auth from "~features/auth";
+import Loading from "~components/Loading";
 
 type UserPageType = {
   user: Partial<LoggedUser>;
@@ -18,21 +19,22 @@ function UserPage({ user }: UserPageType): JSX.Element {
     },
   });
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Auth>
       <Page>
         <Column />
         <Column>
-          {!!loading && <p>Loading...</p>}
-          {!loading && data?.getUserById && (
-            <User
-              refetch={refetch}
-              tweets={data.getUserById.tweets}
-              queriedUser={data.getUserById.user}
-              user={user}
-            />
-          )}
-          {!loading && !data?.getUserById && <p>User not found :(</p>}
+          <User
+            userNotFound={!loading && !data?.getUserById}
+            refetch={refetch}
+            tweets={data?.getUserById?.tweets}
+            queriedUser={data?.getUserById?.user}
+            user={user}
+          />
         </Column>
         <Column />
       </Page>
