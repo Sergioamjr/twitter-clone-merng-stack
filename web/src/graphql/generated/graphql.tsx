@@ -37,6 +37,7 @@ export type QueryValidateTokenArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   root?: Maybe<Scalars['String']>;
+  createRandomUser?: Maybe<LoggedUser>;
   addToFriends?: Maybe<LoggedUser>;
   removeFromFriends?: Maybe<LoggedUser>;
   login?: Maybe<LoggedUser>;
@@ -178,6 +179,17 @@ export type AddToFriendsMutationVariables = Exact<{
 export type AddToFriendsMutation = (
   { __typename?: 'Mutation' }
   & { addToFriends?: Maybe<(
+    { __typename?: 'LoggedUser' }
+    & LoggedUserFragment
+  )> }
+);
+
+export type CreateRandomUserMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateRandomUserMutation = (
+  { __typename?: 'Mutation' }
+  & { createRandomUser?: Maybe<(
     { __typename?: 'LoggedUser' }
     & LoggedUserFragment
   )> }
@@ -412,6 +424,37 @@ export function useAddToFriendsMutation(baseOptions?: Apollo.MutationHookOptions
 export type AddToFriendsMutationHookResult = ReturnType<typeof useAddToFriendsMutation>;
 export type AddToFriendsMutationResult = Apollo.MutationResult<AddToFriendsMutation>;
 export type AddToFriendsMutationOptions = Apollo.BaseMutationOptions<AddToFriendsMutation, AddToFriendsMutationVariables>;
+export const CreateRandomUserDocument = gql`
+    mutation createRandomUser {
+  createRandomUser {
+    ...LoggedUser
+  }
+}
+    ${LoggedUserFragmentDoc}`;
+export type CreateRandomUserMutationFn = Apollo.MutationFunction<CreateRandomUserMutation, CreateRandomUserMutationVariables>;
+
+/**
+ * __useCreateRandomUserMutation__
+ *
+ * To run a mutation, you first call `useCreateRandomUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateRandomUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createRandomUserMutation, { data, loading, error }] = useCreateRandomUserMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCreateRandomUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateRandomUserMutation, CreateRandomUserMutationVariables>) {
+        return Apollo.useMutation<CreateRandomUserMutation, CreateRandomUserMutationVariables>(CreateRandomUserDocument, baseOptions);
+      }
+export type CreateRandomUserMutationHookResult = ReturnType<typeof useCreateRandomUserMutation>;
+export type CreateRandomUserMutationResult = Apollo.MutationResult<CreateRandomUserMutation>;
+export type CreateRandomUserMutationOptions = Apollo.BaseMutationOptions<CreateRandomUserMutation, CreateRandomUserMutationVariables>;
 export const DeleteTweetDocument = gql`
     mutation deleteTweet($_id: String, $token: String!) {
   deleteTweet(_id: $_id, token: $token)

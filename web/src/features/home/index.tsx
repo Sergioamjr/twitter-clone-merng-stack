@@ -67,7 +67,10 @@ export default function Home({
 
   return (
     <Column>
-      <TweetInput onSubmitNewTweet={onSubmitNewTweetHandler} />
+      <TweetInput
+        userName={user.name}
+        onSubmitNewTweet={onSubmitNewTweetHandler}
+      />
       {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
         return (
           <TweetCard

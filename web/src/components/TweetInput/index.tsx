@@ -5,9 +5,11 @@ type Props = {
   contentDefault?: string;
   tweetLimit?: number;
   onSubmitNewTweet: (s: string) => void;
+  userName: string;
 };
 
 function TweetInput({
+  userName,
   contentDefault = "",
   tweetLimit = 150,
   onSubmitNewTweet,
@@ -32,7 +34,7 @@ function TweetInput({
   return (
     <S.Box>
       <S.Input
-        placeholder="what's going on?"
+        placeholder={`what's going on, ${userName}?`}
         hasError={isInvalid}
         rows="4"
         onChange={onChangeTweet}
