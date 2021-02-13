@@ -1,6 +1,7 @@
 import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import getRandomUser, { randomUserType } from "./utils/randomUser";
 export const secret = process.env.SECRET as string;
 
 export type TokenDecoded = {
@@ -47,6 +48,23 @@ export const query: QueryResolvers = {
 };
 
 export const mutation: MutationResolvers = {
+  createRandomUser: async (_, __, { dataSources }) => {
+    const getUniqueUser = async (): Promise<randomUserType> => {
+      const randomUser = getRandomUser();
+      const isRegistered = await dataSources.User.findOne({
+        email: randomUser.email,
+      });
+      if (isRegistered) {
+        return getUniqueUser();
+      }
+      return randomUser;
+    };
+
+    const user = await getUniqueUser();
+    const saved = await new dataSources.User(user).save();
+    saved.token = jwt.sign({ _id: saved._id }, secret);
+    return saved;
+  },
   addToFriends: async (_, { _id, newFriendId, token }, { dataSources }) => {
     await verifyToken(token as string);
     const currentUser = await dataSources.User.findOne({ _id });

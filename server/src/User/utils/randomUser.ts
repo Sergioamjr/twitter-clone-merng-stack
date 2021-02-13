@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-type User = {
+export type randomUserType = {
   name: string;
   lastName: string;
   userName: string;
@@ -10138,7 +10138,7 @@ const random = (list: string[]): string => {
   return list[~~(Math.random() * list.length)];
 };
 
-export default function getRandomUser(): User {
+export default function getRandomUser(): randomUserType {
   const name = random(firstName);
   const lastName = random(surname);
   const service = random(emailService);
