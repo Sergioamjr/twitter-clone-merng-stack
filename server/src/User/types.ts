@@ -30,6 +30,7 @@ export const types = gql`
   }
 
   extend type Mutation {
+    createRandomUser: LoggedUser
     addToFriends(_id: String!, newFriendId: String!, token: String!): LoggedUser
     removeFromFriends(
       _id: String!

@@ -43,6 +43,7 @@ export type QueryValidateTokenArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   root?: Maybe<Scalars['String']>;
+  createRandomUser?: Maybe<LoggedUser>;
   addToFriends?: Maybe<LoggedUser>;
   removeFromFriends?: Maybe<LoggedUser>;
   login?: Maybe<LoggedUser>;
@@ -317,6 +318,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createRandomUser?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType>;
   addToFriends?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationAddToFriendsArgs, '_id' | 'newFriendId' | 'token'>>;
   removeFromFriends?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationRemoveFromFriendsArgs, '_id' | 'friendId' | 'token'>>;
   login?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
