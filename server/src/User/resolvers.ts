@@ -104,6 +104,7 @@ export const mutation: MutationResolvers = {
   saveUser: async (_, { name, email, password, userName }, { dataSources }) => {
     const isRegistered = await dataSources.User.findOne({ email });
     const invalidUserName = await dataSources.User.findOne({ userName });
+    const { color } = getRandomUser();
 
     if (isRegistered) {
       throw Error("Usuário já cadastrado. Tente recuperar sua senha.");
@@ -114,6 +115,7 @@ export const mutation: MutationResolvers = {
 
     const hash = bcrypt.hashSync(password, 10);
     await new dataSources.User({
+      color,
       name,
       email,
       userName,

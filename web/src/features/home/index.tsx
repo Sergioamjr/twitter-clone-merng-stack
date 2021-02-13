@@ -71,24 +71,27 @@ export default function Home({
         userName={user.name}
         onSubmitNewTweet={onSubmitNewTweetHandler}
       />
-      {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
-        return (
-          <TweetCard
-            onLikeTweetHandler={() => onLikeTweetHandler(_id)}
-            onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
-            onDeleteTweet={() => onDeleteTweetHandler(_id)}
-            haveLikedTweet={likedBy.includes(user._id)}
-            showLikeButton={user._id !== authorId}
-            key={_id}
-            name={name}
-            userName={userName}
-            content={content}
-            _id={_id}
-            likedBy={likedBy}
-            authorId={authorId}
-          />
-        );
-      })}
+      {tweets.map(
+        ({ _id, content, userName, name, likedBy, authorId, createdAt }) => {
+          return (
+            <TweetCard
+              createdAt={createdAt}
+              onLikeTweetHandler={() => onLikeTweetHandler(_id)}
+              onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
+              onDeleteTweet={() => onDeleteTweetHandler(_id)}
+              haveLikedTweet={likedBy.includes(user._id)}
+              showLikeButton={user._id !== authorId}
+              key={_id}
+              name={name}
+              userName={userName}
+              content={content}
+              _id={_id}
+              likedBy={likedBy}
+              authorId={authorId}
+            />
+          );
+        }
+      )}
     </Column>
   );
 }

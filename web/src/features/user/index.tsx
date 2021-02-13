@@ -114,23 +114,34 @@ export default function User({
             onUnfollowHandler={onUnfollowHandler}
             disabledButton={followLoading || unfollowLoading}
           />
-          {tweets.map(({ _id, content, userName, name, likedBy, authorId }) => {
-            return (
-              <TweetCard
-                authorId={authorId}
-                haveLikedTweet={likedBy.includes(user._id)}
-                onLikeTweetHandler={() => onLikeTweetHandler(_id)}
-                onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
-                onDeleteTweet={() => onDeleteTweetHandler(_id)}
-                key={_id}
-                name={name}
-                userName={userName}
-                content={content}
-                _id={_id}
-                likedBy={likedBy}
-              />
-            );
-          })}
+          {tweets.map(
+            ({
+              _id,
+              content,
+              userName,
+              name,
+              likedBy,
+              authorId,
+              createdAt,
+            }) => {
+              return (
+                <TweetCard
+                  createdAt={createdAt}
+                  authorId={authorId}
+                  haveLikedTweet={likedBy.includes(user._id)}
+                  onLikeTweetHandler={() => onLikeTweetHandler(_id)}
+                  onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
+                  onDeleteTweet={() => onDeleteTweetHandler(_id)}
+                  key={_id}
+                  name={name}
+                  userName={userName}
+                  content={content}
+                  _id={_id}
+                  likedBy={likedBy}
+                />
+              );
+            }
+          )}
         </>
       )}
     </Column>

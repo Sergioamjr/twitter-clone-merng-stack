@@ -26,6 +26,7 @@ export const Avatar = styled.div`
 
 export const UserName = styled.p`
   color: ${colors.white};
+  margin-bottom: ${spacings.small};
 `;
 
 export const UserAlias = styled.p`

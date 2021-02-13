@@ -121,6 +121,7 @@ export type MutationDeslikeArgs = {
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']>;
+  color?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -130,6 +131,7 @@ export type User = {
 export type LoggedUser = {
   __typename?: 'LoggedUser';
   _id?: Maybe<Scalars['ID']>;
+  color?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -333,6 +335,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -342,6 +345,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoggedUser'] = ResolversParentTypes['LoggedUser']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

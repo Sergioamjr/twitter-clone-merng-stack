@@ -1,6 +1,6 @@
 import { BaseButton } from "~components/button/styled";
 import styled from "styled-components";
-import { colors, spacings } from "~theme";
+import { colors, spacings, fontSizes } from "~theme";
 
 export const Card = styled.section`
   border: 1px solid ${colors.light};
@@ -26,12 +26,12 @@ export const Name = styled.a`
 export const Username = styled.p`
   color: ${colors.lightLighten};
   margin-left: ${spacings.small};
+  font-size: ${fontSizes.extraSmall};
 `;
 
 export const Header = styled.div`
   margin-bottom: ${spacings.small};
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
 `;
 
 export const Footer = styled.footer`
@@ -46,7 +46,6 @@ export const Content = styled.main`
 export const Avatar = styled.div`
   width: 40px;
   height: 40px;
-  background: red;
   border-radius: 50%;
   display: grid;
   align-items: center;

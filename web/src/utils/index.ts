@@ -1,5 +1,5 @@
-export function getNameInitials(name: string): string {
-  const [firstName, secondName] = name.split(" ");
+export function getNameInitials(userName: string): string {
+  const [firstName, secondName] = userName.replace("_", " ").split(" ");
   let initials = firstName[0];
   if (secondName) {
     initials = `${firstName[0]}${secondName[0]}`;

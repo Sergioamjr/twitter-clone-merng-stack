@@ -3,6 +3,7 @@ import { gql } from "apollo-server";
 export const types = gql`
   type User {
     _id: ID
+    color: String
     name: String
     userName: String
     email: String
@@ -11,6 +12,7 @@ export const types = gql`
 
   type LoggedUser {
     _id: ID
+    color: String
     name: String
     userName: String
     email: String

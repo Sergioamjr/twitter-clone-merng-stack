@@ -9,7 +9,7 @@ export const defaultColors = {
   darkBackground: "#15202b",
   light: "rgb(56, 68, 77)",
   blue: "#39a2f2",
-  avatar: "#6567c7",
+  avatar: "#ff5b5b",
   green: "#33994a",
   red: "#cc3939",
 };
@@ -35,7 +35,7 @@ export const colors = {
 };
 
 export const spacings = {
-  extraSmall: "4px;",
+  extraSmall: "7px;",
   small: "8px",
   medium: "16px",
   large: "24px",

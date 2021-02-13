@@ -115,6 +115,7 @@ export type MutationDeslikeArgs = {
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']>;
+  color?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -124,6 +125,7 @@ export type User = {
 export type LoggedUser = {
   __typename?: 'LoggedUser';
   _id?: Maybe<Scalars['ID']>;
+  color?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -156,7 +158,7 @@ export enum CacheControlScope {
 
 export type LoggedUserFragment = (
   { __typename?: 'LoggedUser' }
-  & Pick<LoggedUser, '_id' | 'name' | 'token' | 'email' | 'userName' | 'friends'>
+  & Pick<LoggedUser, '_id' | 'color' | 'name' | 'token' | 'email' | 'userName' | 'friends'>
 );
 
 export type TweetFragment = (
@@ -166,7 +168,7 @@ export type TweetFragment = (
 
 export type UserFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'email' | 'name' | 'userName' | '_id' | 'friends'>
+  & Pick<User, 'email' | 'color' | 'name' | 'userName' | '_id' | 'friends'>
 );
 
 export type AddToFriendsMutationVariables = Exact<{
@@ -363,6 +365,7 @@ export type GetUsersQuery = (
 export const LoggedUserFragmentDoc = gql`
     fragment LoggedUser on LoggedUser {
   _id
+  color
   name
   token
   email
@@ -384,6 +387,7 @@ export const TweetFragmentDoc = gql`
 export const UserFragmentDoc = gql`
     fragment User on User {
   email
+  color
   name
   userName
   _id
