@@ -4,10 +4,10 @@ import {
   useDeleteTweetMutation,
   useLikeMutation,
   useDeslikeMutation,
-  useAddToFriendsMutation,
+  useFollowMutation,
   User as UserType,
   LoggedUser,
-  useRemoveFromFriendsMutation,
+  useUnfollowMutation,
 } from "~graphql/generated/graphql";
 import { Column } from "~components/template";
 import UserIntro from "~components/userIntro";
@@ -33,14 +33,8 @@ export default function User({
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
-  const [
-    onAddToFriends,
-    { loading: followLoading },
-  ] = useAddToFriendsMutation();
-  const [
-    onRemoveFromFriends,
-    { loading: unfollowLoading },
-  ] = useRemoveFromFriendsMutation();
+  const [onFollow, { loading: followLoading }] = useFollowMutation();
+  const [onUnfollow, { loading: unfollowLoading }] = useUnfollowMutation();
 
   const onDeleteTweetHandler = async (_id: string) => {
     await onDeleteTweet({
@@ -73,31 +67,40 @@ export default function User({
   };
 
   const onFollowHandler = async (_id) => {
-    const { data } = await onAddToFriends({
+    const { data } = await onFollow({
       variables: {
-        newFriendId: _id,
+        followingId: _id,
         _id: user._id,
         token: user.token,
       },
     });
 
-    actions.setUserNameAction({ friends: data.addToFriends.friends });
+    actions.setUserNameAction({
+      followers: data.follow.followers,
+      following: data.follow.following,
+    });
+    refetch();
   };
 
   const onUnfollowHandler = async (_id) => {
-    const { data } = await onRemoveFromFriends({
+    const { data } = await onUnfollow({
       variables: {
-        friendId: _id,
+        unfollowingId: _id,
         _id: user._id,
         token: user.token,
       },
     });
+    refetch();
 
-    actions.setUserNameAction({ friends: data.removeFromFriends.friends });
+    actions.setUserNameAction({
+      followers: data.unfollow.followers,
+      following: data.unfollow.following,
+    });
   };
-
-  const areFriends = user.friends.includes(queriedUser?._id);
+  const areFriends = user.following.includes(queriedUser?._id);
   const hideButton = user._id === queriedUser?._id;
+
+  console.log(queriedUser);
 
   return (
     <Column>

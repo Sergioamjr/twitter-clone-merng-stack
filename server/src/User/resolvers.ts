@@ -1,8 +1,4 @@
-import {
-  QueryResolvers,
-  MutationResolvers,
-  Tweet,
-} from "./../generated/graphql";
+import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import getRandomUser, { randomUserType } from "./utils/randomUser";
@@ -70,40 +66,42 @@ export const mutation: MutationResolvers = {
     saved.token = jwt.sign({ _id: saved._id }, secret);
     return saved;
   },
-  addToFriends: async (_, { _id, newFriendId, token }, { dataSources }) => {
+  follow: async (_, { _id, followingId, token }, { dataSources }) => {
     await verifyToken(token as string);
-    const currentUser = await dataSources.User.findOne({ _id });
-    const newFriend = await dataSources.User.findOne({
-      _id: newFriendId,
+    const mainUser = await dataSources.User.findOne({ _id });
+    const secondUser = await dataSources.User.findOne({
+      _id: followingId,
     });
 
-    const currentUserFriends = new Set(currentUser.friends);
-    currentUserFriends.add(newFriendId);
-    currentUser.friends = [...currentUserFriends];
+    const userFollowings = new Set(mainUser.following);
+    userFollowings.add(followingId);
+    mainUser.following = [...userFollowings];
 
-    const newFriendFriends = new Set(newFriend.friends);
-    newFriendFriends.add(_id);
-    newFriend.friends = [...newFriendFriends];
+    const followers = new Set(secondUser.followers);
+    followers.add(_id);
+    secondUser.followers = [...followers];
 
-    await dataSources.User.findOneAndUpdate({ _id: newFriendId }, newFriend);
-    await dataSources.User.findOneAndUpdate({ _id }, currentUser);
+    await dataSources.User.findOneAndUpdate({ _id: followingId }, secondUser);
+    await dataSources.User.findOneAndUpdate({ _id }, mainUser);
     return await dataSources.User.findOne({ _id });
   },
-  removeFromFriends: async (_, { _id, friendId, token }, { dataSources }) => {
+  unfollow: async (_, { _id, unfollowingId, token }, { dataSources }) => {
     await verifyToken(token as string);
-    const currentUser = await dataSources.User.findOne({ _id });
-    const newFriend = await dataSources.User.findOne({
-      _id: friendId,
+    const mainUser = await dataSources.User.findOne({ _id });
+    const secondUser = await dataSources.User.findOne({
+      _id: unfollowingId,
     });
 
-    currentUser.friends = currentUser.friends.filter(
-      (id: string) => id !== friendId
+    mainUser.following = mainUser.following.filter(
+      (id: string) => id !== unfollowingId
     );
 
-    newFriend.friends = newFriend.friends.filter((id: string) => id !== _id);
+    secondUser.followers = secondUser.followers.filter(
+      (id: string) => id !== _id
+    );
 
-    await dataSources.User.findOneAndUpdate({ _id: friendId }, newFriend);
-    await dataSources.User.findOneAndUpdate({ _id }, currentUser);
+    await dataSources.User.findOneAndUpdate({ _id: unfollowingId }, secondUser);
+    await dataSources.User.findOneAndUpdate({ _id }, mainUser);
     return await dataSources.User.findOne({ _id });
   },
   saveUser: async (_, { name, email, password, userName }, { dataSources }) => {

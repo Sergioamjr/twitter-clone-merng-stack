@@ -33,6 +33,21 @@ export const UserAlias = styled.p`
   color: ${colors.lightLighten};
 `;
 
+export const FollowersInfo = styled.div`
+  margin-top: 15px;
+  display: flex;
+`;
+
+export const Counter = styled.p`
+  color: ${colors.white};
+  margin-right: 5px;
+`;
+
+export const Followers = styled.p`
+  color: ${colors.lightLighten};
+  margin-right: 15px;
+`;
+
 export const Action = styled(Button)`
   margin-top: ${spacings.medium};
 `;

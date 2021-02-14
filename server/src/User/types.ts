@@ -7,7 +7,8 @@ export const types = gql`
     name: String
     userName: String
     email: String
-    friends: [String]
+    following: [String]
+    followers: [String]
   }
 
   type LoggedUser {
@@ -17,7 +18,8 @@ export const types = gql`
     userName: String
     email: String
     token: String
-    friends: [String]
+    following: [String]
+    followers: [String]
   }
 
   type UserAndTweets {
@@ -33,12 +35,8 @@ export const types = gql`
 
   extend type Mutation {
     createRandomUser: LoggedUser
-    addToFriends(_id: String!, newFriendId: String!, token: String!): LoggedUser
-    removeFromFriends(
-      _id: String!
-      friendId: String!
-      token: String!
-    ): LoggedUser
+    follow(_id: String!, followingId: String!, token: String!): LoggedUser
+    unfollow(_id: String!, unfollowingId: String!, token: String!): LoggedUser
     login(email: String, password: String): LoggedUser
     saveUser(
       userName: String!

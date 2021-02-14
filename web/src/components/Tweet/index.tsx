@@ -13,7 +13,6 @@ export type TweetProps = Required<TweetType> & {
   onDeleteTweet: (id: string) => void;
   onDeslikeTweetHandler: (id: string) => void;
   user?: Pick<User, "_id">;
-  showLikeButton: boolean;
 };
 
 const Tweet = ({
@@ -27,7 +26,6 @@ const Tweet = ({
   content,
   authorId,
   user,
-  showLikeButton,
   createdAt,
   color,
 }: TweetProps): JSX.Element => {
@@ -48,7 +46,7 @@ const Tweet = ({
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
-          {showLikeButton && (
+          {user._id !== authorId && (
             <S.ActionBtnGroup>
               <S.ActionBtn
                 aria-label="Like"

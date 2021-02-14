@@ -44,8 +44,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   root?: Maybe<Scalars['String']>;
   createRandomUser?: Maybe<LoggedUser>;
-  addToFriends?: Maybe<LoggedUser>;
-  removeFromFriends?: Maybe<LoggedUser>;
+  follow?: Maybe<LoggedUser>;
+  unfollow?: Maybe<LoggedUser>;
   login?: Maybe<LoggedUser>;
   saveUser?: Maybe<LoggedUser>;
   getMyFriendsTweets?: Maybe<Array<Maybe<Tweet>>>;
@@ -57,16 +57,16 @@ export type Mutation = {
 };
 
 
-export type MutationAddToFriendsArgs = {
+export type MutationFollowArgs = {
   _id: Scalars['String'];
-  newFriendId: Scalars['String'];
+  followingId: Scalars['String'];
   token: Scalars['String'];
 };
 
 
-export type MutationRemoveFromFriendsArgs = {
+export type MutationUnfollowArgs = {
   _id: Scalars['String'];
-  friendId: Scalars['String'];
+  unfollowingId: Scalars['String'];
   token: Scalars['String'];
 };
 
@@ -125,7 +125,8 @@ export type User = {
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  friends?: Maybe<Array<Maybe<Scalars['String']>>>;
+  following?: Maybe<Array<Maybe<Scalars['String']>>>;
+  followers?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type LoggedUser = {
@@ -136,7 +137,8 @@ export type LoggedUser = {
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
-  friends?: Maybe<Array<Maybe<Scalars['String']>>>;
+  following?: Maybe<Array<Maybe<Scalars['String']>>>;
+  followers?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UserAndTweets = {
@@ -322,8 +324,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   root?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createRandomUser?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType>;
-  addToFriends?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationAddToFriendsArgs, '_id' | 'newFriendId' | 'token'>>;
-  removeFromFriends?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationRemoveFromFriendsArgs, '_id' | 'friendId' | 'token'>>;
+  follow?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationFollowArgs, '_id' | 'followingId' | 'token'>>;
+  unfollow?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationUnfollowArgs, '_id' | 'unfollowingId' | 'token'>>;
   login?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
   saveUser?: Resolver<Maybe<ResolversTypes['LoggedUser']>, ParentType, ContextType, RequireFields<MutationSaveUserArgs, 'userName' | 'name' | 'email' | 'password'>>;
   getMyFriendsTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType, RequireFields<MutationGetMyFriendsTweetsArgs, '_id'>>;
@@ -340,7 +342,8 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  friends?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  following?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  followers?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -351,7 +354,8 @@ export type LoggedUserResolvers<ContextType = any, ParentType extends ResolversP
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  friends?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  following?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  followers?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

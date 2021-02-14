@@ -90,7 +90,6 @@ export default function Home({
               onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
               onDeleteTweet={() => onDeleteTweetHandler(_id)}
               haveLikedTweet={likedBy.includes(user._id)}
-              showLikeButton={user._id !== authorId}
               key={_id}
               name={name}
               userName={userName}

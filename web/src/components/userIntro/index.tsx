@@ -1,8 +1,8 @@
 import * as Styles from "./style";
-import { Tweet } from "~graphql/generated/graphql";
+import { User } from "~graphql/generated/graphql";
 import { getNameInitials } from "~utils";
 
-type UserIntroProps = Pick<Tweet, "userName" | "_id" | "name" | "color"> & {
+type UserIntroProps = Omit<User, "email"> & {
   onFollowHandler: (_id: string) => void;
   onUnfollowHandler: (_id: string) => void;
   areFriends: boolean;
@@ -14,6 +14,8 @@ export default function UserIntro({
   userName,
   _id,
   name,
+  following,
+  followers,
   hideButton,
   onUnfollowHandler,
   areFriends,
@@ -47,8 +49,17 @@ export default function UserIntro({
             </Styles.Action>
           )}
         </Styles.Spacer>
-        <Styles.UserName>{name}</Styles.UserName>
-        <Styles.UserAlias>@{userName}</Styles.UserAlias>
+        <div>
+          <Styles.UserName>{name}</Styles.UserName>
+          <Styles.UserAlias>@{userName}</Styles.UserAlias>
+        </div>
+        <Styles.FollowersInfo>
+          <Styles.Counter>{following.length}</Styles.Counter>
+          <Styles.Followers>Following</Styles.Followers>
+
+          <Styles.Counter>{followers.length}</Styles.Counter>
+          <Styles.Followers>Followers</Styles.Followers>
+        </Styles.FollowersInfo>
       </Styles.Content>
     </div>
   );

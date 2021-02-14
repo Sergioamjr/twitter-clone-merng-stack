@@ -167,7 +167,7 @@
             "deprecationReason": null
           },
           {
-            "name": "addToFriends",
+            "name": "follow",
             "description": null,
             "args": [
               {
@@ -185,7 +185,7 @@
                 "defaultValue": null
               },
               {
-                "name": "newFriendId",
+                "name": "followingId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -222,7 +222,7 @@
             "deprecationReason": null
           },
           {
-            "name": "removeFromFriends",
+            "name": "unfollow",
             "description": null,
             "args": [
               {
@@ -240,7 +240,7 @@
                 "defaultValue": null
               },
               {
-                "name": "friendId",
+                "name": "unfollowingId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -648,7 +648,23 @@
             "deprecationReason": null
           },
           {
-            "name": "friends",
+            "name": "following",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "followers",
             "description": null,
             "args": [],
             "type": {
@@ -757,7 +773,23 @@
             "deprecationReason": null
           },
           {
-            "name": "friends",
+            "name": "following",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "followers",
             "description": null,
             "args": [],
             "type": {

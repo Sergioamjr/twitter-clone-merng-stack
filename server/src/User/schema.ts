@@ -8,7 +8,8 @@ const [User, userSchema] = createDBSchema(
     email: joi.string().required(),
     color: joi.string(),
     password: joi.string().required(),
-    friends: joi.array().items(joi.string()),
+    followers: joi.array().items(joi.string()),
+    following: joi.array().items(joi.string()),
   },
   "User"
 );

@@ -8,6 +8,7 @@ export default gql`
     token
     email
     userName
-    friends
+    followers
+    following
   }
 `;
