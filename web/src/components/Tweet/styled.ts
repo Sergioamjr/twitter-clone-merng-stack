@@ -63,7 +63,7 @@ export const Content = styled.main`
   margin-bottom: ${spacings.medium};
 `;
 
-export const Avatar = styled.div<{ avatarColor: string }>`
+export const Avatar = styled.a<{ avatarColor: string }>`
   width: 49px;
   height: 49px;
   border-radius: 50%;

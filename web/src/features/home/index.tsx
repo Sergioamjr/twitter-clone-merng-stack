@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import TweetCard from "~components/Tweet";
 import TweetInput from "~components/TweetInput";
 import {
@@ -14,6 +14,7 @@ import { Column } from "~components/template";
 export type HomeProps = {
   tweets?: Tweet[];
   user: LoggedUser;
+  loading: boolean;
   refetch: () => void;
 };
 
@@ -26,6 +27,10 @@ export default function Home({
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const onSubmitNewTweetHandler = useCallback(async (content) => {
     await onSubmitNewTweet({
@@ -71,6 +76,7 @@ export default function Home({
         userName={user.name}
         onSubmitNewTweet={onSubmitNewTweetHandler}
       />
+
       {tweets.map(
         ({
           _id,
@@ -82,14 +88,13 @@ export default function Home({
           createdAt,
           avatarColor,
         }) => {
-          console.log("avatarColor", avatarColor);
           return (
             <TweetCard
               avatarColor={avatarColor}
               createdAt={createdAt}
-              onLikeTweetHandler={() => onLikeTweetHandler(_id)}
-              onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
-              onDeleteTweet={() => onDeleteTweetHandler(_id)}
+              onLikeTweetHandler={onLikeTweetHandler}
+              onDeslikeTweetHandler={onDeslikeTweetHandler}
+              onDeleteTweet={onDeleteTweetHandler}
               haveLikedTweet={likedBy.includes(user._id)}
               key={_id}
               name={name}

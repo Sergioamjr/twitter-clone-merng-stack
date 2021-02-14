@@ -22,6 +22,7 @@ export type Query = {
   getUserById?: Maybe<UserAndTweets>;
   validateToken?: Maybe<Scalars['Boolean']>;
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
+  getTweetById?: Maybe<Tweet>;
 };
 
 
@@ -32,6 +33,11 @@ export type QueryGetUserByIdArgs = {
 
 export type QueryValidateTokenArgs = {
   token: Scalars['String'];
+};
+
+
+export type QueryGetTweetByIdArgs = {
+  _id: Scalars['String'];
 };
 
 export type Mutation = {
@@ -322,6 +328,19 @@ export type UnfollowMutation = (
   & { unfollow?: Maybe<(
     { __typename?: 'LoggedUser' }
     & LoggedUserFragment
+  )> }
+);
+
+export type GetTweetByIdQueryVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type GetTweetByIdQuery = (
+  { __typename?: 'Query' }
+  & { getTweetById?: Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
   )> }
 );
 
@@ -762,6 +781,39 @@ export function useUnfollowMutation(baseOptions?: Apollo.MutationHookOptions<Unf
 export type UnfollowMutationHookResult = ReturnType<typeof useUnfollowMutation>;
 export type UnfollowMutationResult = Apollo.MutationResult<UnfollowMutation>;
 export type UnfollowMutationOptions = Apollo.BaseMutationOptions<UnfollowMutation, UnfollowMutationVariables>;
+export const GetTweetByIdDocument = gql`
+    query getTweetById($_id: String!) {
+  getTweetById(_id: $_id) {
+    ...Tweet
+  }
+}
+    ${TweetFragmentDoc}`;
+
+/**
+ * __useGetTweetByIdQuery__
+ *
+ * To run a query within a React component, call `useGetTweetByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTweetByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTweetByIdQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useGetTweetByIdQuery(baseOptions: Apollo.QueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables>) {
+        return Apollo.useQuery<GetTweetByIdQuery, GetTweetByIdQueryVariables>(GetTweetByIdDocument, baseOptions);
+      }
+export function useGetTweetByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables>) {
+          return Apollo.useLazyQuery<GetTweetByIdQuery, GetTweetByIdQueryVariables>(GetTweetByIdDocument, baseOptions);
+        }
+export type GetTweetByIdQueryHookResult = ReturnType<typeof useGetTweetByIdQuery>;
+export type GetTweetByIdLazyQueryHookResult = ReturnType<typeof useGetTweetByIdLazyQuery>;
+export type GetTweetByIdQueryResult = Apollo.QueryResult<GetTweetByIdQuery, GetTweetByIdQueryVariables>;
 export const GetTweetsDocument = gql`
     query getTweets {
   getTweets {

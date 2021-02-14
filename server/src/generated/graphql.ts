@@ -28,6 +28,7 @@ export type Query = {
   getUserById?: Maybe<UserAndTweets>;
   validateToken?: Maybe<Scalars['Boolean']>;
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
+  getTweetById?: Maybe<Array<Maybe<Tweet>>>;
 };
 
 
@@ -38,6 +39,11 @@ export type QueryGetUserByIdArgs = {
 
 export type QueryValidateTokenArgs = {
   token: Scalars['String'];
+};
+
+
+export type QueryGetTweetByIdArgs = {
+  _id: Scalars['String'];
 };
 
 export type Mutation = {
@@ -320,6 +326,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserById?: Resolver<Maybe<ResolversTypes['UserAndTweets']>, ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, '_id'>>;
   validateToken?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryValidateTokenArgs, 'token'>>;
   getTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
+  getTweetById?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType, RequireFields<QueryGetTweetByIdArgs, '_id'>>;
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{

@@ -15,6 +15,7 @@ export const types = gql`
 
   extend type Query {
     getTweets: [Tweet]
+    getTweetById(_id: String!): Tweet
   }
 
   extend type Mutation {

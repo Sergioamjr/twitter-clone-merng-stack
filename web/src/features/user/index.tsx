@@ -104,7 +104,7 @@ export default function User({
     <Column>
       <GoBackBar />
       {userNotFound ? (
-        <UserNotFound />
+        <UserNotFound type="User" />
       ) : (
         <>
           <UserIntro

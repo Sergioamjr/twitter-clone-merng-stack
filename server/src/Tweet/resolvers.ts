@@ -7,6 +7,9 @@ export const query: QueryResolvers = {
       .sort({ createdAt: -1 })
       .exec();
   },
+  getTweetById: async (_, { _id }, context) => {
+    return await context.dataSources.Tweet.findOne({ _id });
+  },
 };
 
 export const mutation: MutationResolvers = {
