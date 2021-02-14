@@ -100,8 +100,6 @@ export default function User({
   const areFriends = user.following.includes(queriedUser?._id);
   const hideButton = user._id === queriedUser?._id;
 
-  console.log(queriedUser);
-
   return (
     <Column>
       <GoBackBar />

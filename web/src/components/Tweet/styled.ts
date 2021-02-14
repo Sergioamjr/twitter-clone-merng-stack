@@ -26,7 +26,7 @@ export const Name = styled.a`
 export const Username = styled.p`
   color: ${colors.lightLighten};
   margin-left: ${spacings.small};
-  font-size: ${fontSizes.extraSmall};
+  font-size: ${fontSizes.small};
 `;
 
 export const Header = styled.div`

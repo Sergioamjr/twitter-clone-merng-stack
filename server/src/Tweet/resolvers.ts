@@ -25,13 +25,18 @@ export const mutation: MutationResolvers = {
   like: async (_, { _id, token }, context) => {
     try {
       const decoded = await verifyToken(token as string);
-      const tweet = await context.dataSources.Tweet.findOne({ _id });
-      if (!tweet) Error("Tweet não existe");
-      const likes = new Set(tweet.likedBy);
+      const findTweet = await context.dataSources.Tweet.findOne({ _id });
+      if (!findTweet) Error("Tweet não existe");
+      const likes = new Set(findTweet.likedBy);
       likes.add((<TokenDecoded>decoded)._id);
-      tweet.likedBy = [...likes];
-      await context.dataSources.Tweet.findOneAndUpdate({ _id }, tweet);
-      return await context.dataSources.Tweet.findOne({ _id });
+      findTweet.likedBy = [...likes];
+      await context.dataSources.Tweet.findOneAndUpdate({ _id }, findTweet);
+      const tweet = await context.dataSources.Tweet.findOne({ _id });
+      const { color } = await context.dataSources.User.findOne({
+        _id: findTweet.authorId,
+      });
+      tweet["color"] = color;
+      return tweet;
     } catch (err) {
       throw Error(err);
     }
@@ -39,14 +44,19 @@ export const mutation: MutationResolvers = {
   deslike: async (_, { _id, token }, context) => {
     try {
       const decoded = await verifyToken(token as string);
-      const tweet = await context.dataSources.Tweet.findOne({ _id });
-      if (!tweet) Error("Tweet não existe");
-      const newLikedBy = tweet.likedBy.filter(
+      const findTweet = await context.dataSources.Tweet.findOne({ _id });
+      if (!findTweet) Error("Tweet não existe");
+      const newLikedBy = findTweet.likedBy.filter(
         (id: string) => id !== (<TokenDecoded>decoded)._id
       );
-      tweet.likedBy = newLikedBy;
-      await context.dataSources.Tweet.findOneAndUpdate({ _id }, tweet);
-      return await context.dataSources.Tweet.findOne({ _id });
+      findTweet.likedBy = newLikedBy;
+      await context.dataSources.Tweet.findOneAndUpdate({ _id }, findTweet);
+      const tweet = await context.dataSources.Tweet.findOne({ _id });
+      const { color } = await context.dataSources.User.findOne({
+        _id: findTweet.authorId,
+      });
+      tweet["color"] = color;
+      return tweet;
     } catch (err) {
       throw Error(err);
     }
@@ -64,8 +74,6 @@ export const mutation: MutationResolvers = {
       ...tweet,
       color,
     }));
-
-    console.log(withColors);
 
     return withColors;
   },
