@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { connect } from "react-redux";
-import { formatDistance } from "date-fns";
+import { formatDistance, format } from "date-fns";
 import { Heart, Bin } from "~icons";
 import * as S from "./styled";
 import { colors } from "~theme";
@@ -29,17 +29,19 @@ const Tweet = ({
   createdAt,
   color,
 }: TweetProps): JSX.Element => {
+  const dateDesktop = formatDistance(new Date(createdAt), new Date());
+  const dateMobile = format(new Date(createdAt), "MMM/yyyy");
   return (
     <S.Card tabIndex={0}>
       <S.Avatar color={color}>{getNameInitials(userName)}</S.Avatar>
-      <div>
+      <S.TweetContent>
         <S.Header>
           <S.Name href={`/user/${authorId}`} tabIndex={0}>
             {name}
           </S.Name>
-          <S.Username>@{userName}</S.Username>
           <S.Username>
-            - {formatDistance(new Date(createdAt), new Date())}
+            @{userName} · <S.ShowOnMobile>{dateMobile}</S.ShowOnMobile>
+            <S.ShowOnDesktop>{dateDesktop}</S.ShowOnDesktop>
           </S.Username>
         </S.Header>
         <S.Content>
@@ -70,7 +72,7 @@ const Tweet = ({
             </S.ActionBtn>
           )}
         </S.Footer>
-      </div>
+      </S.TweetContent>
     </S.Card>
   );
 };

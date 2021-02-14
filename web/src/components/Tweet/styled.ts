@@ -7,10 +7,23 @@ export const Card = styled.section`
   border-left: 0;
   border-right: 0;
   padding: ${spacings.small};
-  display: grid;
-  grid-template-columns: 50px 1fr;
+  display: flex;
+  justify-content: space-between;
   &:not(:last-child) {
     border-bottom: 0;
+  }
+`;
+
+export const ShowOnMobile = styled.span`
+  @media screen and (min-width: 762px) {
+    display: none;
+  }
+`;
+
+export const ShowOnDesktop = styled.span`
+  display: none;
+  @media screen and (min-width: 762px) {
+    display: inline-block;
   }
 `;
 
@@ -23,10 +36,17 @@ export const Name = styled.a`
   color: ${colors.white};
 `;
 
+export const TweetContent = styled.div`
+  width: calc(100% - 60px);
+`;
+
 export const Username = styled.p`
   color: ${colors.lightLighten};
   margin-left: ${spacings.small};
   font-size: ${fontSizes.small};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Header = styled.div`
@@ -44,8 +64,8 @@ export const Content = styled.main`
 `;
 
 export const Avatar = styled.div<{ color: string }>`
-  width: 40px;
-  height: 40px;
+  width: 49px;
+  height: 49px;
   border-radius: 50%;
   display: grid;
   align-items: center;
