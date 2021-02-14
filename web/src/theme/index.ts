@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { darken, lighten } from "polished";
 
 const diff = 0.2;
+const diffDarken = 0.02;
 
 export const defaultColors = {
   white: "#fff",
@@ -16,14 +17,14 @@ export const defaultColors = {
 
 export const colors = {
   ...defaultColors,
-  darkDarken: darken(diff, defaultColors.dark),
-  redDarken: darken(diff, defaultColors.red),
-  whiteDarken: darken(diff, defaultColors.white),
-  darkBackgroundDarken: darken(diff, defaultColors.darkBackground),
-  lightDarken: darken(diff, defaultColors.light),
-  blueDarken: darken(diff, defaultColors.blue),
-  avatarDarken: darken(diff, defaultColors.avatar),
-  greenDarken: darken(diff, defaultColors.green),
+  darkDarken: darken(diffDarken, defaultColors.dark),
+  redDarken: darken(diffDarken, defaultColors.red),
+  whiteDarken: darken(diffDarken, defaultColors.white),
+  darkBackgroundDarken: darken(0.02, defaultColors.darkBackground),
+  lightDarken: darken(diffDarken, defaultColors.light),
+  blueDarken: darken(diffDarken, defaultColors.blue),
+  avatarDarken: darken(diffDarken, defaultColors.avatar),
+  greenDarken: darken(diffDarken, defaultColors.green),
   redLighten: lighten(diff, defaultColors.red),
   whiteLighten: lighten(diff, defaultColors.white),
   darkBackgroundLighten: lighten(diff, defaultColors.darkBackground),

@@ -9,8 +9,12 @@ export const Card = styled.section`
   padding: ${spacings.small};
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
   &:not(:last-child) {
     border-bottom: 0;
+  }
+  &:hover {
+    background: ${colors.darkBackgroundDarken};
   }
 `;
 
@@ -86,9 +90,6 @@ export const ActionBtn = styled.button`
   transition: all 0.4s ease;
   &:hover {
     background: transparent;
-    svg path {
-      fill: ${colors.blue};
-    }
   }
 `;
 

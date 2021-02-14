@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, spacings } from "~theme";
+import { colors, spacings, fontSizes } from "~theme";
 
 export const GoBack = styled.div`
   height: 50px;
@@ -11,4 +11,11 @@ export const GoBack = styled.div`
   position: sticky;
   top: 0;
   z-index: 1;
+`;
+
+export const Page = styled.p`
+  color: ${colors.white};
+  font-size: ${fontSizes.normal};
+  margin-left: ${spacings.medium};
+  font-weight: bold;
 `;

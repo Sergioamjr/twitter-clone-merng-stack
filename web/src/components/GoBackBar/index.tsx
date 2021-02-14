@@ -4,7 +4,11 @@ import Button from "~components/button";
 import { colors } from "~theme";
 import Link from "next/link";
 
-export default function GoBackBar(): JSX.Element {
+type Props = {
+  type: string;
+};
+
+export default function GoBackBar({ type }: Props): JSX.Element {
   return (
     <Styles.GoBack>
       <Link href="/">
@@ -14,6 +18,7 @@ export default function GoBackBar(): JSX.Element {
           </Button>
         </a>
       </Link>
+      {type && <Styles.Page>{type}</Styles.Page>}
     </Styles.GoBack>
   );
 }

@@ -58,7 +58,7 @@ export default function TweetPage({
 
   return (
     <>
-      <GoBackBar />
+      <GoBackBar type="Tweet" />
       {tweet ? (
         <BaseTweet
           onLikeTweetHandler={onLikeTweetHandler}

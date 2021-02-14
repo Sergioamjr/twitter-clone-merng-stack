@@ -102,7 +102,7 @@ export default function User({
 
   return (
     <Column>
-      <GoBackBar />
+      <GoBackBar type={queriedUser?.name ?? ""} />
       {userNotFound ? (
         <UserNotFound type="User" />
       ) : (
