@@ -1,0 +1,21 @@
+{
+  "name": "twitter-merng-stack",
+  "version": "1.0.0",
+  "description": "- [x] Posting - [x] Deleting - [x] Listing tweets - [x] Changing icons - [x] Likeing/Desleking - [x] Viewing user profile - [ ] Adding/Removing as a friend - [ ] Creating account, login automagic - [ ] Documentation - [ ] Deploy - [ ] Usar .env",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "git subtree push --prefix server heroku master",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sergioamjr/twitter-merng-stack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sergioamjr/twitter-merng-stack/issues"
+  },
+  "homepage": "https://github.com/Sergioamjr/twitter-merng-stack#readme"
+}

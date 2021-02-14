@@ -10,6 +10,7 @@ export const Header = styled.div`
 `;
 
 export const Avatar = styled.div<{ avatarColor: string }>`
+  box-shadow: 2px 3px 20px #000;
   width: 80px;
   height: 80px;
   background: ${({ avatarColor }) => avatarColor};
