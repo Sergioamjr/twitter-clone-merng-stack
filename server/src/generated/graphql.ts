@@ -155,6 +155,7 @@ export type Tweet = {
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
+  avatarColor?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
   likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
@@ -372,6 +373,7 @@ export type TweetResolvers<ContextType = any, ParentType extends ResolversParent
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  avatarColor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   likedBy?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

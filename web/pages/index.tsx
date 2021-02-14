@@ -10,7 +10,7 @@ type HomePageType = {
 
 function HomePage({ user }: HomePageType): JSX.Element {
   const { data, refetch } = useGetTweetsQuery();
-
+  console.log(data?.getTweets);
   return (
     <Auth>
       <Page>

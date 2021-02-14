@@ -27,13 +27,14 @@ const Tweet = ({
   authorId,
   user,
   createdAt,
-  color,
+  avatarColor,
 }: TweetProps): JSX.Element => {
+  console.log("avatarColor 222", avatarColor);
   const dateDesktop = formatDistance(new Date(createdAt), new Date());
   const dateMobile = format(new Date(createdAt), "MMM/yyyy");
   return (
     <S.Card tabIndex={0}>
-      <S.Avatar color={color}>{getNameInitials(userName)}</S.Avatar>
+      <S.Avatar avatarColor={avatarColor}>{getNameInitials(userName)}</S.Avatar>
       <S.TweetContent>
         <S.Header>
           <S.Name href={`/user/${authorId}`} tabIndex={0}>

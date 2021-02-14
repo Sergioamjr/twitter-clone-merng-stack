@@ -4,6 +4,7 @@ import createDBSchema from "../utils/createDBSchema";
 const [Tweet, tweetSchema] = createDBSchema(
   {
     authorId: joi.string().required(),
+    avatarColor: joi.string(),
     createdAt: joi.string().required(),
     name: joi.string().required(),
     userName: joi.string().required(),

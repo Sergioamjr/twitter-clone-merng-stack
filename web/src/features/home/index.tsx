@@ -80,11 +80,12 @@ export default function Home({
           likedBy,
           authorId,
           createdAt,
-          color,
+          avatarColor,
         }) => {
+          console.log("avatarColor", avatarColor);
           return (
             <TweetCard
-              color={color}
+              avatarColor={avatarColor}
               createdAt={createdAt}
               onLikeTweetHandler={() => onLikeTweetHandler(_id)}
               onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}

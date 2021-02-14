@@ -63,7 +63,7 @@ export const Content = styled.main`
   margin-bottom: ${spacings.medium};
 `;
 
-export const Avatar = styled.div<{ color: string }>`
+export const Avatar = styled.div<{ avatarColor: string }>`
   width: 49px;
   height: 49px;
   border-radius: 50%;
@@ -71,7 +71,7 @@ export const Avatar = styled.div<{ color: string }>`
   align-items: center;
   justify-content: center;
   color: ${colors.white};
-  background: ${({ color }) => color};
+  background: ${({ avatarColor }) => avatarColor};
 `;
 
 export const ActionBtn = styled.button`

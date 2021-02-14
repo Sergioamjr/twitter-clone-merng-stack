@@ -8,6 +8,7 @@ export const types = gql`
     name: String
     userName: String
     createdAt: String
+    avatarColor: String
     content: String
     likedBy: [String]
   }

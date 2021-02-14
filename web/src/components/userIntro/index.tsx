@@ -28,7 +28,7 @@ export default function UserIntro({
       <Styles.Header />
       <Styles.Content>
         <Styles.Spacer>
-          <Styles.Avatar color={color}>
+          <Styles.Avatar avatarColor={color}>
             {getNameInitials(userName)}
           </Styles.Avatar>
           {areFriends && !hideButton && (
