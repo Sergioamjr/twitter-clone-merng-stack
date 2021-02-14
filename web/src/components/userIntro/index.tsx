@@ -2,7 +2,7 @@ import * as Styles from "./style";
 import { Tweet } from "~graphql/generated/graphql";
 import { getNameInitials } from "~utils";
 
-type UserIntroProps = Pick<Tweet, "userName" | "_id" | "name"> & {
+type UserIntroProps = Pick<Tweet, "userName" | "_id" | "name" | "color"> & {
   onFollowHandler: (_id: string) => void;
   onUnfollowHandler: (_id: string) => void;
   areFriends: boolean;
@@ -19,13 +19,16 @@ export default function UserIntro({
   areFriends,
   onFollowHandler,
   disabledButton,
+  color,
 }: UserIntroProps): JSX.Element {
   return (
     <div>
       <Styles.Header />
       <Styles.Content>
         <Styles.Spacer>
-          <Styles.Avatar>{getNameInitials(name)}</Styles.Avatar>
+          <Styles.Avatar color={color}>
+            {getNameInitials(userName)}
+          </Styles.Avatar>
           {areFriends && !hideButton && (
             <Styles.Action
               disabled={disabledButton}

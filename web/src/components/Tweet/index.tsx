@@ -29,10 +29,11 @@ const Tweet = ({
   user,
   showLikeButton,
   createdAt,
+  color,
 }: TweetProps): JSX.Element => {
   return (
     <S.Card tabIndex={0}>
-      <S.Avatar>{getNameInitials(userName)}</S.Avatar>
+      <S.Avatar color={color}>{getNameInitials(userName)}</S.Avatar>
       <div>
         <S.Header>
           <S.Name href={`/user/${authorId}`} tabIndex={0}>

@@ -1,11 +1,23 @@
 import { verifyToken, TokenDecoded } from "../User/resolvers";
-import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
+import {
+  QueryResolvers,
+  MutationResolvers,
+  Tweet,
+} from "./../generated/graphql";
 
 export const query: QueryResolvers = {
   getTweets: async (_, args, context) => {
-    return await context.dataSources.Tweet.find()
+    const tweets = await context.dataSources.Tweet.find()
       .sort({ createdAt: -1 })
       .exec();
+
+    for await (const [index, tweet] of tweets.entries()) {
+      const { color } = await context.dataSources.User.findOne({
+        _id: tweet.authorId,
+      });
+      tweets[index].color = color;
+    }
+    return tweets;
   },
 };
 
@@ -40,9 +52,22 @@ export const mutation: MutationResolvers = {
     }
   },
   getTweetByUserID: async (_, { _id }, context) => {
-    return await context.dataSources.Tweet.find({ authorId: _id })
+    const tweets = await context.dataSources.Tweet.find({ authorId: _id })
       .sort({ createdAt: -1 })
       .exec();
+
+    const { color } = await context.dataSources.User.findOne({
+      _id,
+    });
+
+    const withColors = tweets.map((tweet: Tweet) => ({
+      ...tweet,
+      color,
+    }));
+
+    console.log(withColors);
+
+    return withColors;
   },
   getMyFriendsTweets: async (_, { _id }, context) => {
     return await context.dataSources.Tweet.find({ authorId: { $ne: _id } });

@@ -4,6 +4,7 @@ export default gql`
   fragment Tweet on Tweet {
     content
     _id
+    color
     authorId
     name
     userName

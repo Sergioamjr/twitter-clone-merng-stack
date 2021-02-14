@@ -126,6 +126,7 @@ export default function User({
             }) => {
               return (
                 <TweetCard
+                  color={queriedUser.color}
                   createdAt={createdAt}
                   authorId={authorId}
                   haveLikedTweet={likedBy.includes(user._id)}

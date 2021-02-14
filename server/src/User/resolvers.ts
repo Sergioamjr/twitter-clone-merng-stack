@@ -1,4 +1,8 @@
-import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
+import {
+  QueryResolvers,
+  MutationResolvers,
+  Tweet,
+} from "./../generated/graphql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import getRandomUser, { randomUserType } from "./utils/randomUser";
@@ -29,6 +33,7 @@ export const query: QueryResolvers = {
     try {
       const user = await context.dataSources.User.findOne({ _id });
       const tweets = await context.dataSources.Tweet.find({ authorId: _id });
+
       return {
         user,
         tweets,

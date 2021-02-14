@@ -26,6 +26,11 @@ export const Box = styled.div`
 
 export const Counter = styled.span`
   margin-left: ${spacings.small};
-  font-size: ${fontSizes.extraSmall};
+  font-size: ${fontSizes.small};
   color: ${colors.whiteDarken};
+`;
+
+export const TweetAction = styled.div`
+  display: flex;
+  align-items: center;
 `;

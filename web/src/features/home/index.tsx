@@ -72,9 +72,19 @@ export default function Home({
         onSubmitNewTweet={onSubmitNewTweetHandler}
       />
       {tweets.map(
-        ({ _id, content, userName, name, likedBy, authorId, createdAt }) => {
+        ({
+          _id,
+          content,
+          userName,
+          name,
+          likedBy,
+          authorId,
+          createdAt,
+          color,
+        }) => {
           return (
             <TweetCard
+              color={color}
               createdAt={createdAt}
               onLikeTweetHandler={() => onLikeTweetHandler(_id)}
               onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}

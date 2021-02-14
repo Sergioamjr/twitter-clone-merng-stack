@@ -9,10 +9,10 @@ export const Header = styled.div`
   background-size: cover;
 `;
 
-export const Avatar = styled.div`
+export const Avatar = styled.div<{ color: string }>`
   width: 80px;
   height: 80px;
-  background: #ea5959;
+  background: ${({ color }) => color};
   border-radius: 50%;
   color: ${colors.white};
   display: flex;

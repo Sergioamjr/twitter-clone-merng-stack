@@ -41,10 +41,12 @@ function TweetInput({
         type="text"
         value={content}
       ></S.Input>
-      <S.Button onClick={onSubmitHandler} disabled={!size || isInvalid}>
-        Tweet
-      </S.Button>
-      {!!size && <S.Counter>{isInvalid ? invalid : valid}</S.Counter>}
+      <S.TweetAction>
+        <S.Button onClick={onSubmitHandler} disabled={!size || isInvalid}>
+          Tweet
+        </S.Button>
+        {!!size && <S.Counter>{isInvalid ? invalid : valid}</S.Counter>}
+      </S.TweetAction>
     </S.Box>
   );
 }

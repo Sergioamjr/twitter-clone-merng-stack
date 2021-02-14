@@ -8,6 +8,7 @@ export default {
 
 export const Primary = (): JSX.Element => (
   <TweetInput
+    userName="john_mac"
     onSubmitNewTweet={(e) => {
       console.log("subit", e);
     }}
@@ -16,6 +17,7 @@ export const Primary = (): JSX.Element => (
 
 export const WithError = (): JSX.Element => (
   <TweetInput
+    userName="john_mac"
     onSubmitNewTweet={(e) => {
       console.log("subit", e);
     }}

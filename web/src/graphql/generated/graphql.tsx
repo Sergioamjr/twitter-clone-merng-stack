@@ -142,6 +142,7 @@ export type UserAndTweets = {
 export type Tweet = {
   __typename?: 'Tweet';
   _id?: Maybe<Scalars['ID']>;
+  color?: Maybe<Scalars['String']>;
   authorId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
@@ -163,7 +164,7 @@ export type LoggedUserFragment = (
 
 export type TweetFragment = (
   { __typename?: 'Tweet' }
-  & Pick<Tweet, 'content' | '_id' | 'authorId' | 'name' | 'userName' | 'likedBy' | 'createdAt'>
+  & Pick<Tweet, 'content' | '_id' | 'color' | 'authorId' | 'name' | 'userName' | 'likedBy' | 'createdAt'>
 );
 
 export type UserFragment = (
@@ -377,6 +378,7 @@ export const TweetFragmentDoc = gql`
     fragment Tweet on Tweet {
   content
   _id
+  color
   authorId
   name
   userName
