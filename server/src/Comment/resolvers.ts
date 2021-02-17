@@ -10,6 +10,35 @@ export const commentsQueries: QueryResolvers = {
   },
 };
 export const commentsMutations: MutationResolvers = {
+  likeComment: async (_, { _id, token }, context) => {
+    try {
+      const decoded = await verifyToken(token as string);
+      const comment = await context.dataSources.Comment.findOne({ _id });
+      if (!comment) Error("Comentário não existe");
+      const likes = new Set(comment.likedBy);
+      likes.add((<TokenDecoded>decoded)._id);
+      comment.likedBy = [...likes];
+      await context.dataSources.Comment.findOneAndUpdate({ _id }, comment);
+      return await context.dataSources.Comment.findOne({ _id });
+    } catch (err) {
+      throw Error(err);
+    }
+  },
+  deslikeComment: async (_, { _id, token }, context) => {
+    try {
+      const decoded = await verifyToken(token as string);
+      const comment = await context.dataSources.Comment.findOne({ _id });
+      if (!comment) Error("Comentário não existe");
+      const newLikedBy = comment.likedBy.filter(
+        (id: string) => id !== (<TokenDecoded>decoded)._id
+      );
+      comment.likedBy = newLikedBy;
+      await context.dataSources.Comment.findOneAndUpdate({ _id }, comment);
+      return await context.dataSources.Comment.findOne({ _id });
+    } catch (err) {
+      throw Error(err);
+    }
+  },
   deleteComment: async (_, { _id, token }, context) => {
     try {
       await verifyToken(token as string);

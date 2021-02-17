@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useCallback } from "react";
 import {
   LoggedUser,
   Tweet as TweetType,
@@ -8,6 +7,8 @@ import {
   useLikeMutation,
   useDeslikeMutation,
   useNewCommentMutation,
+  useDeslikeCommentMutation,
+  useLikeCommentMutation,
 } from "~graphql/generated/graphql";
 import Tweet from "~components/Tweet";
 import GoBackBar from "~components/GoBackBar";
@@ -32,6 +33,28 @@ export default function TweetPage({
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
+  const [onLikeComment] = useLikeCommentMutation();
+  const [onDeslikeComment] = useDeslikeCommentMutation();
+
+  const onLikeCommentHandler = async (_id: string) => {
+    await onLikeComment({
+      variables: {
+        _id,
+        token: user.token,
+      },
+    });
+    refetch();
+  };
+
+  const onDeslikeCommentHandler = async (_id: string) => {
+    await onDeslikeComment({
+      variables: {
+        _id,
+        token: user.token,
+      },
+    });
+    refetch();
+  };
 
   const onSubmitNewCommentHandler = async (content) => {
     await onSubmitNewComment({
@@ -44,7 +67,7 @@ export default function TweetPage({
     refetch();
   };
 
-  const onDeleteTweetHandler = useCallback(async (_id: string) => {
+  const onDeleteTweetHandler = async (_id: string) => {
     await onDeleteTweet({
       variables: {
         _id,
@@ -53,25 +76,27 @@ export default function TweetPage({
     });
     refetch();
     router.push("/");
-  }, []);
+  };
 
-  const onLikeTweetHandler = useCallback(async (_id: string) => {
+  const onLikeTweetHandler = async (_id: string) => {
     await onLikeTweet({
       variables: {
         _id,
         token: user.token,
       },
     });
-  }, []);
+    refetch();
+  };
 
-  const onDeslikeTweetHandler = useCallback(async (_id: string) => {
+  const onDeslikeTweetHandler = async (_id: string) => {
     await onDeslikeTweet({
       variables: {
         _id,
         token: user.token,
       },
     });
-  }, []);
+    refetch();
+  };
 
   return (
     <>
@@ -88,9 +113,17 @@ export default function TweetPage({
           />
 
           {comments.map((comment) => (
-            <Tweet key={comment._id} isComment {...comment} />
+            <Tweet
+              haveLikedTweet={comment?.likedBy.includes(user._id)}
+              onLikeTweetHandler={onLikeCommentHandler}
+              onDeslikeTweetHandler={onDeslikeCommentHandler}
+              key={comment._id}
+              isComment
+              {...comment}
+            />
           ))}
           <TweetInput
+            isComment
             userName={user.name}
             onSubmitNewTweet={onSubmitNewCommentHandler}
           />

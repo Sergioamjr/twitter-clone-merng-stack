@@ -2,6 +2,7 @@ import { useState, memo } from "react";
 import * as S from "./styled";
 
 type Props = {
+  isComment?: boolean;
   contentDefault?: string;
   tweetLimit?: number;
   onSubmitNewTweet: (s: string) => void;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 function TweetInput({
+  isComment,
   userName,
   contentDefault = "",
   tweetLimit = 150,
@@ -43,7 +45,7 @@ function TweetInput({
       ></S.Input>
       <S.TweetAction>
         <S.Button onClick={onSubmitHandler} disabled={!size || isInvalid}>
-          Tweet
+          {isComment ? "Comment" : "Tweet"}
         </S.Button>
         {!!size && <S.Counter>{isInvalid ? invalid : valid}</S.Counter>}
       </S.TweetAction>

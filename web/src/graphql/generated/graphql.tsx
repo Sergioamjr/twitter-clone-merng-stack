@@ -272,6 +272,20 @@ export type DeleteTweetMutation = (
   & Pick<Mutation, 'deleteTweet'>
 );
 
+export type DeslikeCommentMutationVariables = Exact<{
+  _id: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type DeslikeCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { deslikeComment?: Maybe<(
+    { __typename?: 'Comment' }
+    & CommentFragment
+  )> }
+);
+
 export type DeslikeMutationVariables = Exact<{
   _id?: Maybe<Scalars['String']>;
   token: Scalars['String'];
@@ -325,6 +339,20 @@ export type GetTweetByUserIdMutation = (
     { __typename?: 'Tweet' }
     & TweetFragment
   )>>> }
+);
+
+export type LikeCommentMutationVariables = Exact<{
+  _id: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type LikeCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { likeComment?: Maybe<(
+    { __typename?: 'Comment' }
+    & CommentFragment
+  )> }
 );
 
 export type LikeMutationVariables = Exact<{
@@ -623,6 +651,39 @@ export function useDeleteTweetMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteTweetMutationHookResult = ReturnType<typeof useDeleteTweetMutation>;
 export type DeleteTweetMutationResult = Apollo.MutationResult<DeleteTweetMutation>;
 export type DeleteTweetMutationOptions = Apollo.BaseMutationOptions<DeleteTweetMutation, DeleteTweetMutationVariables>;
+export const DeslikeCommentDocument = gql`
+    mutation deslikeComment($_id: String!, $token: String!) {
+  deslikeComment(_id: $_id, token: $token) {
+    ...Comment
+  }
+}
+    ${CommentFragmentDoc}`;
+export type DeslikeCommentMutationFn = Apollo.MutationFunction<DeslikeCommentMutation, DeslikeCommentMutationVariables>;
+
+/**
+ * __useDeslikeCommentMutation__
+ *
+ * To run a mutation, you first call `useDeslikeCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeslikeCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deslikeCommentMutation, { data, loading, error }] = useDeslikeCommentMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useDeslikeCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeslikeCommentMutation, DeslikeCommentMutationVariables>) {
+        return Apollo.useMutation<DeslikeCommentMutation, DeslikeCommentMutationVariables>(DeslikeCommentDocument, baseOptions);
+      }
+export type DeslikeCommentMutationHookResult = ReturnType<typeof useDeslikeCommentMutation>;
+export type DeslikeCommentMutationResult = Apollo.MutationResult<DeslikeCommentMutation>;
+export type DeslikeCommentMutationOptions = Apollo.BaseMutationOptions<DeslikeCommentMutation, DeslikeCommentMutationVariables>;
 export const DeslikeDocument = gql`
     mutation deslike($_id: String, $token: String!) {
   deslike(_id: $_id, token: $token) {
@@ -754,6 +815,39 @@ export function useGetTweetByUserIdMutation(baseOptions?: Apollo.MutationHookOpt
 export type GetTweetByUserIdMutationHookResult = ReturnType<typeof useGetTweetByUserIdMutation>;
 export type GetTweetByUserIdMutationResult = Apollo.MutationResult<GetTweetByUserIdMutation>;
 export type GetTweetByUserIdMutationOptions = Apollo.BaseMutationOptions<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>;
+export const LikeCommentDocument = gql`
+    mutation likeComment($_id: String!, $token: String!) {
+  likeComment(_id: $_id, token: $token) {
+    ...Comment
+  }
+}
+    ${CommentFragmentDoc}`;
+export type LikeCommentMutationFn = Apollo.MutationFunction<LikeCommentMutation, LikeCommentMutationVariables>;
+
+/**
+ * __useLikeCommentMutation__
+ *
+ * To run a mutation, you first call `useLikeCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLikeCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [likeCommentMutation, { data, loading, error }] = useLikeCommentMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useLikeCommentMutation(baseOptions?: Apollo.MutationHookOptions<LikeCommentMutation, LikeCommentMutationVariables>) {
+        return Apollo.useMutation<LikeCommentMutation, LikeCommentMutationVariables>(LikeCommentDocument, baseOptions);
+      }
+export type LikeCommentMutationHookResult = ReturnType<typeof useLikeCommentMutation>;
+export type LikeCommentMutationResult = Apollo.MutationResult<LikeCommentMutation>;
+export type LikeCommentMutationOptions = Apollo.BaseMutationOptions<LikeCommentMutation, LikeCommentMutationVariables>;
 export const LikeDocument = gql`
     mutation like($_id: String, $token: String!) {
   like(_id: $_id, token: $token) {
