@@ -9,6 +9,7 @@ import { Tweet as TweetType, User } from "~graphql/generated/graphql";
 import { getNameInitials } from "~utils";
 
 export type TweetProps = Required<TweetType> & {
+  isComment?: boolean;
   haveLikedTweet: boolean;
   onLikeTweetHandler: (id: string) => void;
   onDeleteTweet: (id: string) => void;
@@ -17,6 +18,7 @@ export type TweetProps = Required<TweetType> & {
 };
 
 const Tweet = ({
+  isComment,
   _id,
   onDeleteTweet,
   onLikeTweetHandler,
@@ -57,6 +59,7 @@ const Tweet = ({
   return (
     <S.Card tabIndex={0} onClick={onClickHandler}>
       <S.Avatar
+        isComment={isComment}
         onClick={onClickInside}
         href={`/user/${authorId}`}
         tabIndex={0}
@@ -100,14 +103,15 @@ const Tweet = ({
               <Bin width={20} />
             </S.ActionBtn>
           )}
+          {!isComment && (
+            <S.ActionBtnGroup>
+              <S.ActionBtn aria-label="Like" onClick={onLikeTweetHandler_}>
+                <Comment color={colors.lightLighten} />
+              </S.ActionBtn>
 
-          <S.ActionBtnGroup>
-            <S.ActionBtn aria-label="Like" onClick={onLikeTweetHandler_}>
-              <Comment color={colors.lightLighten} />
-            </S.ActionBtn>
-
-            <S.HowManyLikes>{commentsCounter}</S.HowManyLikes>
-          </S.ActionBtnGroup>
+              <S.HowManyLikes>{commentsCounter}</S.HowManyLikes>
+            </S.ActionBtnGroup>
+          )}
         </S.Footer>
       </S.TweetContent>
     </S.Card>

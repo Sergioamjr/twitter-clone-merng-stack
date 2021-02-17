@@ -2,17 +2,19 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import {
   LoggedUser,
-  Tweet,
+  Tweet as TweetType,
+  Comment,
   useDeleteTweetMutation,
   useLikeMutation,
   useDeslikeMutation,
 } from "~graphql/generated/graphql";
-import BaseTweet from "~components/Tweet";
+import Tweet from "~components/Tweet";
 import GoBackBar from "~components/GoBackBar";
 import UserNotFound from "~components/UserNotFound";
 
-type TweetType = {
-  tweet: Tweet;
+type TweetPageProps = {
+  tweet: TweetType;
+  comments?: [Comment];
   refetch: () => void;
   user: Partial<LoggedUser>;
 };
@@ -21,7 +23,8 @@ export default function TweetPage({
   user,
   tweet,
   refetch,
-}: TweetType): JSX.Element {
+  comments,
+}: TweetPageProps): JSX.Element {
   const router = useRouter();
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
@@ -60,14 +63,19 @@ export default function TweetPage({
     <>
       <GoBackBar type="Tweet" />
       {tweet ? (
-        <BaseTweet
-          onLikeTweetHandler={onLikeTweetHandler}
-          onDeslikeTweetHandler={onDeslikeTweetHandler}
-          onDeleteTweet={onDeleteTweetHandler}
-          user={user}
-          haveLikedTweet={tweet?.likedBy.includes(user._id)}
-          {...tweet}
-        />
+        <>
+          <Tweet
+            onLikeTweetHandler={onLikeTweetHandler}
+            onDeslikeTweetHandler={onDeslikeTweetHandler}
+            onDeleteTweet={onDeleteTweetHandler}
+            user={user}
+            haveLikedTweet={tweet?.likedBy.includes(user._id)}
+            {...tweet}
+          />
+          {comments.map((comment) => (
+            <Tweet key={comment._id} isComment {...comment} />
+          ))}
+        </>
       ) : (
         <UserNotFound type="Tweet" />
       )}

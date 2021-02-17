@@ -24,6 +24,7 @@ export type Query = {
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
   getTweetById?: Maybe<Tweet>;
   getComments?: Maybe<Array<Maybe<Comment>>>;
+  getCommentsByTweetId?: Maybe<Array<Maybe<Comment>>>;
 };
 
 
@@ -38,6 +39,11 @@ export type QueryValidateTokenArgs = {
 
 
 export type QueryGetTweetByIdArgs = {
+  _id: Scalars['String'];
+};
+
+
+export type QueryGetCommentsByTweetIdArgs = {
   _id: Scalars['String'];
 };
 
@@ -209,6 +215,11 @@ export enum CacheControlScope {
 }
 
 
+export type CommentFragment = (
+  { __typename?: 'Comment' }
+  & Pick<Comment, 'content' | '_id' | 'authorId' | 'name' | 'avatarColor' | 'userName' | 'originalTweet' | 'likedBy' | 'createdAt'>
+);
+
 export type LoggedUserFragment = (
   { __typename?: 'LoggedUser' }
   & Pick<LoggedUser, '_id' | 'color' | 'name' | 'token' | 'email' | 'userName' | 'followers' | 'following'>
@@ -374,6 +385,30 @@ export type UnfollowMutation = (
   )> }
 );
 
+export type GetCommentsByTweetIdQueryVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type GetCommentsByTweetIdQuery = (
+  { __typename?: 'Query' }
+  & { getCommentsByTweetId?: Maybe<Array<Maybe<(
+    { __typename?: 'Comment' }
+    & CommentFragment
+  )>>> }
+);
+
+export type GetCommentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCommentsQuery = (
+  { __typename?: 'Query' }
+  & { getComments?: Maybe<Array<Maybe<(
+    { __typename?: 'Comment' }
+    & CommentFragment
+  )>>> }
+);
+
 export type GetTweetByIdQueryVariables = Exact<{
   _id: Scalars['String'];
 }>;
@@ -428,6 +463,19 @@ export type GetUsersQuery = (
   )>>> }
 );
 
+export const CommentFragmentDoc = gql`
+    fragment Comment on Comment {
+  content
+  _id
+  authorId
+  name
+  avatarColor
+  userName
+  originalTweet
+  likedBy
+  createdAt
+}
+    `;
 export const LoggedUserFragmentDoc = gql`
     fragment LoggedUser on LoggedUser {
   _id
@@ -825,6 +873,71 @@ export function useUnfollowMutation(baseOptions?: Apollo.MutationHookOptions<Unf
 export type UnfollowMutationHookResult = ReturnType<typeof useUnfollowMutation>;
 export type UnfollowMutationResult = Apollo.MutationResult<UnfollowMutation>;
 export type UnfollowMutationOptions = Apollo.BaseMutationOptions<UnfollowMutation, UnfollowMutationVariables>;
+export const GetCommentsByTweetIdDocument = gql`
+    query getCommentsByTweetId($_id: String!) {
+  getCommentsByTweetId(_id: $_id) {
+    ...Comment
+  }
+}
+    ${CommentFragmentDoc}`;
+
+/**
+ * __useGetCommentsByTweetIdQuery__
+ *
+ * To run a query within a React component, call `useGetCommentsByTweetIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentsByTweetIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommentsByTweetIdQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useGetCommentsByTweetIdQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>) {
+        return Apollo.useQuery<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>(GetCommentsByTweetIdDocument, baseOptions);
+      }
+export function useGetCommentsByTweetIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>) {
+          return Apollo.useLazyQuery<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>(GetCommentsByTweetIdDocument, baseOptions);
+        }
+export type GetCommentsByTweetIdQueryHookResult = ReturnType<typeof useGetCommentsByTweetIdQuery>;
+export type GetCommentsByTweetIdLazyQueryHookResult = ReturnType<typeof useGetCommentsByTweetIdLazyQuery>;
+export type GetCommentsByTweetIdQueryResult = Apollo.QueryResult<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>;
+export const GetCommentsDocument = gql`
+    query getComments {
+  getComments {
+    ...Comment
+  }
+}
+    ${CommentFragmentDoc}`;
+
+/**
+ * __useGetCommentsQuery__
+ *
+ * To run a query within a React component, call `useGetCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCommentsQuery(baseOptions?: Apollo.QueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+        return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, baseOptions);
+      }
+export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+          return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, baseOptions);
+        }
+export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
+export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
+export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
 export const GetTweetByIdDocument = gql`
     query getTweetById($_id: String!) {
   getTweetById(_id: $_id) {

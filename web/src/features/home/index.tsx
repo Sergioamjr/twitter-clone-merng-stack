@@ -81,12 +81,13 @@ export default function Home({
         return (
           <TweetCard
             {...tweet}
+            key={_id}
+            _id={_id}
             likedBy={likedBy}
             onLikeTweetHandler={onLikeTweetHandler}
             onDeslikeTweetHandler={onDeslikeTweetHandler}
             onDeleteTweet={onDeleteTweetHandler}
             haveLikedTweet={likedBy.includes(user._id)}
-            key={_id}
           />
         );
       })}

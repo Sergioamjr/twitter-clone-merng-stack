@@ -5,6 +5,7 @@ import { colors, spacings, fontSizes } from "~theme";
 export const Card = styled.section`
   border: 1px solid ${colors.light};
   border-left: 0;
+  overflow: hidden;
   border-right: 0;
   padding: ${spacings.small};
   display: flex;
@@ -67,7 +68,7 @@ export const Content = styled.main`
   margin-bottom: ${spacings.medium};
 `;
 
-export const Avatar = styled.a<{ avatarColor: string }>`
+export const Avatar = styled.a<{ avatarColor: string; isComment: boolean }>`
   width: 49px;
   height: 49px;
   border-radius: 50%;
@@ -76,6 +77,18 @@ export const Avatar = styled.a<{ avatarColor: string }>`
   justify-content: center;
   color: ${colors.white};
   background: ${({ avatarColor }) => avatarColor};
+  position: relative;
+  &:after {
+    ${({ isComment }) => isComment && "content: ''"};
+    width: 2px;
+    height: 90%;
+    background: #2f4254;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 49px;
+  }
 `;
 
 export const ActionBtn = styled.button`

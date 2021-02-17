@@ -15,6 +15,7 @@ export const types = gql`
 
   extend type Query {
     getComments: [Comment]
+    getCommentsByTweetId(_id: String!): [Comment]
   }
 
   extend type Mutation {

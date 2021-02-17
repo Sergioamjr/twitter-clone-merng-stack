@@ -3,12 +3,10 @@ import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 
 export const commentsQueries: QueryResolvers = {
   getComments: async (_, __, context) => {
-    const all = await context.dataSources.Comment.find({
-      originalTweet: "602d54dea432f17fcef1c289",
-    });
-    console.log("all", all.length);
-    const comments = await context.dataSources.Comment.find();
-    return comments;
+    return await context.dataSources.Comment.find();
+  },
+  getCommentsByTweetId: async (_, { _id }, context) => {
+    return await context.dataSources.Comment.find({ originalTweet: _id });
   },
 };
 export const commentsMutations: MutationResolvers = {

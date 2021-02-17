@@ -30,6 +30,7 @@ export type Query = {
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
   getTweetById?: Maybe<Tweet>;
   getComments?: Maybe<Array<Maybe<Comment>>>;
+  getCommentsByTweetId?: Maybe<Array<Maybe<Comment>>>;
 };
 
 
@@ -45,6 +46,11 @@ export type QueryValidateTokenArgs = {
 
 export type QueryGetTweetByIdArgs = {
   _id: Scalars['String'];
+};
+
+
+export type QueryGetCommentsByTweetIdArgs = {
+  _id?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -375,6 +381,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
   getTweetById?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<QueryGetTweetByIdArgs, '_id'>>;
   getComments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>;
+  getCommentsByTweetId?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType, RequireFields<QueryGetCommentsByTweetIdArgs, never>>;
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
