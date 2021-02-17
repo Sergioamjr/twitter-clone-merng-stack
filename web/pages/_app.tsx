@@ -14,7 +14,7 @@ const client = new ApolloClient({
 });
 
 type Props = {
-  Component: JSX.Element;
+  Component: any;
   pageProps: any;
 };
 
