@@ -21,7 +21,7 @@ export const verifyToken = (
   });
 };
 
-export const query: QueryResolvers = {
+export const userQueries: QueryResolvers = {
   getUsers: async (_, args, context) => {
     return await context.dataSources.User.find();
   },
@@ -48,7 +48,7 @@ export const query: QueryResolvers = {
   },
 };
 
-export const mutation: MutationResolvers = {
+export const userMutations: MutationResolvers = {
   createRandomUser: async (_, __, { dataSources }) => {
     const getUniqueUser = async (): Promise<randomUserType> => {
       const randomUser = getRandomUser();

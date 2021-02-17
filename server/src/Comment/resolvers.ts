@@ -7,9 +7,22 @@ export const commentsQueries: QueryResolvers = {
   },
 };
 export const commentsMutations: MutationResolvers = {
+  deleteComment: async (_, { _id, token }, context) => {
+    try {
+      await verifyToken(token as string);
+      await context.dataSources.Comment.deleteOne({ _id });
+      return true;
+    } catch (err) {
+      throw Error(err);
+    }
+  },
   newComment: async (_, { content, originalTweet, token }, context) => {
     try {
       const decoded = await verifyToken(token as string);
+      const tweet = await context.dataSources.Tweet.findOne({
+        _id: originalTweet,
+      });
+      if (!tweet) return Error("Tweet não existe");
       const { userName, name, color } = await context.dataSources.User.findOne({
         _id: (<TokenDecoded>decoded)._id,
       });

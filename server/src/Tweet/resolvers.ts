@@ -1,7 +1,7 @@
 import { verifyToken, TokenDecoded } from "../User/resolvers";
 import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 
-export const query: QueryResolvers = {
+export const tweetQueries: QueryResolvers = {
   getTweets: async (_, args, context) => {
     return await context.dataSources.Tweet.find()
       .sort({ createdAt: -1 })
@@ -12,7 +12,7 @@ export const query: QueryResolvers = {
   },
 };
 
-export const mutation: MutationResolvers = {
+export const tweetMutations: MutationResolvers = {
   like: async (_, { _id, token }, context) => {
     try {
       const decoded = await verifyToken(token as string);
