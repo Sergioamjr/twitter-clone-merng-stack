@@ -261,6 +261,17 @@ export type CreateRandomUserMutation = (
   )> }
 );
 
+export type DeleteCommentMutationVariables = Exact<{
+  _id: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type DeleteCommentMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteComment'>
+);
+
 export type DeleteTweetMutationVariables = Exact<{
   _id?: Maybe<Scalars['String']>;
   token: Scalars['String'];
@@ -620,6 +631,37 @@ export function useCreateRandomUserMutation(baseOptions?: Apollo.MutationHookOpt
 export type CreateRandomUserMutationHookResult = ReturnType<typeof useCreateRandomUserMutation>;
 export type CreateRandomUserMutationResult = Apollo.MutationResult<CreateRandomUserMutation>;
 export type CreateRandomUserMutationOptions = Apollo.BaseMutationOptions<CreateRandomUserMutation, CreateRandomUserMutationVariables>;
+export const DeleteCommentDocument = gql`
+    mutation deleteComment($_id: String!, $token: String!) {
+  deleteComment(_id: $_id, token: $token)
+}
+    `;
+export type DeleteCommentMutationFn = Apollo.MutationFunction<DeleteCommentMutation, DeleteCommentMutationVariables>;
+
+/**
+ * __useDeleteCommentMutation__
+ *
+ * To run a mutation, you first call `useDeleteCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCommentMutation, { data, loading, error }] = useDeleteCommentMutation({
+ *   variables: {
+ *      _id: // value for '_id'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useDeleteCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCommentMutation, DeleteCommentMutationVariables>) {
+        return Apollo.useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, baseOptions);
+      }
+export type DeleteCommentMutationHookResult = ReturnType<typeof useDeleteCommentMutation>;
+export type DeleteCommentMutationResult = Apollo.MutationResult<DeleteCommentMutation>;
+export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<DeleteCommentMutation, DeleteCommentMutationVariables>;
 export const DeleteTweetDocument = gql`
     mutation deleteTweet($_id: String, $token: String!) {
   deleteTweet(_id: $_id, token: $token)

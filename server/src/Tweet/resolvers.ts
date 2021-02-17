@@ -89,6 +89,7 @@ export const tweetMutations: MutationResolvers = {
         _id: (<TokenDecoded>decoded)._id,
       });
       await context.dataSources.Tweet.deleteOne({ _id });
+      await context.dataSources.Comment.deleteMany({ originalTweet: _id });
       return true;
     } catch (err) {
       throw Error(err);

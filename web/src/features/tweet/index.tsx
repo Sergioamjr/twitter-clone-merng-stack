@@ -9,6 +9,7 @@ import {
   useNewCommentMutation,
   useDeslikeCommentMutation,
   useLikeCommentMutation,
+  useDeleteCommentMutation,
 } from "~graphql/generated/graphql";
 import Tweet from "~components/Tweet";
 import GoBackBar from "~components/GoBackBar";
@@ -31,6 +32,7 @@ export default function TweetPage({
   const router = useRouter();
   const [onSubmitNewComment] = useNewCommentMutation();
   const [onDeleteTweet] = useDeleteTweetMutation();
+  const [onDeleteComment] = useDeleteCommentMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
   const [onLikeComment] = useLikeCommentMutation();
@@ -78,6 +80,16 @@ export default function TweetPage({
     router.push("/");
   };
 
+  const onDeleteCommentHandler = async (_id: string) => {
+    await onDeleteComment({
+      variables: {
+        _id,
+        token: user.token,
+      },
+    });
+    refetch();
+  };
+
   const onLikeTweetHandler = async (_id: string) => {
     await onLikeTweet({
       variables: {
@@ -117,6 +129,7 @@ export default function TweetPage({
               haveLikedTweet={comment?.likedBy.includes(user._id)}
               onLikeTweetHandler={onLikeCommentHandler}
               onDeslikeTweetHandler={onDeslikeCommentHandler}
+              onDeleteTweet={onDeleteCommentHandler}
               key={comment._id}
               isComment
               {...comment}
