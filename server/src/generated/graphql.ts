@@ -192,6 +192,7 @@ export type Tweet = {
   createdAt?: Maybe<Scalars['String']>;
   avatarColor?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
+  commentsCounter?: Maybe<Scalars['Int']>;
   likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
@@ -307,6 +308,7 @@ export type ResolversTypes = ResolversObject<{
   LoggedUser: ResolverTypeWrapper<LoggedUser>;
   UserAndTweets: ResolverTypeWrapper<UserAndTweets>;
   Tweet: ResolverTypeWrapper<Tweet>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Comment: ResolverTypeWrapper<Comment>;
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
@@ -324,6 +326,7 @@ export type ResolversParentTypes = ResolversObject<{
   LoggedUser: LoggedUser;
   UserAndTweets: UserAndTweets;
   Tweet: Tweet;
+  Int: Scalars['Int'];
   Comment: Comment;
   Upload: Scalars['Upload'];
   AdditionalEntityFields: AdditionalEntityFields;
@@ -430,6 +433,7 @@ export type TweetResolvers<ContextType = any, ParentType extends ResolversParent
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   avatarColor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  commentsCounter?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   likedBy?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;

@@ -2,13 +2,27 @@ import { verifyToken, TokenDecoded } from "../User/resolvers";
 import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 
 export const tweetQueries: QueryResolvers = {
-  getTweets: async (_, args, context) => {
-    return await context.dataSources.Tweet.find()
+  getTweets: async (_, __, context) => {
+    const tweets = await context.dataSources.Tweet.find()
       .sort({ createdAt: -1 })
       .exec();
+
+    for (const [index, tweet] of tweets.entries()) {
+      const comments = await context.dataSources.Comment.find({
+        originalTweet: tweet._id,
+      });
+      tweets[index]["commentsCounter"] = comments.length;
+    }
+
+    return tweets;
   },
   getTweetById: async (_, { _id }, context) => {
-    return await context.dataSources.Tweet.findOne({ _id });
+    const tweet = await context.dataSources.Tweet.findOne({ _id });
+    const comments = await context.dataSources.Comment.find({
+      originalTweet: _id,
+    });
+    tweet["commentsCounter"] = comments.length;
+    return tweet;
   },
 };
 

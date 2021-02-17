@@ -9,6 +9,7 @@ export const types = gql`
     createdAt: String
     avatarColor: String
     content: String
+    commentsCounter: Int
     likedBy: [String]
   }
 
