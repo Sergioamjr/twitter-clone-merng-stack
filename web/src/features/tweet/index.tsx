@@ -7,14 +7,16 @@ import {
   useDeleteTweetMutation,
   useLikeMutation,
   useDeslikeMutation,
+  useNewCommentMutation,
 } from "~graphql/generated/graphql";
 import Tweet from "~components/Tweet";
 import GoBackBar from "~components/GoBackBar";
 import UserNotFound from "~components/UserNotFound";
+import TweetInput from "~components/TweetInput";
 
 type TweetPageProps = {
   tweet: TweetType;
-  comments?: [Comment];
+  comments?: Comment[];
   refetch: () => void;
   user: Partial<LoggedUser>;
 };
@@ -26,9 +28,21 @@ export default function TweetPage({
   comments,
 }: TweetPageProps): JSX.Element {
   const router = useRouter();
+  const [onSubmitNewComment] = useNewCommentMutation();
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
+
+  const onSubmitNewCommentHandler = async (content) => {
+    await onSubmitNewComment({
+      variables: {
+        token: user.token,
+        content,
+        originalTweet: tweet._id,
+      },
+    });
+    refetch();
+  };
 
   const onDeleteTweetHandler = useCallback(async (_id: string) => {
     await onDeleteTweet({
@@ -72,9 +86,14 @@ export default function TweetPage({
             haveLikedTweet={tweet?.likedBy.includes(user._id)}
             {...tweet}
           />
+
           {comments.map((comment) => (
             <Tweet key={comment._id} isComment {...comment} />
           ))}
+          <TweetInput
+            userName={user.name}
+            onSubmitNewTweet={onSubmitNewCommentHandler}
+          />
         </>
       ) : (
         <UserNotFound type="Tweet" />

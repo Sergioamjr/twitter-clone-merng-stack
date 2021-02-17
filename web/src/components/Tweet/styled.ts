@@ -17,6 +17,9 @@ export const Card = styled.section`
   &:hover {
     background: ${colors.darkBackgroundDarken};
   }
+  &:last-of-type a:after {
+    display: none;
+  }
 `;
 
 export const ShowOnMobile = styled.span`

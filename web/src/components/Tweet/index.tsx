@@ -59,7 +59,7 @@ const Tweet = ({
   return (
     <S.Card tabIndex={0} onClick={onClickHandler}>
       <S.Avatar
-        isComment={isComment}
+        isComment={isComment || commentsCounter}
         onClick={onClickInside}
         href={`/user/${authorId}`}
         tabIndex={0}

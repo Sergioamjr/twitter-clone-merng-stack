@@ -29,7 +29,10 @@ function Tweet({ user }: TweetPageType): JSX.Element {
     },
   });
 
-  console.log("comments", comments);
+  const refetchAll = () => {
+    tweet.refetch();
+    comments.refetch();
+  };
 
   if (tweet.loading || comments.loading) {
     return <Loading />;
@@ -41,10 +44,10 @@ function Tweet({ user }: TweetPageType): JSX.Element {
         <Column />
         <Column>
           <TweetPage
-            refetch={tweet.refetch}
+            refetch={refetchAll}
             user={user}
             tweet={tweet.data?.getTweetById}
-            comments={comments.data.getCommentsByTweetId}
+            comments={comments.data?.getCommentsByTweetId}
           />
         </Column>
         <Column />

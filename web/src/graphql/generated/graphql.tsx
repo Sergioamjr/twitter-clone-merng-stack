@@ -235,6 +235,21 @@ export type UserFragment = (
   & Pick<User, 'email' | 'color' | 'name' | 'userName' | '_id' | 'followers' | 'following'>
 );
 
+export type NewCommentMutationVariables = Exact<{
+  content?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
+  originalTweet: Scalars['String'];
+}>;
+
+
+export type NewCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { newComment?: Maybe<(
+    { __typename?: 'Comment' }
+    & CommentFragment
+  )> }
+);
+
 export type CreateRandomUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -512,6 +527,40 @@ export const UserFragmentDoc = gql`
   following
 }
     `;
+export const NewCommentDocument = gql`
+    mutation newComment($content: String, $token: String!, $originalTweet: String!) {
+  newComment(content: $content, token: $token, originalTweet: $originalTweet) {
+    ...Comment
+  }
+}
+    ${CommentFragmentDoc}`;
+export type NewCommentMutationFn = Apollo.MutationFunction<NewCommentMutation, NewCommentMutationVariables>;
+
+/**
+ * __useNewCommentMutation__
+ *
+ * To run a mutation, you first call `useNewCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useNewCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [newCommentMutation, { data, loading, error }] = useNewCommentMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *      token: // value for 'token'
+ *      originalTweet: // value for 'originalTweet'
+ *   },
+ * });
+ */
+export function useNewCommentMutation(baseOptions?: Apollo.MutationHookOptions<NewCommentMutation, NewCommentMutationVariables>) {
+        return Apollo.useMutation<NewCommentMutation, NewCommentMutationVariables>(NewCommentDocument, baseOptions);
+      }
+export type NewCommentMutationHookResult = ReturnType<typeof useNewCommentMutation>;
+export type NewCommentMutationResult = Apollo.MutationResult<NewCommentMutation>;
+export type NewCommentMutationOptions = Apollo.BaseMutationOptions<NewCommentMutation, NewCommentMutationVariables>;
 export const CreateRandomUserDocument = gql`
     mutation createRandomUser {
   createRandomUser {
