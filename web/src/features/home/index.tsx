@@ -32,7 +32,7 @@ export default function Home({
     refetch();
   }, []);
 
-  const onSubmitNewTweetHandler = useCallback(async (content) => {
+  const onSubmitNewTweetHandler = async (content) => {
     await onSubmitNewTweet({
       variables: {
         token: user.token,
@@ -40,9 +40,9 @@ export default function Home({
       },
     });
     refetch();
-  }, []);
+  };
 
-  const onDeleteTweetHandler = useCallback(async (_id: string) => {
+  const onDeleteTweetHandler = async (_id: string) => {
     await onDeleteTweet({
       variables: {
         _id,
@@ -50,25 +50,27 @@ export default function Home({
       },
     });
     refetch();
-  }, []);
+  };
 
-  const onLikeTweetHandler = useCallback(async (_id: string) => {
+  const onLikeTweetHandler = async (_id: string) => {
     await onLikeTweet({
       variables: {
         _id,
         token: user.token,
       },
     });
-  }, []);
+    refetch();
+  };
 
-  const onDeslikeTweetHandler = useCallback(async (_id: string) => {
+  const onDeslikeTweetHandler = async (_id: string) => {
     await onDeslikeTweet({
       variables: {
         _id,
         token: user.token,
       },
     });
-  }, []);
+    refetch();
+  };
 
   return (
     <Column>

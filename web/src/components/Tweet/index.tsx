@@ -105,10 +105,7 @@ const Tweet = ({
           )}
           {!isComment && (
             <S.ActionBtnGroup>
-              <S.ActionBtn aria-label="Like" onClick={onLikeTweetHandler_}>
-                <Comment color={colors.lightLighten} />
-              </S.ActionBtn>
-
+              <Comment color={colors.lightLighten} />
               <S.HowManyLikes>{commentsCounter}</S.HowManyLikes>
             </S.ActionBtnGroup>
           )}
