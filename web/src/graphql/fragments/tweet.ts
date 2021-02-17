@@ -8,6 +8,7 @@ export default gql`
     name
     avatarColor
     userName
+    commentsCounter
     likedBy
     createdAt
   }

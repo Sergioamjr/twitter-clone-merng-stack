@@ -122,3 +122,23 @@ export const Loading = (): JSX.Element => {
     </svg>
   );
 };
+
+export const Comment = ({
+  color = colors.lightLighten,
+  width = 20,
+  ...props
+}: SVG): JSX.Element => {
+  return (
+    <svg
+      {...props}
+      width={width}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 60 60"
+    >
+      <path
+        fill={color}
+        d="M6 2h48c3.252 0 6 2.748 6 6v33c0 3.252-2.748 6-6 6H25.442L15.74 57.673a1.003 1.003 0 01-1.101.26A1 1 0 0114 57V47H6c-3.252 0-6-2.748-6-6V8c0-3.252 2.748-6 6-6z"
+      />
+    </svg>
+  );
+};

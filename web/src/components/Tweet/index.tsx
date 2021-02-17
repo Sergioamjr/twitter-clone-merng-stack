@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { formatDistance, format } from "date-fns";
-import { Heart, Bin } from "~icons";
+import { Heart, Bin, Comment } from "~icons";
 import * as S from "./styled";
 import { colors } from "~theme";
 import { Tweet as TweetType, User } from "~graphql/generated/graphql";
@@ -30,6 +30,7 @@ const Tweet = ({
   user,
   createdAt,
   avatarColor,
+  commentsCounter,
 }: TweetProps): JSX.Element => {
   const router = useRouter();
   const dateDesktop = formatDistance(new Date(createdAt), new Date());
@@ -99,6 +100,14 @@ const Tweet = ({
               <Bin width={20} />
             </S.ActionBtn>
           )}
+
+          <S.ActionBtnGroup>
+            <S.ActionBtn aria-label="Like" onClick={onLikeTweetHandler_}>
+              <Comment color={colors.lightLighten} />
+            </S.ActionBtn>
+
+            <S.HowManyLikes>{commentsCounter}</S.HowManyLikes>
+          </S.ActionBtnGroup>
         </S.Footer>
       </S.TweetContent>
     </S.Card>

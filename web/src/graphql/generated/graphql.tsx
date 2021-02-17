@@ -23,6 +23,7 @@ export type Query = {
   validateToken?: Maybe<Scalars['Boolean']>;
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
   getTweetById?: Maybe<Tweet>;
+  getComments?: Maybe<Array<Maybe<Comment>>>;
 };
 
 
@@ -54,6 +55,10 @@ export type Mutation = {
   deleteTweet?: Maybe<Scalars['Boolean']>;
   like?: Maybe<Tweet>;
   deslike?: Maybe<Tweet>;
+  newComment?: Maybe<Comment>;
+  deleteComment?: Maybe<Scalars['Boolean']>;
+  likeComment?: Maybe<Comment>;
+  deslikeComment?: Maybe<Comment>;
 };
 
 
@@ -118,6 +123,31 @@ export type MutationDeslikeArgs = {
   token?: Maybe<Scalars['String']>;
 };
 
+
+export type MutationNewCommentArgs = {
+  content?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
+  originalTweet: Scalars['String'];
+};
+
+
+export type MutationDeleteCommentArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationLikeCommentArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationDeslikeCommentArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']>;
@@ -150,7 +180,19 @@ export type UserAndTweets = {
 export type Tweet = {
   __typename?: 'Tweet';
   _id?: Maybe<Scalars['ID']>;
-  color?: Maybe<Scalars['String']>;
+  authorId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  avatarColor?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  commentsCounter?: Maybe<Scalars['Int']>;
+  likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type Comment = {
+  __typename?: 'Comment';
+  _id?: Maybe<Scalars['ID']>;
   authorId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
@@ -158,6 +200,7 @@ export type Tweet = {
   avatarColor?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
   likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
+  originalTweet?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {
@@ -173,7 +216,7 @@ export type LoggedUserFragment = (
 
 export type TweetFragment = (
   { __typename?: 'Tweet' }
-  & Pick<Tweet, 'content' | '_id' | 'authorId' | 'name' | 'avatarColor' | 'userName' | 'likedBy' | 'createdAt'>
+  & Pick<Tweet, 'content' | '_id' | 'authorId' | 'name' | 'avatarColor' | 'userName' | 'commentsCounter' | 'likedBy' | 'createdAt'>
 );
 
 export type UserFragment = (
@@ -405,6 +448,7 @@ export const TweetFragmentDoc = gql`
   name
   avatarColor
   userName
+  commentsCounter
   likedBy
   createdAt
 }
