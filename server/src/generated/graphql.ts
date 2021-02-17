@@ -28,7 +28,8 @@ export type Query = {
   getUserById?: Maybe<UserAndTweets>;
   validateToken?: Maybe<Scalars['Boolean']>;
   getTweets?: Maybe<Array<Maybe<Tweet>>>;
-  getTweetById?: Maybe<Array<Maybe<Tweet>>>;
+  getTweetById?: Maybe<Tweet>;
+  getComments?: Maybe<Array<Maybe<Comment>>>;
 };
 
 
@@ -60,6 +61,10 @@ export type Mutation = {
   deleteTweet?: Maybe<Scalars['Boolean']>;
   like?: Maybe<Tweet>;
   deslike?: Maybe<Tweet>;
+  newComment?: Maybe<Comment>;
+  deleteComment?: Maybe<Scalars['Boolean']>;
+  likeComment?: Maybe<Comment>;
+  deslikeComment?: Maybe<Comment>;
 };
 
 
@@ -124,6 +129,31 @@ export type MutationDeslikeArgs = {
   token?: Maybe<Scalars['String']>;
 };
 
+
+export type MutationNewCommentArgs = {
+  content?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
+  originalTweet: Scalars['String'];
+};
+
+
+export type MutationDeleteCommentArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationLikeCommentArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationDeslikeCommentArgs = {
+  _id?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']>;
@@ -156,7 +186,6 @@ export type UserAndTweets = {
 export type Tweet = {
   __typename?: 'Tweet';
   _id?: Maybe<Scalars['ID']>;
-  color?: Maybe<Scalars['String']>;
   authorId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
@@ -164,6 +193,19 @@ export type Tweet = {
   avatarColor?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
   likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type Comment = {
+  __typename?: 'Comment';
+  _id?: Maybe<Scalars['ID']>;
+  authorId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  avatarColor?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
+  originalTweet?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {
@@ -265,6 +307,7 @@ export type ResolversTypes = ResolversObject<{
   LoggedUser: ResolverTypeWrapper<LoggedUser>;
   UserAndTweets: ResolverTypeWrapper<UserAndTweets>;
   Tweet: ResolverTypeWrapper<Tweet>;
+  Comment: ResolverTypeWrapper<Comment>;
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
   AdditionalEntityFields: AdditionalEntityFields;
@@ -281,6 +324,7 @@ export type ResolversParentTypes = ResolversObject<{
   LoggedUser: LoggedUser;
   UserAndTweets: UserAndTweets;
   Tweet: Tweet;
+  Comment: Comment;
   Upload: Scalars['Upload'];
   AdditionalEntityFields: AdditionalEntityFields;
 }>;
@@ -326,7 +370,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserById?: Resolver<Maybe<ResolversTypes['UserAndTweets']>, ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, '_id'>>;
   validateToken?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryValidateTokenArgs, 'token'>>;
   getTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
-  getTweetById?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType, RequireFields<QueryGetTweetByIdArgs, '_id'>>;
+  getTweetById?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<QueryGetTweetByIdArgs, '_id'>>;
+  getComments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>;
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
@@ -342,6 +387,10 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteTweet?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteTweetArgs, never>>;
   like?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationLikeArgs, never>>;
   deslike?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<MutationDeslikeArgs, never>>;
+  newComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationNewCommentArgs, 'token' | 'originalTweet'>>;
+  deleteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, never>>;
+  likeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationLikeCommentArgs, never>>;
+  deslikeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationDeslikeCommentArgs, never>>;
 }>;
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
@@ -375,7 +424,6 @@ export type UserAndTweetsResolvers<ContextType = any, ParentType extends Resolve
 
 export type TweetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tweet'] = ResolversParentTypes['Tweet']> = ResolversObject<{
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -383,6 +431,19 @@ export type TweetResolvers<ContextType = any, ParentType extends ResolversParent
   avatarColor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   likedBy?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = ResolversObject<{
+  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  avatarColor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  likedBy?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  originalTweet?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -397,6 +458,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   LoggedUser?: LoggedUserResolvers<ContextType>;
   UserAndTweets?: UserAndTweetsResolvers<ContextType>;
   Tweet?: TweetResolvers<ContextType>;
+  Comment?: CommentResolvers<ContextType>;
   Upload?: GraphQLScalarType;
 }>;
 

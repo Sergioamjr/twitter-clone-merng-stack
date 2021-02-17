@@ -3,7 +3,6 @@ import { gql } from "apollo-server";
 export const types = gql`
   type Tweet {
     _id: ID
-    color: String
     authorId: String
     name: String
     userName: String

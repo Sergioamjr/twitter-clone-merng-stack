@@ -7,15 +7,18 @@ import {
   query as tweetQueries,
   mutation as tweetMutations,
 } from "./Tweet/resolvers";
+import { commentsQueries, commentsMutations } from "./Comment/resolvers";
 
 const Query: QueryResolvers = {
   ...userQueries,
   ...tweetQueries,
+  ...commentsQueries,
 };
 
 const Mutation: MutationResolvers = {
   ...userMutations,
   ...tweetMutations,
+  ...commentsMutations,
 };
 
 export default { Query, Mutation };
