@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import TweetCard from "~components/Tweet";
 import TweetInput from "~components/TweetInput";
 import {
