@@ -120,6 +120,7 @@ export default function TweetPage({
             onDeslikeTweetHandler={onDeslikeTweetHandler}
             onDeleteTweet={onDeleteTweetHandler}
             user={user}
+            showCommentLine={tweet.commentsCounter}
             haveLikedTweet={tweet?.likedBy.includes(user._id)}
             {...tweet}
           />

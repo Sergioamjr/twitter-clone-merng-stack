@@ -10,6 +10,7 @@ import { getNameInitials } from "~utils";
 
 export type TweetProps = Required<TweetType> & {
   isComment?: boolean;
+  showCommentLine?: boolean;
   haveLikedTweet: boolean;
   onLikeTweetHandler: (id: string) => void;
   onDeleteTweet: (id: string) => void;
@@ -27,6 +28,7 @@ const Tweet = ({
   onDeslikeTweetHandler,
   name,
   userName,
+  showCommentLine,
   content,
   authorId,
   user,
@@ -59,7 +61,7 @@ const Tweet = ({
   return (
     <S.Card tabIndex={0} onClick={onClickHandler}>
       <S.Avatar
-        isComment={isComment || commentsCounter}
+        isComment={isComment || showCommentLine}
         onClick={onClickInside}
         href={`/user/${authorId}`}
         tabIndex={0}

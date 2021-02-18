@@ -1,5 +1,5 @@
 import { LoggedUser } from "~graphql/generated/graphql";
-const KEY = "tww";
+const KEY = "TWITTER:CLONE";
 
 export function getNameInitials(userName: string): string {
   const [firstName, secondName] = userName.replace("_", " ").split(" ");
