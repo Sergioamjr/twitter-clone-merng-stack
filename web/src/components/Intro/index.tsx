@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+import { LoggedUser } from "~graphql/generated/graphql";
 import * as Styles from "./styles";
 
 const animate = {
@@ -20,17 +22,21 @@ const container = {
   },
 };
 
-export default function Intro(): JSX.Element {
+type Props = {
+  user: LoggedUser;
+};
+
+function Intro(props: Props): JSX.Element {
   return (
     <Styles.Wrapper variants={container} initial="hidden" animate="show">
       <Styles.Text animate={animate} transition={transition}>
         It seems it&apos;s your first time here :)
       </Styles.Text>
-      <Styles.Text animate={animate} transition={{ ...transition, delay: 3 }}>
+      <Styles.Text animate={animate} transition={{ ...transition, delay: 2 }}>
         Let me create a random user for you...
       </Styles.Text>
       <Styles.Text animate={animate} transition={{ ...transition, delay: 6 }}>
-        Done, you will be <span>@chandra_clyve</span>
+        Done, you will be <span>@{props.user.userName}</span>
       </Styles.Text>
       <Styles.Text animate={animate} transition={{ ...transition, delay: 8 }}>
         Sending you to the home page
@@ -38,3 +44,5 @@ export default function Intro(): JSX.Element {
     </Styles.Wrapper>
   );
 }
+
+export default connect(({ user }, props) => ({ user, ...props }))(Intro);

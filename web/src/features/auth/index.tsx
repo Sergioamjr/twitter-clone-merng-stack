@@ -2,34 +2,49 @@ import { useEffect, ReactNode, useState } from "react";
 import { useCreateRandomUserMutation } from "~graphql/generated/graphql";
 import { actions } from "~store";
 import Loading from "~components/Loading";
+import { getFromLocalStorage, setOnLocalStorage } from "~utils";
+import Intro from "~components/Intro";
 
 type AuthProps = {
   children: ReactNode;
 };
 
-const KEY = "tww";
 export default function Auth({ children }: AuthProps): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   const [onCreateRandomUser] = useCreateRandomUserMutation();
 
   const fetchFakeUser = async () => {
     const {
       data: { createRandomUser },
     } = await onCreateRandomUser();
-    window.localStorage.setItem(KEY, JSON.stringify(createRandomUser));
+    setOnLocalStorage(createRandomUser);
     actions.setUserNameAction(createRandomUser);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    const user = localStorage.getItem(KEY);
+    if (showIntro) {
+      setTimeout(() => {
+        setShowIntro(false);
+      }, 10000);
+    }
+  }, [showIntro]);
+
+  useEffect(() => {
+    const user = getFromLocalStorage();
     if (!user) {
+      setShowIntro(true);
       fetchFakeUser();
     } else {
-      actions.setUserNameAction(JSON.parse(user));
+      actions.setUserNameAction(user);
       setIsLoading(false);
     }
   }, []);
+
+  if (showIntro) {
+    return <Intro />;
+  }
 
   if (isLoading) {
     return <Loading />;
