@@ -1,6 +1,5 @@
 import { LoggedUser } from "~graphql/generated/graphql";
 import store from "~store";
-const KEY = "tww";
 
 type Data = Omit<LoggedUser, "__typename">;
 
@@ -10,7 +9,7 @@ type Action = {
 };
 
 const defaultUser = {};
-const SET_USERDATA = "SET_USERDATA";
+export const SET_USERDATA = "SET_USERDATA";
 
 export default function userReducer(
   state = defaultUser,
@@ -18,13 +17,6 @@ export default function userReducer(
 ): Partial<LoggedUser> {
   switch (action.type) {
     case SET_USERDATA: {
-      window.localStorage.setItem(
-        KEY,
-        JSON.stringify({
-          ...state,
-          ...action.data,
-        })
-      );
       return {
         ...state,
         ...action.data,
