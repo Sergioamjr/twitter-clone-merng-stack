@@ -102,9 +102,11 @@ const Tweet = ({
             </S.ActionBtnGroup>
           )}
           {user._id === authorId && (
-            <S.ActionBtn aria-label="Exclude" onClick={onDeleteTweetHandler}>
-              <Bin width={20} />
-            </S.ActionBtn>
+            <S.ActionBtnGroup>
+              <S.ActionBtn aria-label="Exclude" onClick={onDeleteTweetHandler}>
+                <Bin width={20} />
+              </S.ActionBtn>
+            </S.ActionBtnGroup>
           )}
           {!isComment && (
             <S.ActionBtnGroup>
