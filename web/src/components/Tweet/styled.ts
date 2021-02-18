@@ -63,8 +63,7 @@ export const Header = styled.div`
 `;
 
 export const Footer = styled.footer`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: flex;
 `;
 
 export const Content = styled.main`
@@ -116,4 +115,6 @@ export const HowManyLikes = styled.p`
 
 export const ActionBtnGroup = styled.div`
   display: flex;
+  width: 25%;
+  height: 20px;
 `;

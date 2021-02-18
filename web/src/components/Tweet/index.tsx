@@ -41,6 +41,7 @@ const Tweet = ({
   const dateMobile = format(new Date(createdAt), "MMM/yyyy");
 
   const onClickHandler = () => {
+    if (isComment) return false;
     router.push(`/tweet/${_id}`);
   };
 
