@@ -10,6 +10,7 @@ import {
   LoggedUser,
 } from "~graphql/generated/graphql";
 import { Column } from "~components/template";
+import { Loading } from "~icons";
 
 export type HomeProps = {
   tweets?: Tweet[];
@@ -22,6 +23,7 @@ export default function Home({
   tweets = [],
   user,
   refetch,
+  loading,
 }: HomeProps): JSX.Element {
   const [onSubmitNewTweet] = useNewTweetMutation();
   const [onDeleteTweet] = useDeleteTweetMutation();
@@ -78,6 +80,7 @@ export default function Home({
         userName={user.name}
         onSubmitNewTweet={onSubmitNewTweetHandler}
       />
+      {loading && <Loading />}
 
       {tweets.map(({ _id, likedBy, ...tweet }) => {
         return (

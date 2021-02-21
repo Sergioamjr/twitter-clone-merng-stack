@@ -20,6 +20,9 @@ export const Card = styled.section`
   &:last-of-type a:after {
     display: none;
   }
+  &:first-of-type a:before {
+    display: none;
+  }
 `;
 
 export const ShowOnMobile = styled.span`
@@ -80,41 +83,40 @@ export const Avatar = styled.a<{ avatarColor: string; isComment: boolean }>`
   color: ${colors.white};
   background: ${({ avatarColor }) => avatarColor};
   position: relative;
-  &:after {
+  &:after,
+  &:before {
     ${({ isComment }) => isComment && "content: ''"};
     width: 2px;
-    height: 90%;
-    background: #2f4254;
+    height: 200%;
+    background: ${colors.light};
     position: absolute;
     margin: auto;
     left: 0;
     right: 0;
     top: 49px;
   }
+  &:before {
+    height: 10px;
+    top: -10px;
+  }
 `;
 
 export const ActionBtn = styled.button`
   ${BaseButton};
-  width: 30px;
   padding: 0;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${colors.darkBackground};
   transition: all 0.4s ease;
-  &:hover {
-    background: transparent;
-  }
 `;
 
 export const HowManyLikes = styled.p`
   color: ${colors.lightLighten};
-  margin-left: 10px;
+  margin-left: 5px;
 `;
 
 export const ActionBtnGroup = styled.div`
   display: flex;
   width: 25%;
-  height: 20px;
+  align-items: center;
 `;

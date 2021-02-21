@@ -90,7 +90,12 @@ const Tweet = ({
         <S.Footer>
           {user._id !== authorId && (
             <S.ActionBtnGroup>
-              <S.ActionBtn aria-label="Like" onClick={onLikeTweetHandler_}>
+              <S.ActionBtn
+                rounded
+                variant="danger"
+                aria-label="Like"
+                onClick={onLikeTweetHandler_}
+              >
                 <Heart
                   width={20}
                   color={haveLikedTweet ? colors.red : colors.lightLighten}
@@ -103,14 +108,27 @@ const Tweet = ({
           )}
           {user._id === authorId && (
             <S.ActionBtnGroup>
-              <S.ActionBtn aria-label="Exclude" onClick={onDeleteTweetHandler}>
+              <S.ActionBtn
+                rounded
+                variant="danger"
+                aria-label="Exclude"
+                onClick={onDeleteTweetHandler}
+              >
                 <Bin width={20} />
               </S.ActionBtn>
             </S.ActionBtnGroup>
           )}
           {!isComment && (
             <S.ActionBtnGroup>
-              <Comment color={colors.lightLighten} />
+              <S.ActionBtn
+                variant="blue"
+                rounded
+                onClick={() => {
+                  return false;
+                }}
+              >
+                <Comment color={colors.lightLighten} />
+              </S.ActionBtn>
               <S.HowManyLikes>{commentsCounter}</S.HowManyLikes>
             </S.ActionBtnGroup>
           )}

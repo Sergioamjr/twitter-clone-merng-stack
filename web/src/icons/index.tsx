@@ -70,53 +70,34 @@ export const LeftArrow = ({
   );
 };
 
-export const Loading = (): JSX.Element => {
+export const Loading = ({ color = "#38a1f2", ...props }: SVG): JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="71"
-      height="71"
+      width="30"
+      style={{ margin: "20px auto" }}
+      height="30"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
       display="block"
+      {...props}
     >
       <circle
         cx="50"
         cy="50"
-        r="32"
-        strokeWidth="8"
-        stroke="#93dbe9"
-        strokeDasharray="50.26548245743669 50.26548245743669"
         fill="none"
-        strokeLinecap="round"
+        stroke={color}
+        strokeWidth="10"
+        r="40"
+        strokeDasharray="188.49555921538757 64.83185307179586"
       >
         <animateTransform
           attributeName="transform"
           type="rotate"
-          dur="1.7543859649122806s"
           repeatCount="indefinite"
-          keyTimes="0;1"
+          dur="1s"
           values="0 50 50;360 50 50"
-        />
-      </circle>
-      <circle
-        cx="50"
-        cy="50"
-        r="23"
-        strokeWidth="8"
-        stroke="#689cc5"
-        strokeDasharray="36.12831551628262 36.12831551628262"
-        strokeDashoffset="36.128"
-        fill="none"
-        strokeLinecap="round"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          dur="1.7543859649122806s"
-          repeatCount="indefinite"
           keyTimes="0;1"
-          values="0 50 50;-360 50 50"
         />
       </circle>
     </svg>

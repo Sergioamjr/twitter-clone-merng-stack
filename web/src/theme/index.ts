@@ -2,27 +2,27 @@ import { createGlobalStyle } from "styled-components";
 import { darken, lighten } from "polished";
 
 const diff = 0.2;
-const diffDarken = 0.02;
+const diffDarken = 0.5;
 
 export const defaultColors = {
-  white: "#fff",
+  white: "#d9d9d9",
   dark: "#333",
-  darkBackground: "#15202b",
+  darkBackground: "#000",
   light: "rgb(56, 68, 77)",
-  blue: "#39a2f2",
+  blue: "#38a1f2",
   avatar: "#ff5b5b",
   green: "#33994a",
-  red: "#cc3939",
+  red: "rgb(224, 36, 94)",
 };
 
 export const colors = {
   ...defaultColors,
   darkDarken: darken(diffDarken, defaultColors.dark),
-  redDarken: darken(diffDarken, defaultColors.red),
+  redDarken: darken(0.4, defaultColors.red),
   whiteDarken: darken(diffDarken, defaultColors.white),
   darkBackgroundDarken: darken(0.02, defaultColors.darkBackground),
   lightDarken: darken(diffDarken, defaultColors.light),
-  blueDarken: darken(diffDarken, defaultColors.blue),
+  blueDarken: darken(0.2, defaultColors.blue),
   avatarDarken: darken(diffDarken, defaultColors.avatar),
   greenDarken: darken(diffDarken, defaultColors.green),
   redLighten: lighten(diff, defaultColors.red),
@@ -62,5 +62,11 @@ export const GlobalStyle = createGlobalStyle`
   html, body, #__next {
     background: ${colors.darkBackground};
     height: 100%;
+  }
+
+  *:focus {
+    outline: double;
+    outline-width: 1px;
+    outline-color: #38a1f2;
   }
 `;

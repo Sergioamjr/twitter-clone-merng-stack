@@ -1,7 +1,7 @@
 import * as S from "./styled";
 
 export type CustomProps = {
-  variant?: "ghost";
+  variant?: "ghost" | "danger";
   rounded?: boolean;
   noPadding?: boolean;
 };

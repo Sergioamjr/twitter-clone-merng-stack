@@ -13,9 +13,11 @@ export const BaseButton = css<CustomProps>`
   transition: background-color 0.3s ease;
   &:hover {
     background-color: ${colors.blueDarken};
+    path {
+      fill: ${colors.blue};
+    }
   }
   &:disabled {
-    background-color: ${colors.blueLighten};
     cursor: not-allowed;
   }
   ${({ variant }) =>
@@ -24,6 +26,28 @@ export const BaseButton = css<CustomProps>`
     background-color: transparent;
     &:hover {
       background-color: ${colors.darkBackgroundLighten};
+    }
+  `}
+  ${({ variant }) =>
+    variant === "danger" &&
+    `
+    background-color: transparent;
+    &:hover {
+      background-color: ${colors.redDarken};
+      path {
+        fill: ${colors.red};
+      }
+    }
+  `}
+  ${({ variant }) =>
+    variant === "blue" &&
+    `
+    background-color: transparent;
+    &:hover {
+      background-color: ${colors.blueDarken};
+      path {
+        fill: ${colors.blue};
+      }
     }
   `}
   ${({ rounded }) =>
