@@ -107,9 +107,3 @@ export const HowManyLikes = styled.p`
   color: ${colors.lightLighten};
   margin-left: 5px;
 `;
-
-export const ActionBtnGroup = styled.div`
-  display: flex;
-  width: 25%;
-  align-items: center;
-`;

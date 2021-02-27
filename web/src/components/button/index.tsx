@@ -1,13 +1,13 @@
 import { colors } from "~theme";
 import styled from "styled-components";
 
-export type CustomProps = {
+export type ButtonProps = React.HTMLProps<HTMLButtonElement> & {
   variant?: "ghost" | "danger" | "blue" | "green";
   rounded?: boolean;
   noPadding?: boolean;
 };
 
-export default styled.button<CustomProps>`
+const Button = styled.button<ButtonProps>`
   border: 0;
   border-radius: 50px;
   padding: 5px 15px;
@@ -78,3 +78,5 @@ export default styled.button<CustomProps>`
   align-items: center;
   justify-content: center;
 `;
+
+export default Button;

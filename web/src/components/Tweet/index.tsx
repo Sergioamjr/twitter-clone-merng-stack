@@ -1,21 +1,21 @@
 import { memo } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import Button from "~components/button";
 import { formatDistance, format } from "date-fns";
 import { Heart, Bin, Comment, Share } from "~icons";
 import * as S from "./styled";
 import { colors } from "~theme";
 import { Tweet as TweetType, User } from "~graphql/generated/graphql";
 import { getNameInitials } from "~utils";
+import ButtonWithCounter from "~components/ButtonWithCounter";
 
 export type TweetProps = Required<TweetType> & {
   isComment?: boolean;
   showCommentLine?: boolean;
   haveLikedTweet: boolean;
-  onLikeTweetHandler: (id: string) => void;
+  onLikeTweet: (id: string) => void;
   onDeleteTweet: (id: string) => void;
-  onDeslikeTweetHandler: (id: string) => void;
+  onDeslikeTweet: (id: string) => void;
   user?: Pick<User, "_id">;
 };
 
@@ -23,10 +23,10 @@ const Tweet = ({
   isComment,
   _id,
   onDeleteTweet,
-  onLikeTweetHandler,
+  onLikeTweet,
   likedBy,
   haveLikedTweet,
-  onDeslikeTweetHandler,
+  onDeslikeTweet,
   name,
   userName,
   showCommentLine,
@@ -50,9 +50,9 @@ const Tweet = ({
     e.stopPropagation();
   };
 
-  const onLikeTweetHandler_ = (e) => {
+  const onLikeTweetHandler = (e) => {
     e.stopPropagation();
-    haveLikedTweet ? onDeslikeTweetHandler(_id) : onLikeTweetHandler(_id);
+    haveLikedTweet ? onDeslikeTweet(_id) : onLikeTweet(_id);
   };
 
   const onDeleteTweetHandler = (e) => {
@@ -107,47 +107,42 @@ const Tweet = ({
         </S.Content>
         <S.Footer>
           {user._id !== authorId && (
-            <S.ActionBtnGroup>
-              <Button
-                rounded
-                variant="danger"
-                aria-label="Like"
-                onClick={onLikeTweetHandler_}
-              >
+            <ButtonWithCounter
+              onClick={onLikeTweetHandler}
+              rounded
+              variant="danger"
+              counter={likedBy.length}
+              Icon={
                 <Heart
                   width={20}
                   color={haveLikedTweet ? colors.red : colors.lightLighten}
                 />
-              </Button>
-              {!!likedBy.length && (
-                <S.HowManyLikes>{likedBy.length}</S.HowManyLikes>
-              )}
-            </S.ActionBtnGroup>
+              }
+            />
           )}
           {user._id === authorId && (
-            <S.ActionBtnGroup>
-              <Button
-                rounded
-                variant="danger"
-                aria-label="Exclude"
-                onClick={onDeleteTweetHandler}
-              >
-                <Bin width={20} />
-              </Button>
-            </S.ActionBtnGroup>
+            <ButtonWithCounter
+              onClick={onDeleteTweetHandler}
+              rounded
+              variant="danger"
+              Icon={<Bin width={20} />}
+            />
           )}
           {!isComment && (
-            <S.ActionBtnGroup>
-              <Button variant="blue" rounded>
-                <Comment color={colors.lightLighten} />
-              </Button>
-              <S.HowManyLikes>{commentsCounter}</S.HowManyLikes>
-            </S.ActionBtnGroup>
+            <ButtonWithCounter
+              rounded
+              counter={commentsCounter}
+              variant="blue"
+              Icon={<Comment color={colors.lightLighten} />}
+            />
           )}
           {!isComment && (
-            <Button variant="green" rounded onClick={onShareHandler}>
-              <Share />
-            </Button>
+            <ButtonWithCounter
+              variant="green"
+              rounded
+              onClick={onShareHandler}
+              Icon={<Share />}
+            />
           )}
         </S.Footer>
       </S.TweetContent>
