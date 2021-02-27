@@ -23,3 +23,16 @@ export function mergeOnLocalStorage(data: Partial<LoggedUser>): void {
   const store = getFromLocalStorage();
   window.localStorage.setItem(KEY, JSON.stringify({ ...store, ...data }));
 }
+
+export function omit(obj: unknown, toOmit: string[]): unknown {
+  let newObject = {};
+  Object.entries(obj).forEach(([name, key]) => {
+    if (!toOmit.includes(name)) {
+      newObject = {
+        ...newObject,
+        [name]: key,
+      };
+    }
+  });
+  return newObject;
+}
