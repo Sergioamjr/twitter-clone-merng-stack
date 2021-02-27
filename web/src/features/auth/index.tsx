@@ -1,15 +1,12 @@
-import { useEffect, ReactNode, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateRandomUserMutation } from "~graphql/generated/graphql";
 import { actions } from "~store";
 import Loading from "~components/Loading";
 import { getFromLocalStorage, setOnLocalStorage } from "~utils";
 import Intro from "~components/Intro";
+import { WithChildren } from "~utils/types";
 
-type AuthProps = {
-  children: ReactNode;
-};
-
-export default function Auth({ children }: AuthProps): JSX.Element {
+export default function Auth({ children }: WithChildren): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
   const [showIntro, setShowIntro] = useState(false);
   const [onCreateRandomUser] = useCreateRandomUserMutation();

@@ -30,7 +30,7 @@ function Intro(props: Props): JSX.Element {
   return (
     <Styles.Wrapper variants={container} initial="hidden" animate="show">
       <Styles.Text animate={animate} transition={transition}>
-        It seems it&apos;s your first time here :)
+        It seems it&apos;s your first time here
       </Styles.Text>
       <Styles.Text animate={animate} transition={{ ...transition, delay: 2 }}>
         Let me create a random user for you...

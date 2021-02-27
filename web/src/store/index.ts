@@ -17,7 +17,7 @@ const store = configureStore({
     getDefaultMiddleware().concat(middleware),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootStoreState = ReturnType<typeof store.getState>;
 export default store;
 export const actions = {
   ...userActions,

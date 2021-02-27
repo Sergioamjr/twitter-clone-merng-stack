@@ -15,6 +15,7 @@ import Tweet from "~components/Tweet";
 import GoBackBar from "~components/GoBackBar";
 import UserNotFound from "~components/UserNotFound";
 import TweetInput from "~components/TweetInput";
+import { omit } from "~utils";
 
 type TweetPageProps = {
   tweet: TweetType;
@@ -58,7 +59,7 @@ export default function TweetPage({
     refetch();
   };
 
-  const onSubmitNewCommentHandler = async (content) => {
+  const onSubmitNewCommentHandler = async (content: string) => {
     await onSubmitNewComment({
       variables: {
         token: user.token,
@@ -116,26 +117,31 @@ export default function TweetPage({
       {tweet ? (
         <>
           <Tweet
-            onLikeTweetHandler={onLikeTweetHandler}
-            onDeslikeTweetHandler={onDeslikeTweetHandler}
+            onLikeTweet={onLikeTweetHandler}
+            onDeslikeTweet={onDeslikeTweetHandler}
             onDeleteTweet={onDeleteTweetHandler}
-            user={user}
-            showCommentLine={tweet.commentsCounter}
+            showCommentLine={!!tweet.commentsCounter}
             haveLikedTweet={tweet?.likedBy.includes(user._id)}
             {...tweet}
           />
 
-          {comments.map((comment) => (
-            <Tweet
-              haveLikedTweet={comment?.likedBy.includes(user._id)}
-              onLikeTweetHandler={onLikeCommentHandler}
-              onDeslikeTweetHandler={onDeslikeCommentHandler}
-              onDeleteTweet={onDeleteCommentHandler}
-              key={comment._id}
-              isComment
-              {...comment}
-            />
-          ))}
+          {comments.map((comment) => {
+            const omittedProperties = omit(comment, [
+              "originalTweet",
+              "__typename",
+            ]);
+            return (
+              <Tweet
+                haveLikedTweet={comment?.likedBy.includes(user._id)}
+                onLikeTweet={onLikeCommentHandler}
+                onDeslikeTweet={onDeslikeCommentHandler}
+                onDeleteTweet={onDeleteCommentHandler}
+                key={comment._id}
+                isComment
+                {...omittedProperties}
+              />
+            );
+          })}
           <TweetInput
             isComment
             userName={user.name}

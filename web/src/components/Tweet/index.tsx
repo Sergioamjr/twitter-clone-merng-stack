@@ -8,8 +8,9 @@ import { colors } from "~theme";
 import { Tweet as TweetType, User } from "~graphql/generated/graphql";
 import { getNameInitials } from "~utils";
 import ButtonWithCounter from "~components/ButtonWithCounter";
+import { RootStoreState } from "~store";
 
-export type TweetProps = Required<TweetType> & {
+export type TweetProps = TweetType & {
   isComment?: boolean;
   showCommentLine?: boolean;
   haveLikedTweet: boolean;
@@ -46,21 +47,21 @@ const Tweet = ({
     router.push(`/tweet/${_id}`);
   };
 
-  const onClickInside = (e) => {
+  const onClickInside = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.stopPropagation();
   };
 
-  const onLikeTweetHandler = (e) => {
+  const onLikeTweetHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     haveLikedTweet ? onDeslikeTweet(_id) : onLikeTweet(_id);
   };
 
-  const onDeleteTweetHandler = (e) => {
+  const onDeleteTweetHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     onDeleteTweet(_id);
   };
 
-  const onShareHandler = async (e) => {
+  const onShareHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     const url = `${window.location.origin}/tweet/${_id}`;
     try {
@@ -153,6 +154,7 @@ const Tweet = ({
 
 const MemorizedTweet = memo(Tweet);
 
-export default connect(({ user }, props) => ({ user, ...props }))(
-  MemorizedTweet
-);
+export default connect(({ user }: RootStoreState, props) => ({
+  user,
+  ...props,
+}))(MemorizedTweet);

@@ -67,7 +67,7 @@ const Button = styled.button<ButtonProps>`
     }
   `}
   ${({ rounded }) =>
-    rounded &&
+    !!rounded &&
     `
   border-radius: 50%;
   height: 35px;

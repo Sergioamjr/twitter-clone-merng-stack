@@ -25,8 +25,8 @@ function TweetInput({
   const size = content.length;
 
   const isInvalid = size > tweetLimit;
-  const valid = `${tweetLimit - size} caracteres restantes.`;
-  const invalid = `${size - tweetLimit} a mais.`;
+  const valid = `${tweetLimit - size} characters left`;
+  const invalid = `${size - tweetLimit} characters more than the ${tweetLimit}`;
 
   const onSubmitHandler = () => {
     onSubmitNewTweet(content);

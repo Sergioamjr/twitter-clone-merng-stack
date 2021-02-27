@@ -34,7 +34,7 @@ export default function Home({
     refetch();
   }, []);
 
-  const onSubmitNewTweetHandler = async (content) => {
+  const onSubmitNewTweetHandler = async (content: string) => {
     await onSubmitNewTweet({
       variables: {
         token: user.token,
@@ -89,8 +89,8 @@ export default function Home({
             key={_id}
             _id={_id}
             likedBy={likedBy}
-            onLikeTweetHandler={onLikeTweetHandler}
-            onDeslikeTweetHandler={onDeslikeTweetHandler}
+            onLikeTweet={onLikeTweetHandler}
+            onDeslikeTweet={onDeslikeTweetHandler}
             onDeleteTweet={onDeleteTweetHandler}
             haveLikedTweet={likedBy.includes(user._id)}
           />

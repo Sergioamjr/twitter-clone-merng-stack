@@ -66,7 +66,7 @@ export default function User({
     refetch();
   };
 
-  const onFollowHandler = async (_id) => {
+  const onFollowHandler = async (_id: string) => {
     const { data } = await onFollow({
       variables: {
         followingId: _id,
@@ -82,7 +82,7 @@ export default function User({
     refetch();
   };
 
-  const onUnfollowHandler = async (_id) => {
+  const onUnfollowHandler = async (_id: string) => {
     const { data } = await onUnfollow({
       variables: {
         unfollowingId: _id,
@@ -132,8 +132,8 @@ export default function User({
                   createdAt={createdAt}
                   authorId={authorId}
                   haveLikedTweet={likedBy.includes(user._id)}
-                  onLikeTweetHandler={() => onLikeTweetHandler(_id)}
-                  onDeslikeTweetHandler={() => onDeslikeTweetHandler(_id)}
+                  onLikeTweet={() => onLikeTweetHandler(_id)}
+                  onDeslikeTweet={() => onDeslikeTweetHandler(_id)}
                   onDeleteTweet={() => onDeleteTweetHandler(_id)}
                   key={_id}
                   name={name}

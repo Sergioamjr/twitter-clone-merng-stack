@@ -1,4 +1,5 @@
 {
+  "defaultSeverity": "warning",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -13,6 +14,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
+    "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
