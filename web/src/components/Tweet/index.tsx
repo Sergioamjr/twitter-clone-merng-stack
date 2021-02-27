@@ -1,8 +1,9 @@
 import { memo } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
+import Button from "~components/button";
 import { formatDistance, format } from "date-fns";
-import { Heart, Bin, Comment } from "~icons";
+import { Heart, Bin, Comment, Share } from "~icons";
 import * as S from "./styled";
 import { colors } from "~theme";
 import { Tweet as TweetType, User } from "~graphql/generated/graphql";
@@ -59,6 +60,23 @@ const Tweet = ({
     onDeleteTweet(_id);
   };
 
+  const onShareHandler = async (e) => {
+    e.stopPropagation();
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "MDN",
+          text: "Aprenda desenvolvimento web no MDN!",
+          url: "https://developer.mozilla.org",
+        });
+        return false;
+      }
+      console.log("copiado");
+    } catch (err) {
+      console.log("copiado");
+    }
+  };
+
   return (
     <S.Card tabIndex={0} onClick={onClickHandler}>
       <S.Avatar
@@ -90,7 +108,7 @@ const Tweet = ({
         <S.Footer>
           {user._id !== authorId && (
             <S.ActionBtnGroup>
-              <S.ActionBtn
+              <Button
                 rounded
                 variant="danger"
                 aria-label="Like"
@@ -100,7 +118,7 @@ const Tweet = ({
                   width={20}
                   color={haveLikedTweet ? colors.red : colors.lightLighten}
                 />
-              </S.ActionBtn>
+              </Button>
               {!!likedBy.length && (
                 <S.HowManyLikes>{likedBy.length}</S.HowManyLikes>
               )}
@@ -108,29 +126,28 @@ const Tweet = ({
           )}
           {user._id === authorId && (
             <S.ActionBtnGroup>
-              <S.ActionBtn
+              <Button
                 rounded
                 variant="danger"
                 aria-label="Exclude"
                 onClick={onDeleteTweetHandler}
               >
                 <Bin width={20} />
-              </S.ActionBtn>
+              </Button>
             </S.ActionBtnGroup>
           )}
           {!isComment && (
             <S.ActionBtnGroup>
-              <S.ActionBtn
-                variant="blue"
-                rounded
-                onClick={() => {
-                  return false;
-                }}
-              >
+              <Button variant="blue" rounded>
                 <Comment color={colors.lightLighten} />
-              </S.ActionBtn>
+              </Button>
               <S.HowManyLikes>{commentsCounter}</S.HowManyLikes>
             </S.ActionBtnGroup>
+          )}
+          {!isComment && (
+            <Button variant="green" rounded onClick={onShareHandler}>
+              <Share />
+            </Button>
           )}
         </S.Footer>
       </S.TweetContent>

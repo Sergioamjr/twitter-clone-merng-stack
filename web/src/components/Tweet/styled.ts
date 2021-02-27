@@ -1,4 +1,4 @@
-import { BaseButton } from "~components/button/styled";
+import BaseButton from "~components/button";
 import styled from "styled-components";
 import { colors, spacings, fontSizes } from "~theme";
 
@@ -101,14 +101,7 @@ export const Avatar = styled.a<{ avatarColor: string; isComment: boolean }>`
   }
 `;
 
-export const ActionBtn = styled.button`
-  ${BaseButton};
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.4s ease;
-`;
+export const ActionBtn = styled(BaseButton)``;
 
 export const HowManyLikes = styled.p`
   color: ${colors.lightLighten};
