@@ -62,12 +62,13 @@ const Tweet = ({
 
   const onShareHandler = async (e) => {
     e.stopPropagation();
+    const url = `${window.location.origin}/tweet/${_id}`;
     try {
       if (navigator.share) {
         await navigator.share({
-          title: "MDN",
-          text: "Aprenda desenvolvimento web no MDN!",
-          url: "https://developer.mozilla.org",
+          title: "Clone Twitter",
+          text: "Hey, look at this tweet.",
+          url,
         });
         return false;
       }
