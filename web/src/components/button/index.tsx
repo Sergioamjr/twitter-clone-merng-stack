@@ -1,5 +1,6 @@
 import { colors } from "~theme";
 import styled from "styled-components";
+// import { WithChildren } from "~utils/types";
 
 export type ButtonProps = React.HTMLProps<HTMLButtonElement> & {
   variant?: "ghost" | "danger" | "blue" | "green";

@@ -3,7 +3,7 @@ import store from "~store";
 
 type Data = Omit<LoggedUser, "__typename">;
 
-type Action = {
+export type Action = {
   type: string;
   data?: Data;
 };

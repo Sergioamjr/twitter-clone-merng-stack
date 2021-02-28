@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { mergeOnLocalStorage } from "~utils";
-import user, { userActions, SET_USERDATA } from "./user";
+import user, { userActions, SET_USERDATA, Action } from "./user";
 
-const middleware = () => (next) => (action) => {
+const middleware = () => (next: (arg0: Action) => void) => (action: Action) => {
   if (action.type === SET_USERDATA) {
     mergeOnLocalStorage(action.data);
   }

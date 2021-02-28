@@ -56,4 +56,7 @@ function Tweet({ user }: TweetPageType): JSX.Element {
   );
 }
 
-export default connect(({ user }, props) => ({ user, ...props }))(Tweet);
+export default connect(({ user }: TweetPageType, props) => ({
+  user,
+  ...props,
+}))(Tweet);

@@ -28,4 +28,6 @@ function HomePage({ user }: HomePageType): JSX.Element {
   );
 }
 
-export default connect(({ user }, props) => ({ user, ...props }))(HomePage);
+export default connect(({ user }: HomePageType, props) => ({ user, ...props }))(
+  HomePage
+);

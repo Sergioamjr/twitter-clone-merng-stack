@@ -5,11 +5,11 @@ import { colors } from "~theme";
 
 const state = {
   onDeleteTweet: () => {},
-  onLikeTweetHandler: () => {},
-  onDeslikeTweetHandler: () => {},
+  onLikeTweet: () => {},
+  onDeslikeTweet: () => {},
   name: "Sérgio Júnior",
   user: "sergioamjr_",
-  likedBy: [],
+  likedBy: [""],
   content:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel sodales nibh, vel egestas orci. Praesent mauris leo, pellentesque non malesuada non, sollicitudin dignissim neque. Fusce ornare nibh eget risus ullamcorper scelerisque. Nulla et pellentesque ligula, a maximus purus. Donec at odio quis dolor efficitur malesuada.",
   _id: "123",

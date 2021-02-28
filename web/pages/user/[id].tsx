@@ -42,4 +42,6 @@ function UserPage({ user }: UserPageType): JSX.Element {
   );
 }
 
-export default connect(({ user }, props) => ({ user, ...props }))(UserPage);
+export default connect(({ user }: UserPageType, props) => ({ user, ...props }))(
+  UserPage
+);

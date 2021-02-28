@@ -13,7 +13,7 @@ import { RootStoreState } from "~store";
 export type TweetProps = TweetType & {
   isComment?: boolean;
   showCommentLine?: boolean;
-  haveLikedTweet: boolean;
+  haveLikedTweet?: boolean;
   onLikeTweet: (id: string) => void;
   onDeleteTweet: (id: string) => void;
   onDeslikeTweet: (id: string) => void;

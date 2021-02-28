@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, memo, ChangeEvent } from "react";
 import * as S from "./styled";
 
 type Props = {
@@ -18,7 +18,9 @@ function TweetInput({
 }: Props): JSX.Element {
   const [content, setContent] = useState(contentDefault);
 
-  const onChangeTweet = ({ target: { value } }) => {
+  const onChangeTweet = ({
+    target: { value },
+  }: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(value);
   };
 
@@ -38,9 +40,8 @@ function TweetInput({
       <S.Input
         placeholder={`what's going on, ${userName}?`}
         hasError={isInvalid}
-        rows="4"
+        rows={4}
         onChange={onChangeTweet}
-        type="text"
         value={content}
       ></S.Input>
       <S.TweetAction>

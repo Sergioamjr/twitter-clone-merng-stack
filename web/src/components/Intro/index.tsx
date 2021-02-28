@@ -45,4 +45,4 @@ function Intro(props: Props): JSX.Element {
   );
 }
 
-export default connect(({ user }, props) => ({ user, ...props }))(Intro);
+export default connect(({ user }: Props, props) => ({ user, ...props }))(Intro);
