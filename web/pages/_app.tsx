@@ -1,8 +1,9 @@
-import Head from "next/head";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import store from "~store";
-import { GlobalStyle } from "~theme";
+import { colors, GlobalStyle } from "~theme";
+import Head from "~components/Head";
 
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA;
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -21,31 +22,13 @@ type Props = {
 export default function MyApp({ Component, pageProps }: Props): JSX.Element {
   return (
     <>
-      <Head>
-        <title>Explore / Twitter</title>
-        <link rel="icon" href="/favicon.ico" />
-        {isProduction && (
-          <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-            />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', ${GA_TRACKING_ID});`,
-              }}
-            />
-          </>
-        )}
-      </Head>
+      <Head isProduction={isProduction} GA_TRACKING_ID={GA_TRACKING_ID} />
       <GlobalStyle />
       <Provider store={store}>
         <ApolloProvider client={client}>
-          <Component {...pageProps} />
+          <ThemeProvider theme={{ colors }}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </ApolloProvider>
       </Provider>
     </>
