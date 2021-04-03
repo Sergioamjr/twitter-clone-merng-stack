@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "~components/button";
+import Button from "~components/Button";
 import { colors, fontSizes, spacings } from "~theme";
 
 export const Header = styled.div`

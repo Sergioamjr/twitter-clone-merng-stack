@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { Page, Column } from "~components/template";
+import { Page, Column } from "~components/Template";
 import {
   LoggedUser,
   useGetCommentsByTweetIdQuery,
   useGetTweetByIdQuery,
 } from "~graphql/generated/graphql";
-import Auth from "~features/auth";
+import Auth from "~components/Authentication";
 import Loading from "~components/Loading";
 import TweetPage from "~features/tweet";
 

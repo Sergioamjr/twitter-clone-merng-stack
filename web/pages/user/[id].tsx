@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { Page, Column } from "~components/template";
+import { Page, Column } from "~components/Template";
 import { LoggedUser, useGetUserByIdQuery } from "~graphql/generated/graphql";
 import User from "~features/user";
-import Auth from "~features/auth";
+import Auth from "~components/Authentication";
 import Loading from "~components/Loading";
 
 type UserPageType = {

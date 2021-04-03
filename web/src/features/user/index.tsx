@@ -9,8 +9,8 @@ import {
   LoggedUser,
   useUnfollowMutation,
 } from "~graphql/generated/graphql";
-import { Column } from "~components/template";
-import UserIntro from "~components/userIntro";
+import { Column } from "~components/Template";
+import UserIntro from "~components/UserIntro";
 import { actions } from "~store";
 import GoBackBar from "~components/GoBackBar";
 import UserNotFound from "~components/UserNotFound";

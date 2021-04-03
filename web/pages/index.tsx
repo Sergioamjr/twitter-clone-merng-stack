@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { useGetTweetsQuery, LoggedUser } from "~graphql/generated/graphql";
-import Auth from "~features/auth";
-import { Page, Column } from "~components/template";
+import Auth from "~components/Authentication";
+import { Page, Column } from "~components/Template";
 import Home from "~features/home";
 
 type HomePageType = {

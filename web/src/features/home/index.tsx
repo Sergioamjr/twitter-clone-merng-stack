@@ -9,7 +9,7 @@ import {
   Tweet,
   LoggedUser,
 } from "~graphql/generated/graphql";
-import { Column } from "~components/template";
+import { Column } from "~components/Template";
 import { Loading } from "~icons";
 
 export type HomeProps = {
