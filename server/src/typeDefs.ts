@@ -10,6 +10,9 @@ const root = gql`
   type Mutation {
     root: String
   }
+  type Subscription {
+    root: String
+  }
 `;
 
 export default [root, userTypes, tweetTypes, commentTypes];

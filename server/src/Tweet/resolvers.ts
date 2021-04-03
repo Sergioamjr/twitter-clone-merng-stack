@@ -1,5 +1,18 @@
+import { PubSub } from "apollo-server";
 import { verifyToken, TokenDecoded } from "../User/resolvers";
-import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
+import {
+  QueryResolvers,
+  MutationResolvers,
+  SubscriptionResolvers,
+} from "./../generated/graphql";
+
+const pubsub = new PubSub();
+
+export const tweetSubscriptions: SubscriptionResolvers = {
+  hasANewTweet: {
+    subscribe: () => pubsub.asyncIterator(["A_NEW_TWEET_HAS_BEEN_CREATED"]),
+  },
+};
 
 export const tweetQueries: QueryResolvers = {
   getTweets: async (_, __, context) => {
@@ -70,14 +83,16 @@ export const tweetMutations: MutationResolvers = {
       const { userName, name, color } = await context.dataSources.User.findOne({
         _id: (<TokenDecoded>decoded)._id,
       });
-      return await new context.dataSources.Tweet({
+      const tweet = {
         authorId: (<TokenDecoded>decoded)._id,
         createdAt: new Date().toISOString(),
         content,
         avatarColor: color,
         userName,
         name,
-      }).save();
+      };
+      pubsub.publish("A_NEW_TWEET_HAS_BEEN_CREATED", { hasANewTweet: tweet });
+      return await new context.dataSources.Tweet(tweet).save();
     } catch (err) {
       throw Error(err);
     }

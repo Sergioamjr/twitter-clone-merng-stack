@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
 import express from "express";
+import http from "http";
 import { ApolloServer } from "apollo-server-express";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 import expressPlayground from "graphql-playground-middleware-express";
 import typeDefs from "./src/typeDefs";
 import resolvers from "./src/resolvers";
@@ -12,6 +12,15 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 const server = new ApolloServer({
+  subscriptions: {
+    path: "/subscriptions",
+    onConnect: () => {
+      console.log("ws connected!");
+    },
+    onDisconnect: () => {
+      console.log("ws disconnected!");
+    },
+  },
   typeDefs,
   resolvers,
   dataSources: (): any => models,
@@ -21,14 +30,22 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
 app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
 
 app.get("/starter", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen({ port }, () => {
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+httpServer.listen({ port }, () => {
+  console.log(
+    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
+  );
+  console.log(
+    `🚀 Subscriptions ready at ws://localhost:${port}${server.subscriptionsPath}`
+  );
 });
 
 dbConnect

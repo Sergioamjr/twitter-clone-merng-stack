@@ -26,4 +26,8 @@ export const types = gql`
     like(_id: String, token: String): Tweet
     deslike(_id: String, token: String): Tweet
   }
+
+  extend type Subscription {
+    hasANewTweet: Tweet
+  }
 `;

@@ -50,7 +50,7 @@ export type QueryGetTweetByIdArgs = {
 
 
 export type QueryGetCommentsByTweetIdArgs = {
-  _id?: Maybe<Scalars['String']>;
+  _id: Scalars['String'];
 };
 
 export type Mutation = {
@@ -158,6 +158,12 @@ export type MutationLikeCommentArgs = {
 export type MutationDeslikeCommentArgs = {
   _id?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  root?: Maybe<Scalars['String']>;
+  hasANewTweet?: Maybe<Tweet>;
 };
 
 export type User = {
@@ -309,6 +315,7 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   LoggedUser: ResolverTypeWrapper<LoggedUser>;
@@ -327,6 +334,7 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'];
   Boolean: Scalars['Boolean'];
   Mutation: {};
+  Subscription: {};
   User: User;
   ID: Scalars['ID'];
   LoggedUser: LoggedUser;
@@ -381,7 +389,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getTweets?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tweet']>>>, ParentType, ContextType>;
   getTweetById?: Resolver<Maybe<ResolversTypes['Tweet']>, ParentType, ContextType, RequireFields<QueryGetTweetByIdArgs, '_id'>>;
   getComments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>;
-  getCommentsByTweetId?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType, RequireFields<QueryGetCommentsByTweetIdArgs, never>>;
+  getCommentsByTweetId?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType, RequireFields<QueryGetCommentsByTweetIdArgs, '_id'>>;
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
@@ -401,6 +409,11 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, never>>;
   likeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationLikeCommentArgs, never>>;
   deslikeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationDeslikeCommentArgs, never>>;
+}>;
+
+export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
+  root?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "root", ParentType, ContextType>;
+  hasANewTweet?: SubscriptionResolver<Maybe<ResolversTypes['Tweet']>, "hasANewTweet", ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
@@ -465,6 +478,7 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   LoggedUser?: LoggedUserResolvers<ContextType>;
   UserAndTweets?: UserAndTweetsResolvers<ContextType>;

@@ -1,6 +1,14 @@
-import { QueryResolvers, MutationResolvers } from "./generated/graphql";
+import {
+  QueryResolvers,
+  MutationResolvers,
+  SubscriptionResolvers,
+} from "./generated/graphql";
 import { userQueries, userMutations } from "./User/resolvers";
-import { tweetQueries, tweetMutations } from "./Tweet/resolvers";
+import {
+  tweetQueries,
+  tweetMutations,
+  tweetSubscriptions,
+} from "./Tweet/resolvers";
 import { commentsQueries, commentsMutations } from "./Comment/resolvers";
 
 const Query: QueryResolvers = {
@@ -15,4 +23,8 @@ const Mutation: MutationResolvers = {
   ...commentsMutations,
 };
 
-export default { Query, Mutation };
+const Subscription: SubscriptionResolvers = {
+  ...tweetSubscriptions,
+};
+
+export default { Query, Mutation, Subscription };
