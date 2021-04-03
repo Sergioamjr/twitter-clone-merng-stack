@@ -154,6 +154,12 @@ export type MutationDeslikeCommentArgs = {
   token?: Maybe<Scalars['String']>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  root?: Maybe<Scalars['String']>;
+  hasANewTweet?: Maybe<Tweet>;
+};
+
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']>;
@@ -515,6 +521,17 @@ export type GetUsersQuery = (
     { __typename?: 'User' }
     & UserFragment
   )>>> }
+);
+
+export type HasANewTweetSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HasANewTweetSubscription = (
+  { __typename?: 'Subscription' }
+  & { hasANewTweet?: Maybe<(
+    { __typename?: 'Tweet' }
+    & TweetFragment
+  )> }
 );
 
 export const CommentFragmentDoc = gql`
@@ -1259,3 +1276,31 @@ export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const HasANewTweetDocument = gql`
+    subscription hasANewTweet {
+  hasANewTweet {
+    ...Tweet
+  }
+}
+    ${TweetFragmentDoc}`;
+
+/**
+ * __useHasANewTweetSubscription__
+ *
+ * To run a query within a React component, call `useHasANewTweetSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useHasANewTweetSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHasANewTweetSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHasANewTweetSubscription(baseOptions?: Apollo.SubscriptionHookOptions<HasANewTweetSubscription, HasANewTweetSubscriptionVariables>) {
+        return Apollo.useSubscription<HasANewTweetSubscription, HasANewTweetSubscriptionVariables>(HasANewTweetDocument, baseOptions);
+      }
+export type HasANewTweetSubscriptionHookResult = ReturnType<typeof useHasANewTweetSubscription>;
+export type HasANewTweetSubscriptionResult = Apollo.SubscriptionResult<HasANewTweetSubscription>;
