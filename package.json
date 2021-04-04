@@ -1,7 +1,7 @@
 {
   "name": "twitter-merng-stack",
   "version": "1.0.0",
-  "description": "- [x] Posting - [x] Deleting - [x] Listing tweets - [x] Changing icons - [x] Likeing/Desleking - [x] Viewing user profile - [ ] Adding/Removing as a friend - [ ] Creating account, login automagic - [ ] Documentation - [ ] Deploy - [ ] Usar .env",
+  "description": "A case of study to learn GraphQL on front-end and back-end sides.",
   "main": "index.js",
   "scripts": {
     "deploy": "git subtree push --prefix server heroku master",

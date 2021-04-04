@@ -19,6 +19,7 @@ type HomePageType = {
 function HomePage({ user, tweets }: HomePageType): JSX.Element {
   const { data, refetch, loading } = useGetTweetsQuery();
   const subscriptions = useHasANewTweetSubscription();
+  console.log(subscriptions?.data);
 
   useEffect(() => {
     if (
