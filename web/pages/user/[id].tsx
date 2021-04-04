@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { Page, Column } from "~components/Template";
+import { Page, Column } from "~components/PageTemplate";
 import { LoggedUser, useGetUserByIdQuery } from "~graphql/generated/graphql";
 import User from "~features/user";
 import Auth from "~components/Authentication";

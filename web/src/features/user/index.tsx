@@ -9,7 +9,7 @@ import {
   LoggedUser,
   useUnfollowMutation,
 } from "~graphql/generated/graphql";
-import { Column } from "~components/Template";
+import { Column } from "~components/PageTemplate";
 import UserIntro from "~components/UserIntro";
 import { actions } from "~store";
 import GoBackBar from "~components/GoBackBar";
