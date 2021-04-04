@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { Page, Column } from "~components/Template";
+import { Page, Column } from "~components/PageTemplate";
 import {
   LoggedUser,
   useGetCommentsByTweetIdQuery,
