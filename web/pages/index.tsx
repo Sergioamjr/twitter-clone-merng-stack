@@ -6,7 +6,7 @@ import {
   useHasANewTweetSubscription,
 } from "~graphql/generated/graphql";
 import Auth from "~components/Authentication";
-import { Page, Column } from "~components/Template";
+import { Page, Column } from "~components/PageTemplate";
 import Home from "~features/home";
 import { TweetsStore } from "~store/tweets";
 import { actions } from "~store";
@@ -19,7 +19,6 @@ type HomePageType = {
 function HomePage({ user, tweets }: HomePageType): JSX.Element {
   const { data, refetch, loading } = useGetTweetsQuery();
   const subscriptions = useHasANewTweetSubscription();
-  console.log(subscriptions?.data);
 
   useEffect(() => {
     if (
