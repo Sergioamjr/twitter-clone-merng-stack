@@ -11,8 +11,11 @@ import {
 } from "~graphql/generated/graphql";
 import { Column } from "~components/Template";
 import { Loading } from "~icons";
+import Button from "~components/Button";
 
 export type HomeProps = {
+  onResetTweetsCounter: () => void;
+  newTweets: number;
   tweets?: Tweet[];
   user: LoggedUser;
   loading: boolean;
@@ -20,7 +23,9 @@ export type HomeProps = {
 };
 
 export default function Home({
+  onResetTweetsCounter,
   tweets = [],
+  newTweets,
   user,
   refetch,
   loading,
@@ -81,7 +86,16 @@ export default function Home({
         onSubmitNewTweet={onSubmitNewTweetHandler}
       />
       {loading && <Loading />}
-
+      {!!newTweets && (
+        <Button
+          style={{
+            margin: "0 auto 20px",
+          }}
+          onClick={() => onResetTweetsCounter()}
+        >
+          {newTweets} new tweet{newTweets > 1 ? "s" : ""}
+        </Button>
+      )}
       {tweets.map(({ _id, likedBy, ...tweet }) => {
         return (
           <TweetCard

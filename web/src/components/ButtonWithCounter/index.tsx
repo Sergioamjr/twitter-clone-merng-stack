@@ -5,7 +5,7 @@ import * as Styles from "./styles";
 type Props = {
   counter?: number;
   Icon: React.ReactNode;
-} & Pick<ButtonProps, "onClick" | "rounded" | "variant">;
+} & Pick<ButtonProps, "onClick" | "rounded" | "variant" | "disabled">;
 
 export default function ButtonWithCounter({
   Icon,

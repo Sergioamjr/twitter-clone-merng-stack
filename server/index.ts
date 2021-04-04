@@ -14,12 +14,6 @@ const app = express();
 const server = new ApolloServer({
   subscriptions: {
     path: "/subscriptions",
-    onConnect: () => {
-      console.log("ws connected!");
-    },
-    onDisconnect: () => {
-      console.log("ws disconnected!");
-    },
   },
   typeDefs,
   resolvers,

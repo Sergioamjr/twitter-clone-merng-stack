@@ -108,20 +108,20 @@ const Tweet = ({
           <S.Text>{content}</S.Text>
         </S.Content>
         <S.Footer>
-          {user._id !== authorId && (
-            <ButtonWithCounter
-              onClick={onLikeTweetHandler}
-              rounded
-              variant="danger"
-              counter={likedBy.length}
-              Icon={
-                <Heart
-                  width={20}
-                  color={haveLikedTweet ? colors.red : colors.lightLighten}
-                />
-              }
-            />
-          )}
+          <ButtonWithCounter
+            onClick={onLikeTweetHandler}
+            rounded
+            variant="danger"
+            counter={likedBy.length}
+            disabled={user._id === authorId}
+            Icon={
+              <Heart
+                width={20}
+                color={haveLikedTweet ? colors.red : colors.lightLighten}
+              />
+            }
+          />
+
           {user._id === authorId && (
             <ButtonWithCounter
               onClick={onDeleteTweetHandler}
