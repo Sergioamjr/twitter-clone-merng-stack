@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors, fontSizes, spacings } from "~theme";
-import ButtonBase from "~components/Button";
+import ButtonBase from "~components/BButton";
 
 export const Input = styled.textarea<{ hasError: boolean }>`
   width: 100%;

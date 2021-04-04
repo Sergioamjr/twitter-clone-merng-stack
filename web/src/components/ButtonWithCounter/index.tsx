@@ -1,5 +1,5 @@
 import React from "react";
-import Button, { ButtonProps } from "~components/Button";
+import Button, { ButtonProps } from "~components/BButton";
 import * as Styles from "./styles";
 
 type Props = {

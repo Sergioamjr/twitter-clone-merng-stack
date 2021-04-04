@@ -1,6 +1,6 @@
 import * as Styles from "./styles";
 import { LeftArrow } from "~icons";
-import Button from "~components/Button";
+import Button from "~components/BButton";
 import { colors } from "~theme";
 import Link from "next/link";
 

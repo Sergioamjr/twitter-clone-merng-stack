@@ -11,7 +11,7 @@ import {
 } from "~graphql/generated/graphql";
 import { Column } from "~components/PageTemplate";
 import { Loading } from "~icons";
-import Button from "~components/Button";
+import Button from "~components/BButton";
 
 export type HomeProps = {
   onResetTweetsCounter: () => void;
