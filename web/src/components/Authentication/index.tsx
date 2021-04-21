@@ -20,13 +20,7 @@ export default function Auth({ children }: WithChildren): JSX.Element {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    if (showIntro) {
-      setTimeout(() => {
-        setShowIntro(false);
-      }, 10000);
-    }
-  }, [showIntro]);
+  const onCompleteAnimation = () => setShowIntro(false);
 
   useEffect(() => {
     const user = getFromLocalStorage();
@@ -40,7 +34,7 @@ export default function Auth({ children }: WithChildren): JSX.Element {
   }, []);
 
   if (showIntro) {
-    return <Intro />;
+    return <Intro onCompleteAnimation={onCompleteAnimation} />;
   }
 
   if (isLoading) {

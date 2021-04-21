@@ -1,46 +1,32 @@
+import gsap from "gsap";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { LoggedUser } from "~graphql/generated/graphql";
 import * as Styles from "./styles";
 
-const animate = {
-  y: [20, 0, 0, 0],
-  opacity: [0, 1, 1, 1],
-};
-
-const transition = {
-  duration: 3,
-  times: [0, 0.2, 0.8, 1],
-};
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0.5,
-    },
-  },
-};
-
 type Props = {
   user: LoggedUser;
+  onCompleteAnimation: () => void;
 };
 
 function Intro(props: Props): JSX.Element {
+  useEffect(() => {
+    const tl = gsap.timeline();
+    const texts = document.querySelectorAll("p");
+    tl.from(texts[0], { duration: 0.5, y: 50, opacity: 0 })
+      .from(texts[1], { duration: 0.5, y: 50, opacity: 0, delay: 2 })
+      .from(texts[2], { duration: 0.5, y: 50, opacity: 0, delay: 3 })
+      .from(texts[3], { duration: 0.5, y: 50, opacity: 0, delay: 1 })
+      .then(() => setTimeout(props.onCompleteAnimation, 1000));
+  }, []);
   return (
-    <Styles.Wrapper variants={container} initial="hidden" animate="show">
-      <Styles.Text animate={animate} transition={transition}>
-        It seems it&apos;s your first time here.
+    <Styles.Wrapper>
+      <Styles.Text>It seems it&apos;s your first time here.</Styles.Text>
+      <Styles.Text>Let&apos;s create a random user for you.</Styles.Text>
+      <Styles.Text>
+        Done, you will be <span>@{props.user.userName}.</span>
       </Styles.Text>
-      <Styles.Text animate={animate} transition={{ ...transition, delay: 2 }}>
-        Let me create a random user for you.
-      </Styles.Text>
-      <Styles.Text animate={animate} transition={{ ...transition, delay: 6 }}>
-        Done, you will be <span>@{props.user.userName}</span>
-      </Styles.Text>
-      <Styles.Text animate={animate} transition={{ ...transition, delay: 8 }}>
-        Sending you to the home page
-      </Styles.Text>
+      <Styles.Text>Sending you to the home page.</Styles.Text>
     </Styles.Wrapper>
   );
 }
