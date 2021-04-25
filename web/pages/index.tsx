@@ -11,6 +11,7 @@ import Home from "~features/home";
 import { TweetsStore } from "~store/tweets";
 import { actions } from "~store";
 import SidebarShortCuts from "~components/SidebarShortcuts";
+import RightSidebar from "~components/RightSidebar";
 
 type HomePageType = {
   user: Partial<LoggedUser>;
@@ -51,7 +52,9 @@ function HomePage({ user, tweets }: HomePageType): JSX.Element {
             user={user}
           />
         </Column>
-        <Column />
+        <Column>
+          <RightSidebar />
+        </Column>
       </Page>
     </Auth>
   );

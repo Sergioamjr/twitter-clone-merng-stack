@@ -12,7 +12,6 @@ export const Page = styled.div`
 
 export const Column = styled.div`
   overflow: initial;
-  display: grid;
   &:not(:last-child) {
     border-right: 1px solid ${colors.light};
   }
