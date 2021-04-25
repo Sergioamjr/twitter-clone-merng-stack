@@ -6,12 +6,10 @@ import {
   useHasANewTweetSubscription,
 } from "~graphql/generated/graphql";
 import Auth from "~components/Authentication";
-import { Page, Column } from "~components/PageTemplate";
+import Template from "~components/Template";
 import Home from "~features/home";
 import { TweetsStore } from "~store/tweets";
 import { actions } from "~store";
-import SidebarShortCuts from "~components/SidebarShortcuts";
-import RightSidebar from "~components/RightSidebar";
 
 type HomePageType = {
   user: Partial<LoggedUser>;
@@ -38,24 +36,16 @@ function HomePage({ user, tweets }: HomePageType): JSX.Element {
 
   return (
     <Auth>
-      <Page>
-        <Column>
-          <SidebarShortCuts />
-        </Column>
-        <Column>
-          <Home
-            onResetTweetsCounter={onResetTweetsCounter}
-            newTweets={tweets.newTweets}
-            loading={loading}
-            refetch={refetch}
-            tweets={data?.getTweets}
-            user={user}
-          />
-        </Column>
-        <Column>
-          <RightSidebar />
-        </Column>
-      </Page>
+      <Template>
+        <Home
+          onResetTweetsCounter={onResetTweetsCounter}
+          newTweets={tweets.newTweets}
+          loading={loading}
+          refetch={refetch}
+          tweets={data?.getTweets}
+          user={user}
+        />
+      </Template>
     </Auth>
   );
 }

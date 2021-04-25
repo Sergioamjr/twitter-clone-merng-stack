@@ -9,7 +9,7 @@ import {
   Tweet,
   LoggedUser,
 } from "~graphql/generated/graphql";
-import { Column } from "~components/PageTemplate";
+import { Column } from "~components/Template";
 import { Loading } from "~icons";
 import Button from "~components/Button";
 

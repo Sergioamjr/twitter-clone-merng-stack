@@ -15,7 +15,7 @@ export default function SidebarShortCuts(): JSX.Element {
     <S.Sidebar>
       <S.Header>
         <S.Button variant="blue">
-          <Twitter />
+          <Twitter width={30} />
         </S.Button>
         <S.Button variant="blue">
           <Home />

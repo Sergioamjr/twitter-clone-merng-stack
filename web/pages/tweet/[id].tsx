@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { Page, Column } from "~components/PageTemplate";
+import Template from "~components/Template";
 import {
   LoggedUser,
   useGetCommentsByTweetIdQuery,
@@ -40,18 +40,14 @@ function Tweet({ user }: TweetPageType): JSX.Element {
 
   return (
     <Auth>
-      <Page>
-        <Column />
-        <Column>
-          <TweetPage
-            refetch={refetchAll}
-            user={user}
-            tweet={tweet.data?.getTweetById}
-            comments={comments.data?.getCommentsByTweetId}
-          />
-        </Column>
-        <Column />
-      </Page>
+      <Template>
+        <TweetPage
+          refetch={refetchAll}
+          user={user}
+          tweet={tweet.data?.getTweetById}
+          comments={comments.data?.getCommentsByTweetId}
+        />
+      </Template>
     </Auth>
   );
 }

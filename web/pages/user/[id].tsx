@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { Page, Column } from "~components/PageTemplate";
+import Template from "~components/Template";
 import { LoggedUser, useGetUserByIdQuery } from "~graphql/generated/graphql";
 import User from "~features/user";
 import Auth from "~components/Authentication";
@@ -25,19 +25,15 @@ function UserPage({ user }: UserPageType): JSX.Element {
 
   return (
     <Auth>
-      <Page>
-        <Column />
-        <Column>
-          <User
-            userNotFound={!loading && !data?.getUserById}
-            refetch={refetch}
-            tweets={data?.getUserById?.tweets}
-            queriedUser={data?.getUserById?.user}
-            user={user}
-          />
-        </Column>
-        <Column />
-      </Page>
+      <Template>
+        <User
+          userNotFound={!loading && !data?.getUserById}
+          refetch={refetch}
+          tweets={data?.getUserById?.tweets}
+          queriedUser={data?.getUserById?.user}
+          user={user}
+        />
+      </Template>
     </Auth>
   );
 }
