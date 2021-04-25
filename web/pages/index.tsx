@@ -10,6 +10,7 @@ import { Page, Column } from "~components/PageTemplate";
 import Home from "~features/home";
 import { TweetsStore } from "~store/tweets";
 import { actions } from "~store";
+import SidebarShortCuts from "~components/SidebarShortcuts";
 
 type HomePageType = {
   user: Partial<LoggedUser>;
@@ -37,7 +38,9 @@ function HomePage({ user, tweets }: HomePageType): JSX.Element {
   return (
     <Auth>
       <Page>
-        <Column />
+        <Column>
+          <SidebarShortCuts />
+        </Column>
         <Column>
           <Home
             onResetTweetsCounter={onResetTweetsCounter}

@@ -50,6 +50,7 @@ const Button = styled.button<ButtonProps>`
     background-color: transparent;
     &:hover {
       background-color: ${colors.blueDarken};
+      color: ${colors.blue};
       path {
         fill: ${colors.blue};
       }
