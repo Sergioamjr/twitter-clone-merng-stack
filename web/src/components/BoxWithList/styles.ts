@@ -28,6 +28,7 @@ export const Title = styled.div<{ withBorder?: boolean }>`
 
 export const Item = styled.li`
   padding: 12px 16px;
+  cursor: not-allowed;
   span {
     color: ${colors.lightLighten};
     color: #6E767D;
@@ -39,4 +40,7 @@ export const Item = styled.li`
     color: ${colors.white};
   }
   border-bottom: 1px solid rgb(47, 51, 54)};
+  &:hover {
+    background: #1c1f24;
+  }
 `;

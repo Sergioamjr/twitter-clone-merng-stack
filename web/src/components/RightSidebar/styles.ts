@@ -5,6 +5,10 @@ export const Sidebar = styled.div`
   display: grid;
   position: sticky;
   top: 0;
+  display: none;
+  @media screen and (min-width: 992px) {
+    display: grid;
+  }
 `;
 
 export const Box = styled.div`

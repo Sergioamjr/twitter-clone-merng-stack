@@ -18,6 +18,7 @@ export default function Auth({ children }: WithChildren): JSX.Element {
     setOnLocalStorage(createRandomUser);
     actions.setUserNameAction(createRandomUser);
     setIsLoading(false);
+    setShowIntro(true);
   };
 
   const onCompleteAnimation = () => setShowIntro(false);
@@ -25,7 +26,6 @@ export default function Auth({ children }: WithChildren): JSX.Element {
   useEffect(() => {
     const user = getFromLocalStorage();
     if (!user) {
-      setShowIntro(true);
       fetchFakeUser();
     } else {
       actions.setUserNameAction(user);
