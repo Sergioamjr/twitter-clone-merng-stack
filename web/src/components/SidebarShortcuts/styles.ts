@@ -8,12 +8,19 @@ export const Sidebar = styled.div`
 `;
 
 export const Header = styled.header`
-  max-width: 275px;
+  max-width: 80px;
   width: 100%;
   position: sticky;
   top: 15px;
   padding: 0 12px;
   justify-self: end;
+  display: none;
+  @media screen and (min-width: 762px) {
+    display: block;
+  }
+  @media screen and (min-width: 992px) {
+    max-width: 275px;
+  }
 `;
 
 export const Button = styled(ButtonBase)`
@@ -21,6 +28,12 @@ export const Button = styled(ButtonBase)`
   height: 50px;
   font-weight: 700;
   span {
-    margin-left: 10px;
+    margin-left: 15px;
+    display: none;
+  }
+  @media screen and (min-width: 992px) {
+    span {
+      display: block;
+    }
   }
 `;
