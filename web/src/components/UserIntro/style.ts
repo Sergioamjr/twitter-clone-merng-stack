@@ -58,6 +58,7 @@ export const Content = styled.div`
   padding: ${spacings.medium};
   padding-top: 0;
   border-top: 1px solid ${colors.light};
+  border-bottom: 1px solid ${colors.light};
 `;
 
 export const Spacer = styled.div`

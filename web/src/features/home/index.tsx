@@ -12,6 +12,7 @@ import {
 import { Column } from "~components/Template";
 import { Loading } from "~icons";
 import Button from "~components/Button";
+import GoBackBar from "~components/GoBackBar";
 
 export type HomeProps = {
   onResetTweetsCounter: () => void;
@@ -81,6 +82,7 @@ export default function Home({
 
   return (
     <Column>
+      <GoBackBar woBackBtn type="Home" />
       <TweetInput
         userName={user.name}
         onSubmitNewTweet={onSubmitNewTweetHandler}

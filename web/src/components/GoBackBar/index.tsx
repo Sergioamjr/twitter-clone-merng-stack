@@ -1,24 +1,28 @@
 import * as Styles from "./styles";
 import { LeftArrow } from "~icons";
+import Link from "next/link";
+import SectionTitle from "~components/SectionTitle";
 import Button from "~components/Button";
 import { colors } from "~theme";
-import Link from "next/link";
 
 type Props = {
   type: string;
+  woBackBtn?: boolean;
 };
 
-export default function GoBackBar({ type }: Props): JSX.Element {
+export default function GoBackBar({ type, woBackBtn }: Props): JSX.Element {
   return (
     <Styles.GoBack>
-      <Link href="/">
-        <a>
-          <Button variant="ghost" rounded>
-            <LeftArrow color={colors.blue} />
-          </Button>
-        </a>
-      </Link>
-      {type && <Styles.Page>{type}</Styles.Page>}
+      {!woBackBtn && (
+        <Link href="/">
+          <a>
+            <Button variant="ghost" rounded>
+              <LeftArrow color={colors.blue} />
+            </Button>
+          </a>
+        </Link>
+      )}
+      {type && <SectionTitle>{type}</SectionTitle>}
     </Styles.GoBack>
   );
 }

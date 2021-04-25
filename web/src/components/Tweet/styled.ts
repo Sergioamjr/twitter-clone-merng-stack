@@ -12,7 +12,10 @@ export const Card = styled.section`
   justify-content: space-between;
   cursor: pointer;
   &:not(:last-child) {
-    border-bottom: 0;
+    border-top: 0;
+  }
+  &:first-child {
+    border-top: 0;
   }
   &:hover {
     background: ${colors.darkBackgroundDarken};

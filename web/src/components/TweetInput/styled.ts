@@ -22,6 +22,7 @@ export const Button = styled(ButtonBase)``;
 
 export const Box = styled.div`
   padding: 15px;
+  border-bottom: 1px solid ${colors.light};
 `;
 
 export const Counter = styled.span`
