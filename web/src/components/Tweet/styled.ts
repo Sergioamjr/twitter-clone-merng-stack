@@ -1,4 +1,4 @@
-import BaseButton from "~components/BButton";
+import BaseButton from "~components/Button";
 import styled from "styled-components";
 import { colors, spacings, fontSizes } from "~theme";
 
