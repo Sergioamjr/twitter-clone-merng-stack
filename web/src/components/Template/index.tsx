@@ -29,7 +29,9 @@ export const Page = styled.div`
 
 export const Column = styled.div`
   overflow: initial;
-  &:not(:last-child) {
-    border-right: 1px solid ${colors.light};
+  @media screen and (min-width: 762px) {
+    &:not(:last-child) {
+      border-right: 1px solid ${colors.light};
+    }
   }
 `;
