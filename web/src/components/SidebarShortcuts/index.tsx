@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   HashTag,
   BookMark,
@@ -9,27 +10,28 @@ import {
   Notification,
   Profile,
 } from "~icons";
+
 import * as S from "./styles";
 
 export default function SidebarShortCuts(): JSX.Element {
+  const route = useRouter();
+  console.log(route);
   return (
     <S.Sidebar>
       <S.Header>
         <Link href="/">
-          <a>
-            <S.Button variant="blue">
-              <Twitter width={30} />
-            </S.Button>
-          </a>
+          <S.A>
+            <Twitter width={30} />
+          </S.A>
         </Link>
 
-        <S.Button disabled variant="blue">
+        <S.Button disabled variant="blue" actived={route.pathname === "/"}>
           <Home />
           <span>Home</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <HashTag />
-          <span>Explorer</span>
+          <span>Explore</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <Notification />

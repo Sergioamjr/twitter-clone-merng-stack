@@ -4,7 +4,7 @@ import * as S from "./styles";
 const trendings = [
   {
     title: "Oscar 2021",
-    subtitle: "Entertetimnemt . Trending",
+    subtitle: "Entertainment . Trending",
     description: "455k Tweets",
   },
   {
@@ -17,10 +17,20 @@ const trendings = [
     subtitle: "Music . Trending",
     description: "193k Tweets",
   },
+];
+
+const topics = [
   {
-    title: "Dog",
-    subtitle: "Pets . Trending",
-    description: "19k Tweets",
+    title: "Marvel",
+    description: "Fictional universe",
+  },
+  {
+    title: "Viral Tweets",
+    description: "Popular right now",
+  },
+  {
+    title: "Football",
+    description: "Sport",
   },
 ];
 
@@ -28,11 +38,21 @@ export default function RightSidebar(): JSX.Element {
   return (
     <S.Sidebar>
       <BoxWithList
-        title="Whats happening"
-        items={trendings.map(({ title, subtitle, description }, i) => {
+        title="What’s happening"
+        items={trendings.map(({ title, description }, i) => {
           return (
             <div key={i}>
-              <span>{subtitle}</span>
+              <p>{title}</p>
+              <span>{description}</span>
+            </div>
+          );
+        })}
+      />
+      <BoxWithList
+        title="Topics to follow"
+        items={topics.map(({ title, description }, i) => {
+          return (
+            <div key={i}>
               <p>{title}</p>
               <span>{description}</span>
             </div>

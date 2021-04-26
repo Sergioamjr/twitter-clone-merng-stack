@@ -1,5 +1,14 @@
 import ButtonBase from "~components/Button";
 import styled from "styled-components";
+import { colors } from "~theme";
+
+export const A = styled.a`
+  margin-top: 9px;
+  margin-left: 9px;
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 10px;
+`;
 
 export const Sidebar = styled.div`
   display: grid;
@@ -23,12 +32,14 @@ export const Header = styled.header`
   }
 `;
 
-export const Button = styled(ButtonBase)`
+export const Button = styled(ButtonBase)<{ actived?: boolean }>`
   font-size: 20px;
   height: 50px;
   font-weight: 700;
+  ${({ actived }) =>
+    actived && `color: ${colors.blue}; path { fill: ${colors.blue} }`}
   span {
-    margin-left: 15px;
+    margin-left: 22px;
     display: none;
   }
   @media screen and (min-width: 992px) {

@@ -5,22 +5,11 @@ export const Sidebar = styled.div`
   display: grid;
   position: sticky;
   top: 0;
+  padding-top: 20px;
   display: none;
   @media screen and (min-width: 992px) {
     display: grid;
   }
-`;
-
-export const Box = styled.div`
-  background: #16181d;
-  position: sticky;
-  top: 15px;
-  max-width: 348px;
-  width: 100%;
-  border-radius: 10px;
-  margin-left: 20px;
-  margin-top: 20px;
-  height: auto;
 `;
 
 export const A = styled.a`
