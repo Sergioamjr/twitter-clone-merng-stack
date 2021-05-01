@@ -1,4 +1,3 @@
-
 # Twitter Clone - Merng Stack.
 
 This project has been building as a study-case of new technologies, especially GraphQL that I've been studying for the last years. I'd like to be able to build a entire application, including front-end and back-end, using GraphQL, React and NodeJS.
@@ -27,17 +26,13 @@ I also tried new host services, architectures, patterns, authentication. I've be
 - Login automagically.
 - Post a tweet.
 - Like a tweet.
+- Comment a tweet.
 - Delete your tweet.
+- Subscription to new tweets.
 - Follow an user.
 - Unfollow an user.
 - View a single tweet.
 - View a single user.
-
-## Road map
-
-- Retweet a tweet.
-- Comment a tweet.
-- Change the app theme.
 
 ## More details
 

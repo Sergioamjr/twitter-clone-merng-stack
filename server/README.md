@@ -3,25 +3,25 @@
 ## Commands
 
 - To start the server
-  
+
 ```bash
 npm run dev
 ```
 
 - To run all tests
-  
+
 ```bash
 npm run test
 ```
 
 - To generate all TS types using GraphQL Codegen
-  
+
 ```bash
 npm run codegen
 ```
 
 - To run lint
-  
+
 ```bash
 npm run lint
 ```
@@ -51,24 +51,27 @@ npm run lint
 ### User
 
 ```ts
-_id: string;
-name: string
-userName: string,
-email: string
-password: string,
-friends: string[],
+_id: ID;
+color: String;
+name: String;
+userName: String;
+email: String;
+following: [String];
+followers: [String];
 ```
 
 ### Tweet
 
 ```ts
-_id: string;
-authorId: string;
-createdAt: new Date;
-name: string;
-userName: string;
-content: string;
-likedBy: string[];
+_id: ID;
+authorId: String;
+name: String;
+userName: String;
+createdAt: String;
+avatarColor: String;
+content: String;
+commentsCounter: Int;
+likedBy: [String];
 ```
 
 ## Deploy
