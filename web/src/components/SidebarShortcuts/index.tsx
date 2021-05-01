@@ -15,7 +15,7 @@ import * as S from "./styles";
 
 export default function SidebarShortCuts(): JSX.Element {
   const route = useRouter();
-  console.log(route);
+
   return (
     <S.Sidebar>
       <S.Header>
