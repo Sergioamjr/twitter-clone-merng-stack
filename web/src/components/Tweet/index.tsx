@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { formatDistance, format } from "date-fns";
-import { Heart, Bin, Comment, Share } from "~icons";
+import { Heart, Bin, Comment, Share, Pin } from "~icons";
 import * as S from "./styled";
 import { colors } from "~theme";
 import { Tweet as TweetType, User } from "~graphql/generated/graphql";
@@ -10,7 +10,7 @@ import { getNameInitials } from "~utils";
 import ButtonWithCounter from "~components/ButtonWithCounter";
 import { RootStoreState } from "~store";
 
-export type TweetProps = TweetType & {
+export type TweetProps = Omit<TweetType, "content"> & {
   isComment?: boolean;
   showCommentLine?: boolean;
   haveLikedTweet?: boolean;
@@ -18,9 +18,12 @@ export type TweetProps = TweetType & {
   onDeleteTweet: (id: string) => void;
   onDeslikeTweet: (id: string) => void;
   user?: Pick<User, "_id">;
+  isPinned?: boolean;
+  content?: React.ReactNode;
 };
 
 const Tweet = ({
+  isPinned,
   isComment,
   _id,
   onDeleteTweet,
@@ -43,7 +46,7 @@ const Tweet = ({
   const dateMobile = format(new Date(createdAt), "MMM/yyyy");
 
   const onClickHandler = () => {
-    if (isComment) return false;
+    if (isComment || isPinned) return false;
     router.push(`/tweet/${_id}`);
   };
 
@@ -84,6 +87,7 @@ const Tweet = ({
       <S.Avatar
         isComment={isComment || showCommentLine}
         onClick={onClickInside}
+        className={isPinned ? "is-disabled" : ""}
         href={`/user/${authorId}`}
         tabIndex={0}
         avatarColor={avatarColor}
@@ -91,9 +95,16 @@ const Tweet = ({
         {getNameInitials(userName)}
       </S.Avatar>
       <S.TweetContent>
+        {isPinned && (
+          <S.Pinned>
+            <Pin width={13} />
+            Pinned tweet
+          </S.Pinned>
+        )}
         <S.Header>
           <S.Name
             onClick={onClickInside}
+            className={isPinned ? "is-disabled" : ""}
             href={`/user/${authorId}`}
             tabIndex={0}
           >
@@ -111,9 +122,10 @@ const Tweet = ({
           <ButtonWithCounter
             onClick={onLikeTweetHandler}
             rounded
+            aria-label="Like tweet"
             variant="danger"
             counter={likedBy.length}
-            disabled={user._id === authorId}
+            disabled={user._id === authorId || isPinned}
             Icon={
               <Heart
                 width={20}
@@ -126,6 +138,7 @@ const Tweet = ({
             <ButtonWithCounter
               onClick={onDeleteTweetHandler}
               rounded
+              aria-label="Delete tweet"
               variant="danger"
               Icon={<Bin width={20} />}
             />
@@ -133,8 +146,10 @@ const Tweet = ({
           {!isComment && (
             <ButtonWithCounter
               rounded
+              disabled={isPinned}
               counter={commentsCounter}
               variant="blue"
+              aria-label="Comment tweet"
               Icon={<Comment color={colors.lightLighten} />}
             />
           )}
@@ -142,6 +157,7 @@ const Tweet = ({
             <ButtonWithCounter
               variant="green"
               rounded
+              aria-label="Share tweet"
               onClick={onShareHandler}
               Icon={<Share />}
             />

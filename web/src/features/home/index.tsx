@@ -11,8 +11,8 @@ import {
 } from "~graphql/generated/graphql";
 import { Column } from "~components/Template";
 import { Loading } from "~icons";
-import Button from "~components/Button";
 import GoBackBar from "~components/GoBackBar";
+import LoadNewTweets from "~components/LoadNewTweets";
 
 export type HomeProps = {
   onResetTweetsCounter: () => void;
@@ -89,14 +89,38 @@ export default function Home({
       />
       {loading && <Loading />}
       {!!newTweets && (
-        <Button
-          style={{
-            margin: "0 auto 20px",
-          }}
+        <LoadNewTweets
+          label={`${newTweets} new tweet${newTweets > 1 ? "s" : ""}`}
           onClick={() => onResetTweetsCounter()}
-        >
-          {newTweets} new tweet{newTweets > 1 ? "s" : ""}
-        </Button>
+        />
+      )}
+      {tweets.length && (
+        <TweetCard
+          _id=""
+          avatarColor="#d03c3c"
+          name="Sérgio Júnior"
+          isPinned
+          userName="sergio_amjr"
+          content={
+            <p>
+              Hey, seja bem vindo ao meu clone do Twitter. Ele foi criado como
+              caso de estudo de tecnologias como React, GraphQL, TS, Node. Toda
+              documentação e código do projeto encontra-se{" "}
+              <a
+                href="https://github.com/Sergioamjr/twitter-clone/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                nesse repositório.
+              </a>{" "}
+            </p>
+          }
+          createdAt="2021 01 01"
+          likedBy={[]}
+          onLikeTweet={onLikeTweetHandler}
+          onDeslikeTweet={onDeslikeTweetHandler}
+          onDeleteTweet={onDeleteTweetHandler}
+        />
       )}
       {tweets.map(({ _id, likedBy, ...tweet }) => {
         return (

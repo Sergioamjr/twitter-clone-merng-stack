@@ -48,6 +48,9 @@ export const Text = styled.p`
 
 export const Name = styled.a`
   color: ${colors.white};
+  &.is-disabled {
+    pointer-events: none;
+  }
 `;
 
 export const TweetContent = styled.div`
@@ -63,6 +66,15 @@ export const Username = styled.p`
   text-overflow: ellipsis;
 `;
 
+export const Pinned = styled.p`
+  color: ${colors.lightLighten};
+  margin-bottom: ${spacings.small};
+  font-size: ${fontSizes.small};
+  svg {
+    margin-right: 5px;
+  }
+`;
+
 export const Header = styled.div`
   margin-bottom: ${spacings.small};
   display: flex;
@@ -74,6 +86,9 @@ export const Footer = styled.footer`
 
 export const Content = styled.main`
   margin-bottom: ${spacings.medium};
+  p a {
+    color: ${colors.blue};
+  }
 `;
 
 export const Avatar = styled.a<{ avatarColor: string; isComment: boolean }>`
@@ -101,6 +116,9 @@ export const Avatar = styled.a<{ avatarColor: string; isComment: boolean }>`
   &:before {
     height: 10px;
     top: -10px;
+  }
+  &.is-disabled {
+    pointer-events: none;
   }
 `;
 
