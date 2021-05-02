@@ -1,14 +1,13 @@
 import { memo } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import { formatDistance, format } from "date-fns";
-import { Heart, Bin, Comment, Share, Pin } from "~icons";
+import { Pin } from "~icons";
 import * as S from "./styled";
-import { colors } from "~theme";
 import { Tweet as TweetType, User } from "~graphql/generated/graphql";
 import { getNameInitials } from "~utils";
-import ButtonWithCounter from "~components/ButtonWithCounter";
 import { RootStoreState } from "~store";
+import { TweetHeader } from "./Header";
+import { TweetFooter } from "./Footer";
 
 export type TweetProps = Omit<TweetType, "content"> & {
   isComment?: boolean;
@@ -44,8 +43,6 @@ const Tweet = ({
   commentsCounter,
 }: TweetProps): JSX.Element => {
   const router = useRouter();
-  const dateDesktop = formatDistance(new Date(createdAt), new Date());
-  const dateMobile = format(new Date(createdAt), "MMM/yyyy");
 
   const onClickHandler = () => {
     if (isComment || disableActions) return false;
@@ -54,34 +51,6 @@ const Tweet = ({
 
   const onClickInside = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.stopPropagation();
-  };
-
-  const onLikeTweetHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    haveLikedTweet ? onDeslikeTweet(_id) : onLikeTweet(_id);
-  };
-
-  const onDeleteTweetHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    onDeleteTweet(_id);
-  };
-
-  const onShareHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    const url = `${window.location.origin}/tweet/${_id}`;
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: "Clone Twitter",
-          text: "Hey, look at this tweet.",
-          url,
-        });
-        return false;
-      }
-      console.log("copiado");
-    } catch (err) {
-      console.log("copiado");
-    }
   };
 
   return (
@@ -103,68 +72,30 @@ const Tweet = ({
             Pinned tweet
           </S.Pinned>
         )}
-        <S.Header>
-          <S.Name
-            onClick={onClickInside}
-            className={disableActions ? "is-disabled" : ""}
-            href={`/user/${authorId}`}
-            tabIndex={0}
-          >
-            {name}
-          </S.Name>
-          <S.Username>
-            @{userName} · <S.ShowOnMobile>{dateMobile}</S.ShowOnMobile>
-            <S.ShowOnDesktop>{dateDesktop}</S.ShowOnDesktop>
-          </S.Username>
-        </S.Header>
+        <TweetHeader
+          createdAt={createdAt}
+          name={name}
+          userName={userName}
+          authorId={authorId}
+          disableActions={disableActions}
+        />
+
         <S.Content>
           <S.Text>{content}</S.Text>
         </S.Content>
-        <S.Footer>
-          <ButtonWithCounter
-            onClick={onLikeTweetHandler}
-            rounded
-            aria-label="Like tweet"
-            variant="danger"
-            counter={likedBy.length}
-            disabled={user._id === authorId || disableActions}
-            Icon={
-              <Heart
-                width={20}
-                color={haveLikedTweet ? colors.red : colors.lightLighten}
-              />
-            }
-          />
-
-          {user._id === authorId && (
-            <ButtonWithCounter
-              onClick={onDeleteTweetHandler}
-              rounded
-              aria-label="Delete tweet"
-              variant="danger"
-              Icon={<Bin width={20} />}
-            />
-          )}
-          {!isComment && (
-            <ButtonWithCounter
-              rounded
-              disabled={disableActions}
-              counter={commentsCounter}
-              variant="blue"
-              aria-label="Comment tweet"
-              Icon={<Comment color={colors.lightLighten} />}
-            />
-          )}
-          {!isComment && (
-            <ButtonWithCounter
-              variant="green"
-              rounded
-              aria-label="Share tweet"
-              onClick={onShareHandler}
-              Icon={<Share />}
-            />
-          )}
-        </S.Footer>
+        <TweetFooter
+          haveLikedTweet={haveLikedTweet}
+          authorId={authorId}
+          likedBy={likedBy}
+          disableActions={disableActions}
+          isComment={isComment}
+          commentsCounter={commentsCounter}
+          _id={_id}
+          user={user}
+          onDeslikeTweet={onDeslikeTweet}
+          onLikeTweet={onLikeTweet}
+          onDeleteTweet={onDeleteTweet}
+        />
       </S.TweetContent>
     </S.Card>
   );
