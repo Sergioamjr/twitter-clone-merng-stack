@@ -100,6 +100,7 @@ export default function Home({
           avatarColor="#d03c3c"
           name="Sérgio Júnior"
           isPinned
+          disableActions
           userName="sergio_amjr"
           content={
             <p>
@@ -115,7 +116,7 @@ export default function Home({
               </a>{" "}
             </p>
           }
-          createdAt="2021 01 01"
+          createdAt="2021-05-01T23:57:33.291Z"
           likedBy={[]}
           onLikeTweet={onLikeTweetHandler}
           onDeslikeTweet={onDeslikeTweetHandler}

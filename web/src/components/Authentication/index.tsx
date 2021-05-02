@@ -17,8 +17,8 @@ export default function Auth({ children }: WithChildren): JSX.Element {
     } = await onCreateRandomUser();
     setOnLocalStorage(createRandomUser);
     actions.setUserNameAction(createRandomUser);
-    setIsLoading(false);
     setShowIntro(true);
+    setIsLoading(false);
   };
 
   const onCompleteAnimation = () => setShowIntro(false);

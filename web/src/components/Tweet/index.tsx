@@ -20,9 +20,11 @@ export type TweetProps = Omit<TweetType, "content"> & {
   user?: Pick<User, "_id">;
   isPinned?: boolean;
   content?: React.ReactNode;
+  disableActions?: boolean;
 };
 
 const Tweet = ({
+  disableActions,
   isPinned,
   isComment,
   _id,
@@ -46,7 +48,7 @@ const Tweet = ({
   const dateMobile = format(new Date(createdAt), "MMM/yyyy");
 
   const onClickHandler = () => {
-    if (isComment || isPinned) return false;
+    if (isComment || disableActions) return false;
     router.push(`/tweet/${_id}`);
   };
 
@@ -87,7 +89,7 @@ const Tweet = ({
       <S.Avatar
         isComment={isComment || showCommentLine}
         onClick={onClickInside}
-        className={isPinned ? "is-disabled" : ""}
+        className={disableActions ? "is-disabled" : ""}
         href={`/user/${authorId}`}
         tabIndex={0}
         avatarColor={avatarColor}
@@ -104,7 +106,7 @@ const Tweet = ({
         <S.Header>
           <S.Name
             onClick={onClickInside}
-            className={isPinned ? "is-disabled" : ""}
+            className={disableActions ? "is-disabled" : ""}
             href={`/user/${authorId}`}
             tabIndex={0}
           >
@@ -125,7 +127,7 @@ const Tweet = ({
             aria-label="Like tweet"
             variant="danger"
             counter={likedBy.length}
-            disabled={user._id === authorId || isPinned}
+            disabled={user._id === authorId || disableActions}
             Icon={
               <Heart
                 width={20}
@@ -146,7 +148,7 @@ const Tweet = ({
           {!isComment && (
             <ButtonWithCounter
               rounded
-              disabled={isPinned}
+              disabled={disableActions}
               counter={commentsCounter}
               variant="blue"
               aria-label="Comment tweet"
