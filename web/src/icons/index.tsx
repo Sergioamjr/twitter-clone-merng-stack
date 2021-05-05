@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { colors } from "~theme";
 
-export type SVGTypes = {
+export type SVGTypes = React.SVGAttributes<SVGElement> & {
   color?: string;
   width?: number;
   height?: number;
