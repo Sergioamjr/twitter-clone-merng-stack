@@ -6,7 +6,7 @@ export const Sidebar = styled.div`
   top: 0;
   padding: 20px;
   display: none;
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 1200px) {
     display: grid;
   }
 `;

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import styled from "styled-components";
 import TweetCard from "~components/Tweet";
 import TweetInput from "~components/TweetInput";
 import {
@@ -31,7 +32,7 @@ export default function Home({
   refetch,
   loading,
 }: HomeProps): JSX.Element {
-  const [onSubmitNewTweet] = useNewTweetMutation();
+  const [onSubmitNewTweet, newTweetState] = useNewTweetMutation();
   const [onDeleteTweet] = useDeleteTweetMutation();
   const [onLikeTweet] = useLikeMutation();
   const [onDeslikeTweet] = useDeslikeMutation();
@@ -84,10 +85,11 @@ export default function Home({
     <Column>
       <GoBackBar woBackBtn type="Home" />
       <TweetInput
+        isLoading={newTweetState.loading}
         userName={user.name}
         onSubmitNewTweet={onSubmitNewTweetHandler}
       />
-      {loading && <Loading />}
+      {loading && <LoadingBase />}
       {!!newTweets && (
         <LoadNewTweets
           label={`${newTweets} new tweet${newTweets > 1 ? "s" : ""}`}
@@ -140,3 +142,7 @@ export default function Home({
     </Column>
   );
 }
+
+const LoadingBase = styled(Loading)`
+  margin: 20px auto;
+`;

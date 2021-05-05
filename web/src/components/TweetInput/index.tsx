@@ -7,9 +7,11 @@ type Props = {
   tweetLimit?: number;
   onSubmitNewTweet: (s: string) => void;
   userName: string;
+  isLoading?: boolean;
 };
 
 function TweetInput({
+  isLoading,
   isComment,
   userName,
   contentDefault = "",
@@ -27,8 +29,10 @@ function TweetInput({
   const size = content.length;
 
   const isInvalid = size > tweetLimit;
-  const valid = `${tweetLimit - size} characters left`;
-  const invalid = `${size - tweetLimit} characters more than the ${tweetLimit}`;
+  const valid = `${tweetLimit - size} character${
+    tweetLimit - size > 1 ? "s" : ""
+  } left`;
+  const invalid = `${size - tweetLimit} characters more than the limit`;
 
   const onSubmitHandler = () => {
     onSubmitNewTweet(content);
@@ -45,7 +49,11 @@ function TweetInput({
         value={content}
       ></S.Input>
       <S.TweetAction>
-        <S.Button onClick={onSubmitHandler} disabled={!size || isInvalid}>
+        <S.Button
+          isLoading={isLoading}
+          onClick={onSubmitHandler}
+          disabled={!size || isInvalid}
+        >
           {isComment ? "Comment" : "Tweet"}
         </S.Button>
         {!!size && <S.Counter>{isInvalid ? invalid : valid}</S.Counter>}
