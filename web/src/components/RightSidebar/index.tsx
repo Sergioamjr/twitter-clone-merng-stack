@@ -44,7 +44,7 @@ export default function RightSidebar(): JSX.Element {
           return (
             <div key={i}>
               <p>{title}</p>
-              <span>{description}</span>
+              <span className="description">{description}</span>
             </div>
           );
         })}
@@ -56,7 +56,7 @@ export default function RightSidebar(): JSX.Element {
             <div key={i} className="with-button">
               <div>
                 <p>{title}</p>
-                <span>{description}</span>
+                <span className="description">{description}</span>
               </div>
               <Button disabled>Follow</Button>
             </div>

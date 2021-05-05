@@ -1,10 +1,10 @@
 import { Loading as LoadingIcon } from "~icons";
 import * as Styled from "./styles";
 
-export default function Loading(): JSX.Element {
+export default function Loading(props): JSX.Element {
   return (
     <Styled.LoadingWrapper>
-      <LoadingIcon />
+      <LoadingIcon {...props} />
     </Styled.LoadingWrapper>
   );
 }

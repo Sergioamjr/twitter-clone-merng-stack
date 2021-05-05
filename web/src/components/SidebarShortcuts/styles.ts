@@ -38,12 +38,12 @@ export const Button = styled(ButtonBase)<{ actived?: boolean }>`
   font-weight: 700;
   ${({ actived }) =>
     actived && `color: ${colors.blue}; path { fill: ${colors.blue} }`}
-  span {
+  .label {
     margin-left: 22px;
     display: none;
   }
   @media screen and (min-width: 992px) {
-    span {
+    .label {
       display: block;
     }
   }

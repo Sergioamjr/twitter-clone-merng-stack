@@ -1,13 +1,15 @@
 import { colors } from "~theme";
-import styled from "styled-components";
+import styled, { StyledComponentPropsWithRef } from "styled-components";
+import Loading from "~components/Loading";
 
-export type ButtonProps = React.HTMLProps<HTMLButtonElement> & {
+export type ButtonProps = StyledComponentPropsWithRef<"button"> & {
   variant?: "ghost" | "danger" | "blue" | "green";
   rounded?: boolean;
   noPadding?: boolean;
+  isLoading?: boolean;
 };
 
-const Button = styled.button<ButtonProps>`
+const BaseButton = styled.button<ButtonProps>`
   border: 0;
   border-radius: 50px;
   padding: 5px 15px;
@@ -78,6 +80,34 @@ const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  .loading-icon {
+    position: absolute;
+    margin: auto;
+    right: 0;
+    left: 0;
+    opacity: ${({ isLoading }) => (!isLoading ? 0 : 1)};
+  }
+  .button-content {
+    opacity: ${({ isLoading }) => (isLoading ? 0 : 1)};
+    display: flex;
+  }
 `;
 
-export default Button;
+export default function Button({
+  children,
+  isLoading,
+  disabled,
+  ...props
+}: ButtonProps): JSX.Element {
+  return (
+    <BaseButton
+      {...props}
+      disabled={disabled || isLoading}
+      isLoading={isLoading}
+    >
+      <Loading className="loading-icon" width={18} height={18} color="#fff" />{" "}
+      <span className="button-content">{children}</span>
+    </BaseButton>
+  );
+}

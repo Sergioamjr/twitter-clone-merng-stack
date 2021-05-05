@@ -28,7 +28,7 @@ export const Title = styled.div<{ withBorder?: boolean }>`
 export const Item = styled.li`
   padding: 12px 16px;
   cursor: not-allowed;
-  span {
+  .description {
     color: ${colors.lightLighten};
     color: #6E767D;
     font-size: ${fontSizes.extraSmall};

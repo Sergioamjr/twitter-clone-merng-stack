@@ -27,31 +27,31 @@ export default function SidebarShortCuts(): JSX.Element {
 
         <S.Button disabled variant="blue" actived={route.pathname === "/"}>
           <Home />
-          <span>Home</span>
+          <span className="label">Home</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <HashTag />
-          <span>Explore</span>
+          <span className="label">Explore</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <Notification />
-          <span>Notifications</span>
+          <span className="label">Notifications</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <BookMark />
-          <span>Bookmarks</span>
+          <span className="label">Bookmarks</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <List />
-          <span>List</span>
+          <span className="label">List</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <Profile />
-          <span>Profile</span>
+          <span className="label">Profile</span>
         </S.Button>
         <S.Button disabled variant="blue">
           <Dots />
-          <span>More</span>
+          <span className="label">More</span>
         </S.Button>
       </S.Header>
     </S.Sidebar>
