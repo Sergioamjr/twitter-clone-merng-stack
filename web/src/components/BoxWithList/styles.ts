@@ -6,9 +6,10 @@ export const Box = styled.div`
   max-width: 348px;
   width: 100%;
   border-radius: 10px;
-  margin-left: 20px;
-  margin-bottom: 20px;
   height: auto;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const A = styled.a`
@@ -40,5 +41,10 @@ export const Item = styled.li`
   border-bottom: 1px solid rgb(47, 51, 54)};
   &:hover {
     background: #1c1f24;
+  }
+  .with-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `;

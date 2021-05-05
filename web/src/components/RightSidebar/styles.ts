@@ -5,7 +5,7 @@ export const Sidebar = styled.div`
   display: grid;
   position: sticky;
   top: 0;
-  padding-top: 20px;
+  padding: 20px;
   display: none;
   @media screen and (min-width: 992px) {
     display: grid;

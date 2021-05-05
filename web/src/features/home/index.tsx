@@ -103,7 +103,7 @@ export default function Home({
           disableActions
           userName="sergio_amjr"
           content={
-            <p>
+            <span>
               Hey, seja bem vindo ao meu clone do Twitter. Ele foi criado como
               caso de estudo de tecnologias como React, GraphQL, TS, Node. Toda
               documentação e código do projeto encontra-se{" "}
@@ -114,7 +114,7 @@ export default function Home({
               >
                 nesse repositório.
               </a>{" "}
-            </p>
+            </span>
           }
           createdAt="2021-05-01T23:57:33.291Z"
           likedBy={[]}

@@ -1,4 +1,5 @@
 import BoxWithList from "~components/BoxWithList";
+import Button from "~components/Button";
 import * as S from "./styles";
 
 const trendings = [
@@ -52,9 +53,12 @@ export default function RightSidebar(): JSX.Element {
         title="Topics to follow"
         items={topics.map(({ title, description }, i) => {
           return (
-            <div key={i}>
-              <p>{title}</p>
-              <span>{description}</span>
+            <div key={i} className="with-button">
+              <div>
+                <p>{title}</p>
+                <span>{description}</span>
+              </div>
+              <Button disabled>Follow</Button>
             </div>
           );
         })}

@@ -11,8 +11,8 @@ export default function Head({
 }: Props): JSX.Element {
   return (
     <HeadBase>
-      <title>Explore / Twitter</title>
-      <link rel="icon" href="/favicon.ico" />
+      <title>Home / Twitter Clone</title>
+      <link rel="icon" href="/favicon.png" />
       {isProduction && (
         <>
           <script
