@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { colors } from "~theme";
 
-type SVG = {
+export type SVGTypes = {
   color?: string;
   width?: number;
   height?: number;
@@ -10,7 +10,7 @@ type SVG = {
 export function Bin({
   color = colors.lightLighten,
   ...props
-}: SVG): JSX.Element {
+}: SVGTypes): JSX.Element {
   return (
     <svg
       {...props}
@@ -37,7 +37,7 @@ export const Heart = ({
   color = colors.lightLighten,
   width = 20,
   ...props
-}: SVG): JSX.Element => (
+}: SVGTypes): JSX.Element => (
   <svg
     {...props}
     viewBox="0 0 24 24"
@@ -55,7 +55,7 @@ export const LeftArrow = ({
   color = colors.lightLighten,
   width = 20,
   ...props
-}: SVG): JSX.Element => {
+}: SVGTypes): JSX.Element => {
   return (
     <svg
       {...props}
@@ -71,7 +71,10 @@ export const LeftArrow = ({
   );
 };
 
-export const Loading = ({ color = "#38a1f2", ...props }: SVG): JSX.Element => {
+export const Loading = ({
+  color = "#38a1f2",
+  ...props
+}: SVGTypes): JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +111,7 @@ export const Comment = ({
   color = colors.lightLighten,
   width = 20,
   ...props
-}: SVG): JSX.Element => {
+}: SVGTypes): JSX.Element => {
   return (
     <svg
       {...props}
@@ -124,7 +127,7 @@ export const Comment = ({
   );
 };
 
-export const Share: FC<SVG> = ({
+export const Share: FC<SVGTypes> = ({
   color = colors.lightLighten,
   width = 20,
   ...props
@@ -148,7 +151,7 @@ export const Share: FC<SVG> = ({
   );
 };
 
-export const HashTag: FC<SVG> = ({
+export const HashTag: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -168,7 +171,7 @@ export const HashTag: FC<SVG> = ({
   );
 };
 
-export const BookMark: FC<SVG> = ({
+export const BookMark: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -188,7 +191,7 @@ export const BookMark: FC<SVG> = ({
   );
 };
 
-export const Twitter: FC<SVG> = ({
+export const Twitter: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -208,7 +211,7 @@ export const Twitter: FC<SVG> = ({
   );
 };
 
-export const Home: FC<SVG> = ({
+export const Home: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -228,7 +231,7 @@ export const Home: FC<SVG> = ({
   );
 };
 
-export const Notification: FC<SVG> = ({
+export const Notification: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -248,7 +251,7 @@ export const Notification: FC<SVG> = ({
   );
 };
 
-export const List: FC<SVG> = ({
+export const List: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -268,7 +271,7 @@ export const List: FC<SVG> = ({
   );
 };
 
-export const Profile: FC<SVG> = ({
+export const Profile: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -288,7 +291,7 @@ export const Profile: FC<SVG> = ({
   );
 };
 
-export const Dots: FC<SVG> = ({
+export const Dots: FC<SVGTypes> = ({
   color = colors.white,
   width = 20,
   ...props
@@ -311,7 +314,7 @@ export const Dots: FC<SVG> = ({
   );
 };
 
-export const Pin: FC<SVG> = ({
+export const Pin: FC<SVGTypes> = ({
   color = colors.lightLighten,
   width = 20,
   ...props
