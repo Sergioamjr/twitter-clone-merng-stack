@@ -1,3 +1,4 @@
+import { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { ApolloProvider } from "@apollo/client";
@@ -9,12 +10,7 @@ import client from "./../client.config";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA;
 const isProduction = process.env.NODE_ENV === "production";
 
-type Props = {
-  Component: any;
-  pageProps: any;
-};
-
-export default function MyApp({ Component, pageProps }: Props): JSX.Element {
+export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <Head isProduction={isProduction} GA_TRACKING_ID={GA_TRACKING_ID} />
