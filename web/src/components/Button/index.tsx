@@ -91,6 +91,8 @@ const BaseButton = styled.button<ButtonProps>`
   .button-content {
     opacity: ${({ isLoading }) => (isLoading ? 0 : 1)};
     display: flex;
+    height: 100%;
+    align-items: center;
   }
 `;
 
@@ -106,8 +108,10 @@ export default function Button({
       disabled={disabled || isLoading}
       isLoading={isLoading}
     >
-      <Loading className="loading-icon" width={18} height={18} color="#fff" />{" "}
-      <span className="button-content">{children}</span>
+      {isLoading && (
+        <Loading className="loading-icon" width={18} height={18} color="#fff" />
+      )}
+      <div className="button-content">{children}</div>
     </BaseButton>
   );
 }
