@@ -31,21 +31,14 @@ export default function UserIntro({
           <Styles.Avatar avatarColor={color}>
             {getNameInitials(userName)}
           </Styles.Avatar>
-          {areFriends && !hideButton && (
+          {!hideButton && (
             <Styles.Action
-              disabled={disabledButton}
-              onClick={() => onUnfollowHandler(_id)}
+              isLoading={disabledButton}
+              onClick={() =>
+                areFriends ? onUnfollowHandler(_id) : onFollowHandler(_id)
+              }
             >
-              Unfollow
-            </Styles.Action>
-          )}
-
-          {!areFriends && !hideButton && (
-            <Styles.Action
-              disabled={disabledButton}
-              onClick={() => onFollowHandler(_id)}
-            >
-              Follow
+              {areFriends ? "Unfollow" : "Follow"}
             </Styles.Action>
           )}
         </Styles.Spacer>

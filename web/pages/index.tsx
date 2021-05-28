@@ -21,10 +21,7 @@ function HomePage({ user, tweets }: HomePageType): JSX.Element {
   const subscriptions = useHasANewTweetSubscription();
 
   useEffect(() => {
-    if (
-      subscriptions?.data?.hasANewTweet?.createdAt &&
-      user._id !== subscriptions?.data?.hasANewTweet.authorId
-    ) {
+    if (subscriptions?.data?.hasANewTweet?.createdAt) {
       actions.addNewTweet();
     }
   }, [subscriptions?.data?.hasANewTweet?.createdAt]);

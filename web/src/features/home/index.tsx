@@ -48,7 +48,6 @@ export default function Home({
         content,
       },
     });
-    refetch();
   };
 
   const onDeleteTweetHandler = async (_id: string) => {
