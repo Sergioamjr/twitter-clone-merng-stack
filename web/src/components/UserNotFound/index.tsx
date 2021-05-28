@@ -2,7 +2,7 @@ import { Ghost } from "react-kawaii";
 import * as S from "./styles";
 
 type Props = {
-  type: "Tweet" | "User";
+  type: "Tweet" | "User" | "Page";
 };
 
 export default function UserNotFound({ type }: Props): JSX.Element {

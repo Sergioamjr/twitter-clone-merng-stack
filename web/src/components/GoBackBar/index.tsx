@@ -6,7 +6,7 @@ import Button from "~components/Button";
 import { colors } from "~theme";
 
 type Props = {
-  type: string;
+  type?: string;
   woBackBtn?: boolean;
 };
 
