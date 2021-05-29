@@ -1,36 +1,67 @@
 import { useRouter } from "next/router";
+import getUser from "~graphql/queries/get-users-by-id";
+import { GetServerSideProps } from "next";
 import { connect } from "react-redux";
 import Template from "~components/Template";
-import { LoggedUser, useGetUserByIdQuery } from "~graphql/generated/graphql";
-import User from "~features/user";
+import {
+  LoggedUser,
+  useGetUserByIdQuery,
+  User,
+  Tweet,
+} from "~graphql/generated/graphql";
+import UserView from "~features/user";
 import Auth from "~components/Authentication";
-import Loading from "~components/Loading";
+import clientConfig from "client.config";
+import { useEffect, useState } from "react";
 
 type UserPageType = {
   user: Partial<LoggedUser>;
+  queriedUser: User;
+  tweets: Tweet[];
+  userNotFound: boolean;
 };
 
-function UserPage({ user }: UserPageType): JSX.Element {
+function UserPage({
+  user,
+  queriedUser: queriedUser_,
+  tweets: tweets_,
+  userNotFound,
+}: UserPageType): JSX.Element {
+  const [queriedUser, setQueriedUser] = useState(queriedUser_);
+  const [tweets, setTweets] = useState(tweets_);
+  const [fethOnClient, setFetchOnClient] = useState(false);
   const router = useRouter();
   const { id } = router.query;
-  const { data, loading, refetch } = useGetUserByIdQuery({
+  const { refetch, data } = useGetUserByIdQuery({
     variables: {
       _id: id as string,
     },
   });
 
-  if (loading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    if (
+      fethOnClient &&
+      data?.getUserById?.tweets &&
+      data?.getUserById?.tweets
+    ) {
+      setQueriedUser(data?.getUserById?.user);
+      setTweets(data?.getUserById?.tweets);
+    }
+  }, [data?.getUserById?.user, data?.getUserById?.tweets, fethOnClient]);
+
+  const onRefect = () => {
+    setFetchOnClient(true);
+    refetch();
+  };
 
   return (
     <Auth>
       <Template>
-        <User
-          userNotFound={!loading && !data?.getUserById}
-          refetch={refetch}
-          tweets={data?.getUserById?.tweets}
-          queriedUser={data?.getUserById?.user}
+        <UserView
+          userNotFound={userNotFound}
+          refetch={onRefect}
+          tweets={tweets}
+          queriedUser={queriedUser}
           user={user}
         />
       </Template>
@@ -41,3 +72,20 @@ function UserPage({ user }: UserPageType): JSX.Element {
 export default connect(({ user }: UserPageType, props) => ({ user, ...props }))(
   UserPage
 );
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { id } = query;
+
+  const { data } = await clientConfig.query({
+    query: getUser,
+    variables: { _id: id },
+  });
+
+  return {
+    props: {
+      userNotFound: !data?.getUserById,
+      tweets: data?.getUserById?.tweets || [],
+      queriedUser: data?.getUserById?.user || {},
+    },
+  };
+};
