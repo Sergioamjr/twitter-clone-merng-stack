@@ -29,8 +29,6 @@ function Tweet({ user }: TweetPageType): JSX.Element {
     },
   });
 
-  console.log(tweet);
-
   const refetchAll = () => {
     tweet.refetch();
     comments.refetch();
