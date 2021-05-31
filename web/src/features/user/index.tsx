@@ -117,6 +117,7 @@ export default function User({
           />
           {tweets.map(
             ({
+              commentsCounter,
               _id,
               content,
               userName,
@@ -128,6 +129,7 @@ export default function User({
             }) => {
               return (
                 <TweetCard
+                  commentsCounter={commentsCounter}
                   avatarColor={avatarColor}
                   createdAt={createdAt}
                   authorId={authorId}

@@ -30,6 +30,13 @@ export const userQueries: QueryResolvers = {
       const user = await context.dataSources.User.findOne({ _id });
       const tweets = await context.dataSources.Tweet.find({ authorId: _id });
 
+      for (const [index, tweet] of tweets.entries()) {
+        const comments = await context.dataSources.Comment.find({
+          originalTweet: tweet._id,
+        });
+        tweets[index]["commentsCounter"] = comments.length;
+      }
+
       return {
         user,
         tweets,

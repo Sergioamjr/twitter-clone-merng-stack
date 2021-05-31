@@ -29,7 +29,7 @@ function UserPage({
 }: UserPageType): JSX.Element {
   const [queriedUser, setQueriedUser] = useState(queriedUser_);
   const [tweets, setTweets] = useState(tweets_);
-  const [fethOnClient, setFetchOnClient] = useState(false);
+
   const router = useRouter();
   const { id } = router.query;
   const { refetch, data } = useGetUserByIdQuery({
@@ -39,27 +39,18 @@ function UserPage({
   });
 
   useEffect(() => {
-    if (
-      fethOnClient &&
-      data?.getUserById?.tweets &&
-      data?.getUserById?.tweets
-    ) {
+    if (data?.getUserById?.tweets && data?.getUserById?.tweets) {
       setQueriedUser(data?.getUserById?.user);
       setTweets(data?.getUserById?.tweets);
     }
-  }, [data?.getUserById?.user, data?.getUserById?.tweets, fethOnClient]);
-
-  const onRefect = () => {
-    setFetchOnClient(true);
-    refetch();
-  };
+  }, [data?.getUserById?.user, data?.getUserById?.tweets]);
 
   return (
     <Auth>
       <Template>
         <UserView
           userNotFound={userNotFound}
-          refetch={onRefect}
+          refetch={refetch}
           tweets={tweets}
           queriedUser={queriedUser}
           user={user}
