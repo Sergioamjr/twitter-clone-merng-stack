@@ -12,7 +12,7 @@ I also tried new host services, architectures, patterns, authentication. I've be
 
 ### Back-end
 
-- NodeJS, Typescript, Express, MongoDB, Apollo Server..
+- NodeJS, Typescript, Express, MongoDB, Apollo Server.
 
 ## Services
 
