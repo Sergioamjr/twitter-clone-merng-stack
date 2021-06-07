@@ -31,8 +31,8 @@ I also tried new host services, architectures, patterns, authentication. I've be
 - Subscription to new tweets.
 - Follow an user.
 - Unfollow an user.
-- View a single tweet.
 - View a single user.
+- View a single tweet.
 
 ## More details
 
