@@ -16,8 +16,8 @@ I also tried new host services, architectures, patterns, authentication. I've be
 
 ## Services
 
-- The database is hosted on MongoDB Atlas.
 - The Backend is hosted on Heroku.
+- The database is hosted on MongoDB Atlas.
 - The Frontend is hosted on Vercel.
 
 ## Features
