@@ -23,6 +23,7 @@ export const verifyToken = (
 
 export const userQueries: QueryResolvers = {
   getUsers: async (_, args, context) => {
+    console.log("get");
     return await context.dataSources.User.find();
   },
   getUserById: async (_, { _id }, context) => {

@@ -12,13 +12,17 @@ export default function Auth({ children }: WithChildren): JSX.Element {
   const [onCreateRandomUser] = useCreateRandomUserMutation();
 
   const fetchFakeUser = async () => {
-    const {
-      data: { createRandomUser },
-    } = await onCreateRandomUser();
-    setOnLocalStorage(createRandomUser);
-    actions.setUserNameAction(createRandomUser);
-    setShowIntro(true);
-    setIsLoading(false);
+    try {
+      const {
+        data: { createRandomUser },
+      } = await onCreateRandomUser();
+      setOnLocalStorage(createRandomUser);
+      actions.setUserNameAction(createRandomUser);
+      setShowIntro(true);
+      setIsLoading(false);
+    } catch (err) {
+      console.log("err", err);
+    }
   };
 
   const onCompleteAnimation = () => setShowIntro(false);
