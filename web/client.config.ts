@@ -1,18 +1,19 @@
 import { ApolloClient, InMemoryCache, split, HttpLink } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
-import { WebSocketLink } from "@apollo/client/link/ws";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 const SUBSCRIPTIONS_URL = process.env.NEXT_PUBLIC_SUBSCRIPTIONS_URL;
 
 const wsLink =
   process.browser &&
-  new WebSocketLink({
-    uri: SUBSCRIPTIONS_URL,
-    options: {
-      reconnect: true,
-    },
-  });
+  new GraphQLWsLink(
+    createClient({
+      url: SUBSCRIPTIONS_URL,
+      retryAttempts: 5,
+    })
+  );
 
 const httpLink = new HttpLink({
   uri: SERVER_URL,

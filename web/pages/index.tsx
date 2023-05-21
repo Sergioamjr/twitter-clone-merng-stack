@@ -18,13 +18,13 @@ type HomePageType = {
 
 function HomePage({ user, tweets }: HomePageType): JSX.Element {
   const { data, refetch, loading } = useGetTweetsQuery();
-  // const subscriptions = useHasANewTweetSubscription();
+  const subscriptions = useHasANewTweetSubscription();
 
-  // useEffect(() => {
-  //   if (subscriptions?.data?.hasANewTweet?.createdAt) {
-  //     actions.addNewTweet();
-  //   }
-  // }, [subscriptions?.data?.hasANewTweet?.createdAt]);
+  useEffect(() => {
+    if (subscriptions?.data?.hasANewTweet?.createdAt) {
+      actions.addNewTweet();
+    }
+  }, [subscriptions?.data?.hasANewTweet?.createdAt]);
 
   const onResetTweetsCounter = () => {
     refetch();

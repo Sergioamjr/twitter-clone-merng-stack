@@ -2,8 +2,6 @@
 require("dotenv").config();
 import express from "express";
 import http from "http";
-import { startStandaloneServer } from "@apollo/server/standalone";
-
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServer } from "@apollo/server";
@@ -14,34 +12,61 @@ import { dbConnect, models } from "./src/database";
 import cors from "cors";
 import { json } from "body-parser";
 
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { WebSocketServer } from "ws";
+import { useServer } from "graphql-ws/lib/use/ws";
+
 const port = process.env.PORT || 4000;
 const app = express();
 const httpServer = http.createServer(app);
 
 (async () => {
   try {
+    const schema = makeExecutableSchema({ typeDefs, resolvers });
+
     const server = new ApolloServer({
-      // subscriptions: {
-      //   path: "/subscriptions",
-      // },
-      typeDefs,
-      resolvers,
-      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+      schema,
+      plugins: [
+        ApolloServerPluginDrainHttpServer({ httpServer }),
+        {
+          async serverWillStart() {
+            return {
+              async drainServer() {
+                await serverCleanup.dispose();
+              },
+            };
+          },
+        },
+      ],
       introspection: true,
     });
 
-    await server.start();
+    const wsServer = new WebSocketServer({
+      server: httpServer,
+      path: "/subscriptions",
+    });
+
+    const serverCleanup = useServer({ schema }, wsServer);
+
+    wsServer.on("connection", (ws, req) => {
+      console.log(req.url);
+    });
 
     app.get("/starter", (req, res) => {
       res.send("Hello World!");
     });
+
+    await server.start();
 
     app.use(
       "/graphql",
       cors(),
       json(),
       expressMiddleware(server, {
-        context: async ({ req }) => ({ token: req.headers.token }),
+        context: async ({ req }) => ({
+          token: req.headers.token,
+          dataSources: models,
+        }),
       })
     );
 
@@ -49,9 +74,6 @@ const httpServer = http.createServer(app);
 
     httpServer.listen({ port }, () => {
       console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
-      // console.log(
-      //   `🚀 Subscriptions ready at ws://localhost:${port}${server.subscriptionsPath}`
-      // );
     });
 
     dbConnect
@@ -65,32 +87,3 @@ const httpServer = http.createServer(app);
     console.log("erro!", err);
   }
 })();
-
-// dbConnect
-//   .then(() => {
-//     console.log("DB Connected");
-//   })
-//   .catch((err) => {
-//     console.log("Error to connect DB: ", err);
-//   });
-
-// const server = new ApolloServer({
-//   // subscriptions: {
-//   //   path: "/subscriptions",
-//   // },
-//   typeDefs,
-//   resolvers,
-//   // dataSources: (): any => models,
-//   // introspection: true,
-//   // playground: true,
-// });
-
-// server.applyMiddleware({ app });
-
-// server.installSubscriptionHandlers(httpServer);
-
-// app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
-
-// app.get("/starter", (req, res) => {
-//   res.send("Hello World!");
-// });
