@@ -20,7 +20,7 @@ export const commentsMutations: MutationResolvers = {
       comment.likedBy = [...likes];
       await context.dataSources.Comment.findOneAndUpdate({ _id }, comment);
       return await context.dataSources.Comment.findOne({ _id });
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
@@ -35,7 +35,7 @@ export const commentsMutations: MutationResolvers = {
       comment.likedBy = newLikedBy;
       await context.dataSources.Comment.findOneAndUpdate({ _id }, comment);
       return await context.dataSources.Comment.findOne({ _id });
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
@@ -44,7 +44,7 @@ export const commentsMutations: MutationResolvers = {
       await verifyToken(token as string);
       await context.dataSources.Comment.deleteOne({ _id });
       return true;
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
@@ -68,7 +68,7 @@ export const commentsMutations: MutationResolvers = {
         name,
         originalTweet,
       }).save();
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
