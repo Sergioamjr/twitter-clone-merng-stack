@@ -50,7 +50,7 @@ export const tweetMutations: MutationResolvers = {
       findTweet.likedBy = [...likes];
       await context.dataSources.Tweet.findOneAndUpdate({ _id }, findTweet);
       return await context.dataSources.Tweet.findOne({ _id });
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
@@ -65,7 +65,7 @@ export const tweetMutations: MutationResolvers = {
       findTweet.likedBy = newLikedBy;
       await context.dataSources.Tweet.findOneAndUpdate({ _id }, findTweet);
       return await context.dataSources.Tweet.findOne({ _id });
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
@@ -93,7 +93,7 @@ export const tweetMutations: MutationResolvers = {
       };
       pubsub.publish("A_NEW_TWEET_HAS_BEEN_CREATED", { hasANewTweet: tweet });
       return await new context.dataSources.Tweet(tweet).save();
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
@@ -106,7 +106,7 @@ export const tweetMutations: MutationResolvers = {
       await context.dataSources.Tweet.deleteOne({ _id });
       await context.dataSources.Comment.deleteMany({ originalTweet: _id });
       return true;
-    } catch (err) {
+    } catch (err: any) {
       throw Error(err);
     }
   },
