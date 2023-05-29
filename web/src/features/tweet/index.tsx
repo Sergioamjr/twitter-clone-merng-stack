@@ -138,7 +138,7 @@ export default function TweetPage({
                 onDeleteTweet={onDeleteCommentHandler}
                 key={comment._id}
                 isComment
-                {...omittedProperties}
+                {...Object.assign({}, omittedProperties)}
               />
             );
           })}
