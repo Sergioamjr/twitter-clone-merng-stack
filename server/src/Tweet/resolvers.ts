@@ -48,6 +48,7 @@ export const tweetMutations: MutationResolvers = {
       const likes = new Set(findTweet.likedBy);
       likes.add((<TokenDecoded>decoded)._id);
       findTweet.likedBy = [...likes];
+      
       await context.dataSources.Tweet.findOneAndUpdate({ _id }, findTweet);
       return await context.dataSources.Tweet.findOne({ _id });
     } catch (err: any) {
