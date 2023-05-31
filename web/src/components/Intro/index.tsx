@@ -21,7 +21,7 @@ function Intro(props: Props): JSX.Element {
   }, []);
   return (
     <Styles.Wrapper>
-      <Styles.Text>It seems it&apos;s your first time here.</Styles.Text>
+      <Styles.Text>It looks like it&apos;s your first time here.</Styles.Text>
       <Styles.Text>Let&apos;s create a random user for you.</Styles.Text>
       <Styles.Text>
         Done, you will be <span>@{props.user.userName}.</span>
