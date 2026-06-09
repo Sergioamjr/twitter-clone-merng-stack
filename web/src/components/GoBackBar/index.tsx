@@ -15,11 +15,11 @@ export default function GoBackBar({ type, woBackBtn }: Props): JSX.Element {
     <Styles.GoBack>
       {!woBackBtn && (
         <Link href="/">
-          <a>
-            <Button variant="ghost" rounded>
-              <LeftArrow color={colors.blue} />
-            </Button>
-          </a>
+          {/* <a> */}
+          <Button variant="ghost" rounded>
+            <LeftArrow color={colors.blue} />
+          </Button>
+          {/* </a> */}
         </Link>
       )}
       {type && <SectionTitle>{type}</SectionTitle>}
