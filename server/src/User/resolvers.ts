@@ -1,15 +1,31 @@
 import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import getRandomUser, { randomUserType } from "./utils/randomUser";
+import getRandomUser from "./utils/randomUser";
+import { GetUserUseCase } from "./application/get-user-use-case";
+import { GetUserByIdUseCase } from "./application/get-user-by-id-use-case";
+import { CreateUserUseCase } from "./application/create-user-use-case";
+import { SaveUserUseCase } from "./application/save-user-use-case";
+import { LoginUseCase } from "./application/login-use-case";
+import { FollowUseCase } from "./application/follow-use-case";
+import { UnfollowUseCase } from "./application/unfollow-use-case";
+import FirebaseRepository from "./infrastructure/firebase.repository";
+
 export const secret = process.env.SECRET as string;
+
+const getUserUseCase = new GetUserUseCase(FirebaseRepository);
+const getUserByIdUseCase = new GetUserByIdUseCase(FirebaseRepository);
+const createUserUseCase = new CreateUserUseCase(FirebaseRepository);
+const saveUserUseCase = new SaveUserUseCase(FirebaseRepository);
+const loginUseCase = new LoginUseCase(FirebaseRepository);
+const followUseCase = new FollowUseCase(FirebaseRepository);
+const unfollowUseCase = new UnfollowUseCase(FirebaseRepository);
 
 export type TokenDecoded = {
   _id?: string;
 };
 
 export const verifyToken = (
-  token?: string
+  token?: string,
 ): Promise<TokenDecoded | "string"> => {
   return new Promise((resolve, reject) => {
     try {
@@ -22,12 +38,12 @@ export const verifyToken = (
 };
 
 export const userQueries: QueryResolvers = {
-  getUsers: async (_, args, context) => {
-    return await context.dataSources.User.find();
+  getUsers: async () => {
+    return await getUserUseCase.execute();
   },
   getUserById: async (_, { _id }, context) => {
     try {
-      const user = await context.dataSources.User.findOne({ _id });
+      const user = await getUserByIdUseCase.execute(_id);
       const tweets = await context.dataSources.Tweet.find({ authorId: _id });
 
       for (const [index, tweet] of tweets.entries()) {
@@ -37,10 +53,7 @@ export const userQueries: QueryResolvers = {
         tweets[index]["commentsCounter"] = comments.length;
       }
 
-      return {
-        user,
-        tweets,
-      };
+      return { user, tweets };
     } catch (err) {
       return null;
     }
@@ -56,97 +69,40 @@ export const userQueries: QueryResolvers = {
 };
 
 export const userMutations: MutationResolvers = {
-  createRandomUser: async (_, __, { dataSources }) => {
-    const getUniqueUser = async (): Promise<randomUserType> => {
-      const randomUser = getRandomUser();
-      const isRegistered = await dataSources.User.findOne({
-        email: randomUser.email,
-      });
-      if (isRegistered) {
-        return getUniqueUser();
-      }
-      return randomUser;
-    };
-
-    const user = await getUniqueUser();
-    const saved = await new dataSources.User(user).save();
-    saved.token = jwt.sign({ _id: saved._id }, secret);
-    return saved;
+  createRandomUser: async () => {
+    const user = await createUserUseCase.execute();
+    const token = jwt.sign({ _id: user._id }, secret);
+    return { ...user, token };
   },
-  follow: async (_, { _id, followingId, token }, { dataSources }) => {
+  follow: async (_, { _id, followingId, token }) => {
     await verifyToken(token as string);
-    const mainUser = await dataSources.User.findOne({ _id });
-    const secondUser = await dataSources.User.findOne({
-      _id: followingId,
-    });
-
-    const userFollowings = new Set(mainUser.following);
-    userFollowings.add(followingId);
-    mainUser.following = [...userFollowings];
-
-    const followers = new Set(secondUser.followers);
-    followers.add(_id);
-    secondUser.followers = [...followers];
-
-    await dataSources.User.findOneAndUpdate({ _id: followingId }, secondUser);
-    await dataSources.User.findOneAndUpdate({ _id }, mainUser);
-    return await dataSources.User.findOne({ _id });
-  },
-  unfollow: async (_, { _id, unfollowingId, token }, { dataSources }) => {
-    await verifyToken(token as string);
-    const mainUser = await dataSources.User.findOne({ _id });
-    const secondUser = await dataSources.User.findOne({
-      _id: unfollowingId,
-    });
-
-    mainUser.following = mainUser.following.filter(
-      (id: string) => id !== unfollowingId
-    );
-
-    secondUser.followers = secondUser.followers.filter(
-      (id: string) => id !== _id
-    );
-
-    await dataSources.User.findOneAndUpdate({ _id: unfollowingId }, secondUser);
-    await dataSources.User.findOneAndUpdate({ _id }, mainUser);
-    return await dataSources.User.findOne({ _id });
-  },
-  saveUser: async (_, { name, email, password, userName }, { dataSources }) => {
-    const isRegistered = await dataSources.User.findOne({ email });
-    const invalidUserName = await dataSources.User.findOne({ userName });
-    const { color } = getRandomUser();
-
-    if (isRegistered) {
-      throw Error("Usuário já cadastrado. Tente recuperar sua senha.");
-    }
-    if (invalidUserName) {
-      throw Error("Nome de usuário inválido.");
-    }
-
-    const hash = bcrypt.hashSync(password, 10);
-    await new dataSources.User({
-      color,
-      name,
-      email,
-      userName,
-      password: hash,
-    }).save();
-
-    const user = await dataSources.User.findOne({ email });
-    user.token = jwt.sign({ _id: user._id }, secret);
+    const user = await followUseCase.execute(_id, followingId as string);
     return user;
   },
-  login: async (_, { email, password }, { dataSources }) => {
+  unfollow: async (_, { _id, unfollowingId, token }) => {
+    await verifyToken(token as string);
+    const user = await unfollowUseCase.execute(_id, unfollowingId as string);
+    return user;
+  },
+  saveUser: async (_, { name, email, password, userName }) => {
+    const { color } = getRandomUser();
+    const user = await saveUserUseCase.execute({
+      name,
+      email,
+      password,
+      userName,
+      color,
+    });
+    const token = jwt.sign({ _id: user._id }, secret);
+    return { ...user, token };
+  },
+  login: async (_, { email, password }) => {
     try {
-      const user = await dataSources.User.findOne({ email });
-      const match = await bcrypt.compare(password, user.password);
-      user.token = jwt.sign({ _id: user._id }, secret);
-      if (match) {
-        return user;
-      }
-      throw Error("E-mail ou senha incorretos.");
-    } catch (err) {
-      throw Error("E-mail ou senha incorretos.");
+      const user = await loginUseCase.execute(email as string, password as string);
+      const token = jwt.sign({ _id: user._id }, secret);
+      return { ...user, token };
+    } catch (err: any) {
+      throw new Error(err.message ?? "E-mail ou senha incorretos.");
     }
   },
 };

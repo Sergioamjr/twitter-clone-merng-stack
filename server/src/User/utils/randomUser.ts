@@ -7,6 +7,8 @@ export type randomUserType = {
   email: string;
   password: string;
   color: string;
+  followers: string[];
+  following: string[];
 };
 
 const firstName = [
@@ -10140,5 +10142,7 @@ export default function getRandomUser(): randomUserType {
     userName: `${name}_${lastName}`.toLowerCase(),
     email: email.toLowerCase(),
     password: bcrypt.genSaltSync(),
+    followers: [],
+    following: [],
   };
 }

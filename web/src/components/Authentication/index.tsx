@@ -5,11 +5,16 @@ import Loading from "~components/Loading";
 import { getFromLocalStorage, setOnLocalStorage } from "~utils";
 import Intro from "~components/Intro";
 import { WithChildren } from "~utils/types";
+// import getUsers from "~graphql/queries/get-users";
+import { useGetUsersQuery } from "~graphql/generated/graphql";
 
 export default function Auth({ children }: WithChildren): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
   const [showIntro, setShowIntro] = useState(false);
   const [onCreateRandomUser] = useCreateRandomUserMutation();
+  const { data, loading: loadingUsers, error: errorUsers } = useGetUsersQuery();
+
+  console.log("data", data, loadingUsers, errorUsers);
 
   const fetchFakeUser = async () => {
     try {

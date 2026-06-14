@@ -17,7 +17,11 @@ type HomePageType = {
 };
 
 function HomePage({ user, tweets }: HomePageType): JSX.Element {
-  const { data, refetch, loading } = useGetTweetsQuery();
+  const { data, refetch, loading } = useGetTweetsQuery({
+    // save in cache
+    fetchPolicy: "cache-and-network",
+  });
+
   const subscriptions = useHasANewTweetSubscription();
 
   useEffect(() => {
