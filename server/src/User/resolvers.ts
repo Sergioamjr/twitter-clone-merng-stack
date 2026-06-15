@@ -49,7 +49,9 @@ export const userQueries: QueryResolvers = {
       const tweets = await TweetFirebaseRepository.getTweetsByAuthorId(_id);
 
       for (const [index, tweet] of tweets.entries()) {
-        const comments = await CommentFirebaseRepository.getCommentsByTweetId(tweet._id);
+        const comments = await CommentFirebaseRepository.getCommentsByTweetId(
+          tweet._id,
+        );
         tweets[index]["commentsCounter"] = comments.length;
       }
 
@@ -98,7 +100,10 @@ export const userMutations: MutationResolvers = {
   },
   login: async (_, { email, password }) => {
     try {
-      const user = await loginUseCase.execute(email as string, password as string);
+      const user = await loginUseCase.execute(
+        email as string,
+        password as string,
+      );
       const token = jwt.sign({ _id: user._id }, secret);
       return { ...user, token };
     } catch (err: any) {

@@ -19,9 +19,10 @@ class TweetFirebaseRepository implements TweetRepository {
   async getTweetsByAuthorId(authorId: string): Promise<TweetEntity[]> {
     const snapshot = await this.collection
       .where("authorId", "==", authorId)
-      .orderBy("createdAt", "desc")
       .get();
-    return snapshot.docs.map((doc) => doc.data() as TweetEntity);
+    return snapshot.docs
+      .map((doc) => doc.data() as TweetEntity)
+      .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
   }
 
   async getTweetsExcludingAuthor(authorId: string): Promise<TweetEntity[]> {
@@ -38,7 +39,10 @@ class TweetFirebaseRepository implements TweetRepository {
     return tweetWithId;
   }
 
-  async updateTweet(id: string, data: Partial<TweetEntity>): Promise<TweetEntity> {
+  async updateTweet(
+    id: string,
+    data: Partial<TweetEntity>,
+  ): Promise<TweetEntity> {
     await this.collection.doc(id).update(data);
     return this.getTweetById(id);
   }

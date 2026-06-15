@@ -24,7 +24,9 @@ class FirebaseRepository implements UserRepository {
   }
 
   async getUserByUserName(userName: string): Promise<UserEntity | null> {
-    const snapshot = await this.collection.where("userName", "==", userName).get();
+    const snapshot = await this.collection
+      .where("userName", "==", userName)
+      .get();
     if (snapshot.empty) return null;
     return snapshot.docs[0].data() as UserEntity;
   }
