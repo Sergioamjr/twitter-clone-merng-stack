@@ -8,7 +8,6 @@ import { ApolloServer } from "@apollo/server";
 import expressPlayground from "graphql-playground-middleware-express";
 import typeDefs from "./src/typeDefs";
 import resolvers from "./src/resolvers";
-import { dbConnect, models } from "./src/database";
 import cors from "cors";
 import { json } from "body-parser";
 
@@ -65,7 +64,6 @@ const httpServer = http.createServer(app);
       expressMiddleware(server, {
         context: async ({ req }) => ({
           token: req.headers.token,
-          dataSources: models,
         }),
       })
     );
@@ -76,13 +74,6 @@ const httpServer = http.createServer(app);
       console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
     });
 
-    dbConnect
-      .then(() => {
-        console.log("DB Connected");
-      })
-      .catch((err) => {
-        console.log("Error to connect DB: ", err);
-      });
   } catch (err) {
     console.log("erro!", err);
   }

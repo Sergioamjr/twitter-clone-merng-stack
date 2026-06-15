@@ -1,538 +1,389 @@
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type InputMaybe<T> = Maybe<T>;
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  root?: Maybe<Scalars['String']>;
-  getUsers?: Maybe<Array<Maybe<User>>>;
-  getUserById?: Maybe<UserAndTweets>;
-  validateToken?: Maybe<Scalars['Boolean']>;
-  getTweets?: Maybe<Array<Maybe<Tweet>>>;
-  getTweetById?: Maybe<Tweet>;
-  getComments?: Maybe<Array<Maybe<Comment>>>;
-  getCommentsByTweetId?: Maybe<Array<Maybe<Comment>>>;
-};
-
-
-export type QueryGetUserByIdArgs = {
-  _id: Scalars['String'];
-};
-
-
-export type QueryValidateTokenArgs = {
-  token: Scalars['String'];
-};
-
-
-export type QueryGetTweetByIdArgs = {
-  _id: Scalars['String'];
-};
-
-
-export type QueryGetCommentsByTweetIdArgs = {
-  _id: Scalars['String'];
-};
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  root?: Maybe<Scalars['String']>;
-  createRandomUser?: Maybe<LoggedUser>;
-  follow?: Maybe<LoggedUser>;
-  unfollow?: Maybe<LoggedUser>;
-  login?: Maybe<LoggedUser>;
-  saveUser?: Maybe<LoggedUser>;
-  getMyFriendsTweets?: Maybe<Array<Maybe<Tweet>>>;
-  getTweetByUserID?: Maybe<Array<Maybe<Tweet>>>;
-  newTweet?: Maybe<Tweet>;
-  deleteTweet?: Maybe<Scalars['Boolean']>;
-  like?: Maybe<Tweet>;
-  deslike?: Maybe<Tweet>;
-  newComment?: Maybe<Comment>;
-  deleteComment?: Maybe<Scalars['Boolean']>;
-  likeComment?: Maybe<Comment>;
-  deslikeComment?: Maybe<Comment>;
-};
-
-
-export type MutationFollowArgs = {
-  _id: Scalars['String'];
-  followingId: Scalars['String'];
-  token: Scalars['String'];
-};
-
-
-export type MutationUnfollowArgs = {
-  _id: Scalars['String'];
-  unfollowingId: Scalars['String'];
-  token: Scalars['String'];
-};
-
-
-export type MutationLoginArgs = {
-  email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationSaveUserArgs = {
-  userName: Scalars['String'];
-  name: Scalars['String'];
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
-
-export type MutationGetMyFriendsTweetsArgs = {
-  _id: Scalars['String'];
-};
-
-
-export type MutationGetTweetByUserIdArgs = {
-  _id: Scalars['String'];
-};
-
-
-export type MutationNewTweetArgs = {
-  content?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
-};
-
-
-export type MutationDeleteTweetArgs = {
-  _id?: Maybe<Scalars['String']>;
-  token?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationLikeArgs = {
-  _id?: Maybe<Scalars['String']>;
-  token?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationDeslikeArgs = {
-  _id?: Maybe<Scalars['String']>;
-  token?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationNewCommentArgs = {
-  content?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
-  originalTweet: Scalars['String'];
-};
-
-
-export type MutationDeleteCommentArgs = {
-  _id?: Maybe<Scalars['String']>;
-  token?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationLikeCommentArgs = {
-  _id?: Maybe<Scalars['String']>;
-  token?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationDeslikeCommentArgs = {
-  _id?: Maybe<Scalars['String']>;
-  token?: Maybe<Scalars['String']>;
-};
-
-export type Subscription = {
-  __typename?: 'Subscription';
-  root?: Maybe<Scalars['String']>;
-  hasANewTweet?: Maybe<Tweet>;
-};
-
-export type User = {
-  __typename?: 'User';
-  _id?: Maybe<Scalars['ID']>;
-  color?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  userName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  following?: Maybe<Array<Maybe<Scalars['String']>>>;
-  followers?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type LoggedUser = {
-  __typename?: 'LoggedUser';
-  _id?: Maybe<Scalars['ID']>;
-  color?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  userName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  token?: Maybe<Scalars['String']>;
-  following?: Maybe<Array<Maybe<Scalars['String']>>>;
-  followers?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type UserAndTweets = {
-  __typename?: 'UserAndTweets';
-  user?: Maybe<User>;
-  tweets?: Maybe<Array<Maybe<Tweet>>>;
-};
-
-export type Tweet = {
-  __typename?: 'Tweet';
-  _id?: Maybe<Scalars['ID']>;
-  authorId?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  userName?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
-  avatarColor?: Maybe<Scalars['String']>;
-  content?: Maybe<Scalars['String']>;
-  commentsCounter?: Maybe<Scalars['Int']>;
-  likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type Comment = {
   __typename?: 'Comment';
-  _id?: Maybe<Scalars['ID']>;
-  authorId?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  userName?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
-  avatarColor?: Maybe<Scalars['String']>;
-  content?: Maybe<Scalars['String']>;
-  likedBy?: Maybe<Array<Maybe<Scalars['String']>>>;
-  originalTweet?: Maybe<Scalars['String']>;
+  _id?: Maybe<Scalars['ID']['output']>;
+  authorId?: Maybe<Scalars['String']['output']>;
+  avatarColor?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  likedBy?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  name?: Maybe<Scalars['String']['output']>;
+  originalTweet?: Maybe<Scalars['String']['output']>;
+  userName?: Maybe<Scalars['String']['output']>;
 };
 
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE'
-}
+export type LoggedUser = {
+  __typename?: 'LoggedUser';
+  _id?: Maybe<Scalars['ID']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  followers?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  following?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  name?: Maybe<Scalars['String']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
+  userName?: Maybe<Scalars['String']['output']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createRandomUser?: Maybe<LoggedUser>;
+  deleteComment?: Maybe<Scalars['Boolean']['output']>;
+  deleteTweet?: Maybe<Scalars['Boolean']['output']>;
+  deslike?: Maybe<Tweet>;
+  deslikeComment?: Maybe<Comment>;
+  follow?: Maybe<LoggedUser>;
+  getMyFriendsTweets?: Maybe<Array<Maybe<Tweet>>>;
+  getTweetByUserID?: Maybe<Array<Maybe<Tweet>>>;
+  like?: Maybe<Tweet>;
+  likeComment?: Maybe<Comment>;
+  login?: Maybe<LoggedUser>;
+  newComment?: Maybe<Comment>;
+  newTweet?: Maybe<Tweet>;
+  root?: Maybe<Scalars['String']['output']>;
+  saveUser?: Maybe<LoggedUser>;
+  unfollow?: Maybe<LoggedUser>;
+};
 
 
-export type CommentFragment = (
-  { __typename?: 'Comment' }
-  & Pick<Comment, 'content' | '_id' | 'authorId' | 'name' | 'avatarColor' | 'userName' | 'originalTweet' | 'likedBy' | 'createdAt'>
-);
+export type MutationDeleteCommentArgs = {
+  _id?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
 
-export type LoggedUserFragment = (
-  { __typename?: 'LoggedUser' }
-  & Pick<LoggedUser, '_id' | 'color' | 'name' | 'token' | 'email' | 'userName' | 'followers' | 'following'>
-);
 
-export type TweetFragment = (
-  { __typename?: 'Tweet' }
-  & Pick<Tweet, 'content' | '_id' | 'authorId' | 'name' | 'avatarColor' | 'userName' | 'commentsCounter' | 'likedBy' | 'createdAt'>
-);
+export type MutationDeleteTweetArgs = {
+  _id?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
 
-export type UserFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'email' | 'color' | 'name' | 'userName' | '_id' | 'followers' | 'following'>
-);
+
+export type MutationDeslikeArgs = {
+  _id?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationDeslikeCommentArgs = {
+  _id?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationFollowArgs = {
+  _id: Scalars['String']['input'];
+  followingId: Scalars['String']['input'];
+  token: Scalars['String']['input'];
+};
+
+
+export type MutationGetMyFriendsTweetsArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type MutationGetTweetByUserIdArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type MutationLikeArgs = {
+  _id?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationLikeCommentArgs = {
+  _id?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationLoginArgs = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationNewCommentArgs = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  originalTweet: Scalars['String']['input'];
+  token: Scalars['String']['input'];
+};
+
+
+export type MutationNewTweetArgs = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  token: Scalars['String']['input'];
+};
+
+
+export type MutationSaveUserArgs = {
+  email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  userName: Scalars['String']['input'];
+};
+
+
+export type MutationUnfollowArgs = {
+  _id: Scalars['String']['input'];
+  token: Scalars['String']['input'];
+  unfollowingId: Scalars['String']['input'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getComments?: Maybe<Array<Maybe<Comment>>>;
+  getCommentsByTweetId?: Maybe<Array<Maybe<Comment>>>;
+  getTweetById?: Maybe<Tweet>;
+  getTweets?: Maybe<Array<Maybe<Tweet>>>;
+  getUserById?: Maybe<UserAndTweets>;
+  getUsers?: Maybe<Array<Maybe<User>>>;
+  root?: Maybe<Scalars['String']['output']>;
+  validateToken?: Maybe<Scalars['Boolean']['output']>;
+};
+
+
+export type QueryGetCommentsByTweetIdArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type QueryGetTweetByIdArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type QueryGetUserByIdArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type QueryValidateTokenArgs = {
+  token: Scalars['String']['input'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  hasANewTweet?: Maybe<Tweet>;
+  root?: Maybe<Scalars['String']['output']>;
+};
+
+export type Tweet = {
+  __typename?: 'Tweet';
+  _id?: Maybe<Scalars['ID']['output']>;
+  authorId?: Maybe<Scalars['String']['output']>;
+  avatarColor?: Maybe<Scalars['String']['output']>;
+  commentsCounter?: Maybe<Scalars['Int']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  likedBy?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  name?: Maybe<Scalars['String']['output']>;
+  userName?: Maybe<Scalars['String']['output']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  _id?: Maybe<Scalars['ID']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  followers?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  following?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  name?: Maybe<Scalars['String']['output']>;
+  userName?: Maybe<Scalars['String']['output']>;
+};
+
+export type UserAndTweets = {
+  __typename?: 'UserAndTweets';
+  tweets?: Maybe<Array<Maybe<Tweet>>>;
+  user?: Maybe<User>;
+};
+
+export type CommentFragment = { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, originalTweet: string | null, likedBy: Array<string | null> | null, createdAt: string | null };
+
+export type LoggedUserFragment = { _id: string | null, color: string | null, name: string | null, token: string | null, email: string | null, userName: string | null, followers: Array<string | null> | null, following: Array<string | null> | null };
+
+export type TweetFragment = { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null };
+
+export type UserFragment = { email: string | null, color: string | null, name: string | null, userName: string | null, _id: string | null, followers: Array<string | null> | null, following: Array<string | null> | null };
 
 export type NewCommentMutationVariables = Exact<{
-  content?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
-  originalTweet: Scalars['String'];
+  content?: string | null | undefined;
+  token: string;
+  originalTweet: string;
 }>;
 
 
-export type NewCommentMutation = (
-  { __typename?: 'Mutation' }
-  & { newComment?: Maybe<(
-    { __typename?: 'Comment' }
-    & CommentFragment
-  )> }
-);
+export type NewCommentMutation = { newComment: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, originalTweet: string | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export type CreateRandomUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CreateRandomUserMutation = (
-  { __typename?: 'Mutation' }
-  & { createRandomUser?: Maybe<(
-    { __typename?: 'LoggedUser' }
-    & LoggedUserFragment
-  )> }
-);
+export type CreateRandomUserMutation = { createRandomUser: { _id: string | null, color: string | null, name: string | null, token: string | null, email: string | null, userName: string | null, followers: Array<string | null> | null, following: Array<string | null> | null } | null };
 
 export type DeleteCommentMutationVariables = Exact<{
-  _id: Scalars['String'];
-  token: Scalars['String'];
+  _id: string;
+  token: string;
 }>;
 
 
-export type DeleteCommentMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deleteComment'>
-);
+export type DeleteCommentMutation = { deleteComment: boolean | null };
 
 export type DeleteTweetMutationVariables = Exact<{
-  _id?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
+  _id?: string | null | undefined;
+  token: string;
 }>;
 
 
-export type DeleteTweetMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deleteTweet'>
-);
+export type DeleteTweetMutation = { deleteTweet: boolean | null };
 
 export type DeslikeCommentMutationVariables = Exact<{
-  _id: Scalars['String'];
-  token: Scalars['String'];
+  _id: string;
+  token: string;
 }>;
 
 
-export type DeslikeCommentMutation = (
-  { __typename?: 'Mutation' }
-  & { deslikeComment?: Maybe<(
-    { __typename?: 'Comment' }
-    & CommentFragment
-  )> }
-);
+export type DeslikeCommentMutation = { deslikeComment: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, originalTweet: string | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export type DeslikeMutationVariables = Exact<{
-  _id?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
+  _id?: string | null | undefined;
+  token: string;
 }>;
 
 
-export type DeslikeMutation = (
-  { __typename?: 'Mutation' }
-  & { deslike?: Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )> }
-);
+export type DeslikeMutation = { deslike: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export type FollowMutationVariables = Exact<{
-  _id: Scalars['String'];
-  followingId: Scalars['String'];
-  token: Scalars['String'];
+  _id: string;
+  followingId: string;
+  token: string;
 }>;
 
 
-export type FollowMutation = (
-  { __typename?: 'Mutation' }
-  & { follow?: Maybe<(
-    { __typename?: 'LoggedUser' }
-    & LoggedUserFragment
-  )> }
-);
+export type FollowMutation = { follow: { _id: string | null, color: string | null, name: string | null, token: string | null, email: string | null, userName: string | null, followers: Array<string | null> | null, following: Array<string | null> | null } | null };
 
 export type GetMyFriendsTweetsMutationVariables = Exact<{
-  _id: Scalars['String'];
+  _id: string;
 }>;
 
 
-export type GetMyFriendsTweetsMutation = (
-  { __typename?: 'Mutation' }
-  & { getMyFriendsTweets?: Maybe<Array<Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )>>> }
-);
+export type GetMyFriendsTweetsMutation = { getMyFriendsTweets: Array<{ content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null> | null };
 
 export type GetTweetByUserIdMutationVariables = Exact<{
-  _id: Scalars['String'];
+  _id: string;
 }>;
 
 
-export type GetTweetByUserIdMutation = (
-  { __typename?: 'Mutation' }
-  & { getTweetByUserID?: Maybe<Array<Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )>>> }
-);
+export type GetTweetByUserIdMutation = { getTweetByUserID: Array<{ content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null> | null };
 
 export type LikeCommentMutationVariables = Exact<{
-  _id: Scalars['String'];
-  token: Scalars['String'];
+  _id: string;
+  token: string;
 }>;
 
 
-export type LikeCommentMutation = (
-  { __typename?: 'Mutation' }
-  & { likeComment?: Maybe<(
-    { __typename?: 'Comment' }
-    & CommentFragment
-  )> }
-);
+export type LikeCommentMutation = { likeComment: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, originalTweet: string | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export type LikeMutationVariables = Exact<{
-  _id?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
+  _id?: string | null | undefined;
+  token: string;
 }>;
 
 
-export type LikeMutation = (
-  { __typename?: 'Mutation' }
-  & { like?: Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )> }
-);
+export type LikeMutation = { like: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export type LoginMutationVariables = Exact<{
-  password: Scalars['String'];
-  email: Scalars['String'];
+  password: string;
+  email: string;
 }>;
 
 
-export type LoginMutation = (
-  { __typename?: 'Mutation' }
-  & { login?: Maybe<(
-    { __typename?: 'LoggedUser' }
-    & LoggedUserFragment
-  )> }
-);
+export type LoginMutation = { login: { _id: string | null, color: string | null, name: string | null, token: string | null, email: string | null, userName: string | null, followers: Array<string | null> | null, following: Array<string | null> | null } | null };
 
 export type NewTweetMutationVariables = Exact<{
-  content?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
+  content?: string | null | undefined;
+  token: string;
 }>;
 
 
-export type NewTweetMutation = (
-  { __typename?: 'Mutation' }
-  & { newTweet?: Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )> }
-);
+export type NewTweetMutation = { newTweet: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export type SaveUserMutationVariables = Exact<{
-  userName: Scalars['String'];
-  name: Scalars['String'];
-  password: Scalars['String'];
-  email: Scalars['String'];
+  userName: string;
+  name: string;
+  password: string;
+  email: string;
 }>;
 
 
-export type SaveUserMutation = (
-  { __typename?: 'Mutation' }
-  & { saveUser?: Maybe<(
-    { __typename?: 'LoggedUser' }
-    & LoggedUserFragment
-  )> }
-);
+export type SaveUserMutation = { saveUser: { _id: string | null, color: string | null, name: string | null, token: string | null, email: string | null, userName: string | null, followers: Array<string | null> | null, following: Array<string | null> | null } | null };
 
 export type UnfollowMutationVariables = Exact<{
-  _id: Scalars['String'];
-  unfollowingId: Scalars['String'];
-  token: Scalars['String'];
+  _id: string;
+  unfollowingId: string;
+  token: string;
 }>;
 
 
-export type UnfollowMutation = (
-  { __typename?: 'Mutation' }
-  & { unfollow?: Maybe<(
-    { __typename?: 'LoggedUser' }
-    & LoggedUserFragment
-  )> }
-);
+export type UnfollowMutation = { unfollow: { _id: string | null, color: string | null, name: string | null, token: string | null, email: string | null, userName: string | null, followers: Array<string | null> | null, following: Array<string | null> | null } | null };
 
 export type GetCommentsByTweetIdQueryVariables = Exact<{
-  _id: Scalars['String'];
+  _id: string;
 }>;
 
 
-export type GetCommentsByTweetIdQuery = (
-  { __typename?: 'Query' }
-  & { getCommentsByTweetId?: Maybe<Array<Maybe<(
-    { __typename?: 'Comment' }
-    & CommentFragment
-  )>>> }
-);
+export type GetCommentsByTweetIdQuery = { getCommentsByTweetId: Array<{ content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, originalTweet: string | null, likedBy: Array<string | null> | null, createdAt: string | null } | null> | null };
 
 export type GetCommentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCommentsQuery = (
-  { __typename?: 'Query' }
-  & { getComments?: Maybe<Array<Maybe<(
-    { __typename?: 'Comment' }
-    & CommentFragment
-  )>>> }
-);
+export type GetCommentsQuery = { getComments: Array<{ content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, originalTweet: string | null, likedBy: Array<string | null> | null, createdAt: string | null } | null> | null };
 
 export type GetTweetByIdQueryVariables = Exact<{
-  _id: Scalars['String'];
+  _id: string;
 }>;
 
 
-export type GetTweetByIdQuery = (
-  { __typename?: 'Query' }
-  & { getTweetById?: Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )> }
-);
+export type GetTweetByIdQuery = { getTweetById: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export type GetTweetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTweetsQuery = (
-  { __typename?: 'Query' }
-  & { getTweets?: Maybe<Array<Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )>>> }
-);
+export type GetTweetsQuery = { getTweets: Array<{ content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null> | null };
 
 export type GetUserByIdQueryVariables = Exact<{
-  _id: Scalars['String'];
+  _id: string;
 }>;
 
 
-export type GetUserByIdQuery = (
-  { __typename?: 'Query' }
-  & { getUserById?: Maybe<(
-    { __typename?: 'UserAndTweets' }
-    & { user?: Maybe<(
-      { __typename?: 'User' }
-      & UserFragment
-    )>, tweets?: Maybe<Array<Maybe<(
-      { __typename?: 'Tweet' }
-      & TweetFragment
-    )>>> }
-  )> }
-);
+export type GetUserByIdQuery = { getUserById: { user: { email: string | null, color: string | null, name: string | null, userName: string | null, _id: string | null, followers: Array<string | null> | null, following: Array<string | null> | null } | null, tweets: Array<{ content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null> | null } | null };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUsersQuery = (
-  { __typename?: 'Query' }
-  & { getUsers?: Maybe<Array<Maybe<(
-    { __typename?: 'User' }
-    & UserFragment
-  )>>> }
-);
+export type GetUsersQuery = { getUsers: Array<{ email: string | null, color: string | null, name: string | null, userName: string | null, _id: string | null, followers: Array<string | null> | null, following: Array<string | null> | null } | null> | null };
 
 export type HasANewTweetSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HasANewTweetSubscription = (
-  { __typename?: 'Subscription' }
-  & { hasANewTweet?: Maybe<(
-    { __typename?: 'Tweet' }
-    & TweetFragment
-  )> }
-);
+export type HasANewTweetSubscription = { hasANewTweet: { content: string | null, _id: string | null, authorId: string | null, name: string | null, avatarColor: string | null, userName: string | null, commentsCounter: number | null, likedBy: Array<string | null> | null, createdAt: string | null } | null };
 
 export const CommentFragmentDoc = gql`
     fragment Comment on Comment {
@@ -612,7 +463,8 @@ export type NewCommentMutationFn = Apollo.MutationFunction<NewCommentMutation, N
  * });
  */
 export function useNewCommentMutation(baseOptions?: Apollo.MutationHookOptions<NewCommentMutation, NewCommentMutationVariables>) {
-        return Apollo.useMutation<NewCommentMutation, NewCommentMutationVariables>(NewCommentDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<NewCommentMutation, NewCommentMutationVariables>(NewCommentDocument, options);
       }
 export type NewCommentMutationHookResult = ReturnType<typeof useNewCommentMutation>;
 export type NewCommentMutationResult = Apollo.MutationResult<NewCommentMutation>;
@@ -643,7 +495,8 @@ export type CreateRandomUserMutationFn = Apollo.MutationFunction<CreateRandomUse
  * });
  */
 export function useCreateRandomUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateRandomUserMutation, CreateRandomUserMutationVariables>) {
-        return Apollo.useMutation<CreateRandomUserMutation, CreateRandomUserMutationVariables>(CreateRandomUserDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateRandomUserMutation, CreateRandomUserMutationVariables>(CreateRandomUserDocument, options);
       }
 export type CreateRandomUserMutationHookResult = ReturnType<typeof useCreateRandomUserMutation>;
 export type CreateRandomUserMutationResult = Apollo.MutationResult<CreateRandomUserMutation>;
@@ -674,7 +527,8 @@ export type DeleteCommentMutationFn = Apollo.MutationFunction<DeleteCommentMutat
  * });
  */
 export function useDeleteCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCommentMutation, DeleteCommentMutationVariables>) {
-        return Apollo.useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, options);
       }
 export type DeleteCommentMutationHookResult = ReturnType<typeof useDeleteCommentMutation>;
 export type DeleteCommentMutationResult = Apollo.MutationResult<DeleteCommentMutation>;
@@ -705,7 +559,8 @@ export type DeleteTweetMutationFn = Apollo.MutationFunction<DeleteTweetMutation,
  * });
  */
 export function useDeleteTweetMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTweetMutation, DeleteTweetMutationVariables>) {
-        return Apollo.useMutation<DeleteTweetMutation, DeleteTweetMutationVariables>(DeleteTweetDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTweetMutation, DeleteTweetMutationVariables>(DeleteTweetDocument, options);
       }
 export type DeleteTweetMutationHookResult = ReturnType<typeof useDeleteTweetMutation>;
 export type DeleteTweetMutationResult = Apollo.MutationResult<DeleteTweetMutation>;
@@ -738,7 +593,8 @@ export type DeslikeCommentMutationFn = Apollo.MutationFunction<DeslikeCommentMut
  * });
  */
 export function useDeslikeCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeslikeCommentMutation, DeslikeCommentMutationVariables>) {
-        return Apollo.useMutation<DeslikeCommentMutation, DeslikeCommentMutationVariables>(DeslikeCommentDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeslikeCommentMutation, DeslikeCommentMutationVariables>(DeslikeCommentDocument, options);
       }
 export type DeslikeCommentMutationHookResult = ReturnType<typeof useDeslikeCommentMutation>;
 export type DeslikeCommentMutationResult = Apollo.MutationResult<DeslikeCommentMutation>;
@@ -771,7 +627,8 @@ export type DeslikeMutationFn = Apollo.MutationFunction<DeslikeMutation, Deslike
  * });
  */
 export function useDeslikeMutation(baseOptions?: Apollo.MutationHookOptions<DeslikeMutation, DeslikeMutationVariables>) {
-        return Apollo.useMutation<DeslikeMutation, DeslikeMutationVariables>(DeslikeDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeslikeMutation, DeslikeMutationVariables>(DeslikeDocument, options);
       }
 export type DeslikeMutationHookResult = ReturnType<typeof useDeslikeMutation>;
 export type DeslikeMutationResult = Apollo.MutationResult<DeslikeMutation>;
@@ -805,7 +662,8 @@ export type FollowMutationFn = Apollo.MutationFunction<FollowMutation, FollowMut
  * });
  */
 export function useFollowMutation(baseOptions?: Apollo.MutationHookOptions<FollowMutation, FollowMutationVariables>) {
-        return Apollo.useMutation<FollowMutation, FollowMutationVariables>(FollowDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FollowMutation, FollowMutationVariables>(FollowDocument, options);
       }
 export type FollowMutationHookResult = ReturnType<typeof useFollowMutation>;
 export type FollowMutationResult = Apollo.MutationResult<FollowMutation>;
@@ -837,7 +695,8 @@ export type GetMyFriendsTweetsMutationFn = Apollo.MutationFunction<GetMyFriendsT
  * });
  */
 export function useGetMyFriendsTweetsMutation(baseOptions?: Apollo.MutationHookOptions<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>) {
-        return Apollo.useMutation<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>(GetMyFriendsTweetsDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GetMyFriendsTweetsMutation, GetMyFriendsTweetsMutationVariables>(GetMyFriendsTweetsDocument, options);
       }
 export type GetMyFriendsTweetsMutationHookResult = ReturnType<typeof useGetMyFriendsTweetsMutation>;
 export type GetMyFriendsTweetsMutationResult = Apollo.MutationResult<GetMyFriendsTweetsMutation>;
@@ -869,7 +728,8 @@ export type GetTweetByUserIdMutationFn = Apollo.MutationFunction<GetTweetByUserI
  * });
  */
 export function useGetTweetByUserIdMutation(baseOptions?: Apollo.MutationHookOptions<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>) {
-        return Apollo.useMutation<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>(GetTweetByUserIdDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GetTweetByUserIdMutation, GetTweetByUserIdMutationVariables>(GetTweetByUserIdDocument, options);
       }
 export type GetTweetByUserIdMutationHookResult = ReturnType<typeof useGetTweetByUserIdMutation>;
 export type GetTweetByUserIdMutationResult = Apollo.MutationResult<GetTweetByUserIdMutation>;
@@ -902,7 +762,8 @@ export type LikeCommentMutationFn = Apollo.MutationFunction<LikeCommentMutation,
  * });
  */
 export function useLikeCommentMutation(baseOptions?: Apollo.MutationHookOptions<LikeCommentMutation, LikeCommentMutationVariables>) {
-        return Apollo.useMutation<LikeCommentMutation, LikeCommentMutationVariables>(LikeCommentDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LikeCommentMutation, LikeCommentMutationVariables>(LikeCommentDocument, options);
       }
 export type LikeCommentMutationHookResult = ReturnType<typeof useLikeCommentMutation>;
 export type LikeCommentMutationResult = Apollo.MutationResult<LikeCommentMutation>;
@@ -935,7 +796,8 @@ export type LikeMutationFn = Apollo.MutationFunction<LikeMutation, LikeMutationV
  * });
  */
 export function useLikeMutation(baseOptions?: Apollo.MutationHookOptions<LikeMutation, LikeMutationVariables>) {
-        return Apollo.useMutation<LikeMutation, LikeMutationVariables>(LikeDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LikeMutation, LikeMutationVariables>(LikeDocument, options);
       }
 export type LikeMutationHookResult = ReturnType<typeof useLikeMutation>;
 export type LikeMutationResult = Apollo.MutationResult<LikeMutation>;
@@ -968,7 +830,8 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  * });
  */
 export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
       }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
@@ -1001,7 +864,8 @@ export type NewTweetMutationFn = Apollo.MutationFunction<NewTweetMutation, NewTw
  * });
  */
 export function useNewTweetMutation(baseOptions?: Apollo.MutationHookOptions<NewTweetMutation, NewTweetMutationVariables>) {
-        return Apollo.useMutation<NewTweetMutation, NewTweetMutationVariables>(NewTweetDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<NewTweetMutation, NewTweetMutationVariables>(NewTweetDocument, options);
       }
 export type NewTweetMutationHookResult = ReturnType<typeof useNewTweetMutation>;
 export type NewTweetMutationResult = Apollo.MutationResult<NewTweetMutation>;
@@ -1036,7 +900,8 @@ export type SaveUserMutationFn = Apollo.MutationFunction<SaveUserMutation, SaveU
  * });
  */
 export function useSaveUserMutation(baseOptions?: Apollo.MutationHookOptions<SaveUserMutation, SaveUserMutationVariables>) {
-        return Apollo.useMutation<SaveUserMutation, SaveUserMutationVariables>(SaveUserDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveUserMutation, SaveUserMutationVariables>(SaveUserDocument, options);
       }
 export type SaveUserMutationHookResult = ReturnType<typeof useSaveUserMutation>;
 export type SaveUserMutationResult = Apollo.MutationResult<SaveUserMutation>;
@@ -1070,7 +935,8 @@ export type UnfollowMutationFn = Apollo.MutationFunction<UnfollowMutation, Unfol
  * });
  */
 export function useUnfollowMutation(baseOptions?: Apollo.MutationHookOptions<UnfollowMutation, UnfollowMutationVariables>) {
-        return Apollo.useMutation<UnfollowMutation, UnfollowMutationVariables>(UnfollowDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnfollowMutation, UnfollowMutationVariables>(UnfollowDocument, options);
       }
 export type UnfollowMutationHookResult = ReturnType<typeof useUnfollowMutation>;
 export type UnfollowMutationResult = Apollo.MutationResult<UnfollowMutation>;
@@ -1099,14 +965,24 @@ export const GetCommentsByTweetIdDocument = gql`
  *   },
  * });
  */
-export function useGetCommentsByTweetIdQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>) {
-        return Apollo.useQuery<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>(GetCommentsByTweetIdDocument, baseOptions);
+export function useGetCommentsByTweetIdQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables> & ({ variables: GetCommentsByTweetIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>(GetCommentsByTweetIdDocument, options);
       }
 export function useGetCommentsByTweetIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>) {
-          return Apollo.useLazyQuery<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>(GetCommentsByTweetIdDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>(GetCommentsByTweetIdDocument, options);
+        }
+// @ts-ignore
+export function useGetCommentsByTweetIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>): Apollo.UseSuspenseQueryResult<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>;
+export function useGetCommentsByTweetIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>): Apollo.UseSuspenseQueryResult<GetCommentsByTweetIdQuery | undefined, GetCommentsByTweetIdQueryVariables>;
+export function useGetCommentsByTweetIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>(GetCommentsByTweetIdDocument, options);
         }
 export type GetCommentsByTweetIdQueryHookResult = ReturnType<typeof useGetCommentsByTweetIdQuery>;
 export type GetCommentsByTweetIdLazyQueryHookResult = ReturnType<typeof useGetCommentsByTweetIdLazyQuery>;
+export type GetCommentsByTweetIdSuspenseQueryHookResult = ReturnType<typeof useGetCommentsByTweetIdSuspenseQuery>;
 export type GetCommentsByTweetIdQueryResult = Apollo.QueryResult<GetCommentsByTweetIdQuery, GetCommentsByTweetIdQueryVariables>;
 export const GetCommentsDocument = gql`
     query getComments {
@@ -1132,13 +1008,23 @@ export const GetCommentsDocument = gql`
  * });
  */
 export function useGetCommentsQuery(baseOptions?: Apollo.QueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
-        return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
       }
 export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
-          return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
+        }
+// @ts-ignore
+export function useGetCommentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>): Apollo.UseSuspenseQueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
+export function useGetCommentsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>): Apollo.UseSuspenseQueryResult<GetCommentsQuery | undefined, GetCommentsQueryVariables>;
+export function useGetCommentsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
         }
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
 export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
+export type GetCommentsSuspenseQueryHookResult = ReturnType<typeof useGetCommentsSuspenseQuery>;
 export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
 export const GetTweetByIdDocument = gql`
     query getTweetById($_id: String!) {
@@ -1164,14 +1050,24 @@ export const GetTweetByIdDocument = gql`
  *   },
  * });
  */
-export function useGetTweetByIdQuery(baseOptions: Apollo.QueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables>) {
-        return Apollo.useQuery<GetTweetByIdQuery, GetTweetByIdQueryVariables>(GetTweetByIdDocument, baseOptions);
+export function useGetTweetByIdQuery(baseOptions: Apollo.QueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables> & ({ variables: GetTweetByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTweetByIdQuery, GetTweetByIdQueryVariables>(GetTweetByIdDocument, options);
       }
 export function useGetTweetByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables>) {
-          return Apollo.useLazyQuery<GetTweetByIdQuery, GetTweetByIdQueryVariables>(GetTweetByIdDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTweetByIdQuery, GetTweetByIdQueryVariables>(GetTweetByIdDocument, options);
+        }
+// @ts-ignore
+export function useGetTweetByIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables>): Apollo.UseSuspenseQueryResult<GetTweetByIdQuery, GetTweetByIdQueryVariables>;
+export function useGetTweetByIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables>): Apollo.UseSuspenseQueryResult<GetTweetByIdQuery | undefined, GetTweetByIdQueryVariables>;
+export function useGetTweetByIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTweetByIdQuery, GetTweetByIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTweetByIdQuery, GetTweetByIdQueryVariables>(GetTweetByIdDocument, options);
         }
 export type GetTweetByIdQueryHookResult = ReturnType<typeof useGetTweetByIdQuery>;
 export type GetTweetByIdLazyQueryHookResult = ReturnType<typeof useGetTweetByIdLazyQuery>;
+export type GetTweetByIdSuspenseQueryHookResult = ReturnType<typeof useGetTweetByIdSuspenseQuery>;
 export type GetTweetByIdQueryResult = Apollo.QueryResult<GetTweetByIdQuery, GetTweetByIdQueryVariables>;
 export const GetTweetsDocument = gql`
     query getTweets {
@@ -1197,13 +1093,23 @@ export const GetTweetsDocument = gql`
  * });
  */
 export function useGetTweetsQuery(baseOptions?: Apollo.QueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>) {
-        return Apollo.useQuery<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, options);
       }
 export function useGetTweetsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>) {
-          return Apollo.useLazyQuery<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, options);
+        }
+// @ts-ignore
+export function useGetTweetsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>): Apollo.UseSuspenseQueryResult<GetTweetsQuery, GetTweetsQueryVariables>;
+export function useGetTweetsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>): Apollo.UseSuspenseQueryResult<GetTweetsQuery | undefined, GetTweetsQueryVariables>;
+export function useGetTweetsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTweetsQuery, GetTweetsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTweetsQuery, GetTweetsQueryVariables>(GetTweetsDocument, options);
         }
 export type GetTweetsQueryHookResult = ReturnType<typeof useGetTweetsQuery>;
 export type GetTweetsLazyQueryHookResult = ReturnType<typeof useGetTweetsLazyQuery>;
+export type GetTweetsSuspenseQueryHookResult = ReturnType<typeof useGetTweetsSuspenseQuery>;
 export type GetTweetsQueryResult = Apollo.QueryResult<GetTweetsQuery, GetTweetsQueryVariables>;
 export const GetUserByIdDocument = gql`
     query getUserById($_id: String!) {
@@ -1235,14 +1141,24 @@ ${TweetFragmentDoc}`;
  *   },
  * });
  */
-export function useGetUserByIdQuery(baseOptions: Apollo.QueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
-        return Apollo.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, baseOptions);
+export function useGetUserByIdQuery(baseOptions: Apollo.QueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables> & ({ variables: GetUserByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
       }
 export function useGetUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
-          return Apollo.useLazyQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+        }
+// @ts-ignore
+export function useGetUserByIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>): Apollo.UseSuspenseQueryResult<GetUserByIdQuery, GetUserByIdQueryVariables>;
+export function useGetUserByIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>): Apollo.UseSuspenseQueryResult<GetUserByIdQuery | undefined, GetUserByIdQueryVariables>;
+export function useGetUserByIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
         }
 export type GetUserByIdQueryHookResult = ReturnType<typeof useGetUserByIdQuery>;
 export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLazyQuery>;
+export type GetUserByIdSuspenseQueryHookResult = ReturnType<typeof useGetUserByIdSuspenseQuery>;
 export type GetUserByIdQueryResult = Apollo.QueryResult<GetUserByIdQuery, GetUserByIdQueryVariables>;
 export const GetUsersDocument = gql`
     query getUsers {
@@ -1268,13 +1184,23 @@ export const GetUsersDocument = gql`
  * });
  */
 export function useGetUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
-        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
       }
 export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
-          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        }
+// @ts-ignore
+export function useGetUsersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>): Apollo.UseSuspenseQueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export function useGetUsersSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>): Apollo.UseSuspenseQueryResult<GetUsersQuery | undefined, GetUsersQueryVariables>;
+export function useGetUsersSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
         }
 export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
+export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
 export const HasANewTweetDocument = gql`
     subscription hasANewTweet {
@@ -1300,7 +1226,8 @@ export const HasANewTweetDocument = gql`
  * });
  */
 export function useHasANewTweetSubscription(baseOptions?: Apollo.SubscriptionHookOptions<HasANewTweetSubscription, HasANewTweetSubscriptionVariables>) {
-        return Apollo.useSubscription<HasANewTweetSubscription, HasANewTweetSubscriptionVariables>(HasANewTweetDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<HasANewTweetSubscription, HasANewTweetSubscriptionVariables>(HasANewTweetDocument, options);
       }
 export type HasANewTweetSubscriptionHookResult = ReturnType<typeof useHasANewTweetSubscription>;
 export type HasANewTweetSubscriptionResult = Apollo.SubscriptionResult<HasANewTweetSubscription>;
