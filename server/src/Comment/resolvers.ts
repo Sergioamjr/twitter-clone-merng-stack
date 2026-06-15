@@ -1,73 +1,72 @@
 import { TokenDecoded, verifyToken } from "../User/resolvers";
 import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
+import { GetCommentsUseCase } from "./application/get-comments-use-case";
+import { GetCommentsByTweetIdUseCase } from "./application/get-comments-by-tweet-id-use-case";
+import { NewCommentUseCase } from "./application/new-comment-use-case";
+import { DeleteCommentUseCase } from "./application/delete-comment-use-case";
+import { LikeCommentUseCase } from "./application/like-comment-use-case";
+import { DeslikeCommentUseCase } from "./application/deslike-comment-use-case";
+import CommentFirebaseRepository from "./infrastructure/firebase.repository";
+import UserFirebaseRepository from "../User/infrastructure/firebase.repository";
+import TweetFirebaseRepository from "../Tweet/infrastructure/firebase.repository";
+
+const getCommentsUseCase = new GetCommentsUseCase(CommentFirebaseRepository);
+const getCommentsByTweetIdUseCase = new GetCommentsByTweetIdUseCase(CommentFirebaseRepository);
+const newCommentUseCase = new NewCommentUseCase(CommentFirebaseRepository);
+const deleteCommentUseCase = new DeleteCommentUseCase(CommentFirebaseRepository);
+const likeCommentUseCase = new LikeCommentUseCase(CommentFirebaseRepository);
+const deslikeCommentUseCase = new DeslikeCommentUseCase(CommentFirebaseRepository);
 
 export const commentsQueries: QueryResolvers = {
-  getComments: async (_, __, context) => {
-    return await context.dataSources.Comment.find();
+  getComments: async () => {
+    return await getCommentsUseCase.execute();
   },
-  getCommentsByTweetId: async (_, { _id }, context) => {
-    return await context.dataSources.Comment.find({ originalTweet: _id });
+  getCommentsByTweetId: async (_, { _id }) => {
+    return await getCommentsByTweetIdUseCase.execute(_id);
   },
 };
+
 export const commentsMutations: MutationResolvers = {
-  likeComment: async (_, { _id, token }, context) => {
+  likeComment: async (_, { _id, token }) => {
     try {
       const decoded = await verifyToken(token as string);
-      const comment = await context.dataSources.Comment.findOne({ _id });
-      if (!comment) Error("Comentário não existe");
-      const likes = new Set(comment.likedBy);
-      likes.add((<TokenDecoded>decoded)._id);
-      comment.likedBy = [...likes];
-      await context.dataSources.Comment.findOneAndUpdate({ _id }, comment);
-      return await context.dataSources.Comment.findOne({ _id });
+      return await likeCommentUseCase.execute(_id as string, (<TokenDecoded>decoded)._id as string);
     } catch (err: any) {
       throw Error(err);
     }
   },
-  deslikeComment: async (_, { _id, token }, context) => {
+  deslikeComment: async (_, { _id, token }) => {
     try {
       const decoded = await verifyToken(token as string);
-      const comment = await context.dataSources.Comment.findOne({ _id });
-      if (!comment) Error("Comentário não existe");
-      const newLikedBy = comment.likedBy.filter(
-        (id: string) => id !== (<TokenDecoded>decoded)._id
-      );
-      comment.likedBy = newLikedBy;
-      await context.dataSources.Comment.findOneAndUpdate({ _id }, comment);
-      return await context.dataSources.Comment.findOne({ _id });
+      return await deslikeCommentUseCase.execute(_id as string, (<TokenDecoded>decoded)._id as string);
     } catch (err: any) {
       throw Error(err);
     }
   },
-  deleteComment: async (_, { _id, token }, context) => {
+  deleteComment: async (_, { _id, token }) => {
     try {
       await verifyToken(token as string);
-      await context.dataSources.Comment.deleteOne({ _id });
+      await deleteCommentUseCase.execute(_id as string);
       return true;
     } catch (err: any) {
       throw Error(err);
     }
   },
-  newComment: async (_, { content, originalTweet, token }, context) => {
+  newComment: async (_, { content, originalTweet, token }) => {
     try {
       const decoded = await verifyToken(token as string);
-      const tweet = await context.dataSources.Tweet.findOne({
-        _id: originalTweet,
-      });
-      if (!tweet) return Error("Tweet não existe");
-      const { userName, name, color } = await context.dataSources.User.findOne({
-        _id: (<TokenDecoded>decoded)._id,
-      });
-
-      return await new context.dataSources.Comment({
-        authorId: (<TokenDecoded>decoded)._id,
-        createdAt: new Date().toISOString(),
-        content,
-        avatarColor: color,
-        userName,
+      await TweetFirebaseRepository.getTweetById(originalTweet as string);
+      const { userName, name, color } = await UserFirebaseRepository.getUserById(
+        (<TokenDecoded>decoded)._id as string,
+      );
+      return await newCommentUseCase.execute({
+        authorId: (<TokenDecoded>decoded)._id as string,
+        content: content as string,
+        originalTweet: originalTweet as string,
         name,
-        originalTweet,
-      }).save();
+        userName,
+        avatarColor: color,
+      });
     } catch (err: any) {
       throw Error(err);
     }

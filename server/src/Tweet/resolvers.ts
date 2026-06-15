@@ -5,8 +5,28 @@ import {
   MutationResolvers,
   SubscriptionResolvers,
 } from "./../generated/graphql";
+import { GetTweetsUseCase } from "./application/get-tweets-use-case";
+import { GetTweetByIdUseCase } from "./application/get-tweet-by-id-use-case";
+import { GetTweetsByUserIdUseCase } from "./application/get-tweets-by-user-id-use-case";
+import { GetFriendsTweetsUseCase } from "./application/get-friends-tweets-use-case";
+import { NewTweetUseCase } from "./application/new-tweet-use-case";
+import { DeleteTweetUseCase } from "./application/delete-tweet-use-case";
+import { LikeTweetUseCase } from "./application/like-tweet-use-case";
+import { DeslikeTweetUseCase } from "./application/deslike-tweet-use-case";
+import TweetFirebaseRepository from "./infrastructure/firebase.repository";
+import UserFirebaseRepository from "../User/infrastructure/firebase.repository";
+import CommentFirebaseRepository from "../Comment/infrastructure/firebase.repository";
 
 const pubsub = new PubSub();
+
+const getTweetsUseCase = new GetTweetsUseCase(TweetFirebaseRepository);
+const getTweetByIdUseCase = new GetTweetByIdUseCase(TweetFirebaseRepository);
+const getTweetsByUserIdUseCase = new GetTweetsByUserIdUseCase(TweetFirebaseRepository);
+const getFriendsTweetsUseCase = new GetFriendsTweetsUseCase(TweetFirebaseRepository);
+const newTweetUseCase = new NewTweetUseCase(TweetFirebaseRepository);
+const deleteTweetUseCase = new DeleteTweetUseCase(TweetFirebaseRepository);
+const likeTweetUseCase = new LikeTweetUseCase(TweetFirebaseRepository);
+const deslikeTweetUseCase = new DeslikeTweetUseCase(TweetFirebaseRepository);
 
 export const tweetSubscriptions: SubscriptionResolvers = {
   hasANewTweet: {
@@ -15,97 +35,70 @@ export const tweetSubscriptions: SubscriptionResolvers = {
 };
 
 export const tweetQueries: QueryResolvers = {
-  getTweets: async (_, __, context) => {
-    const tweets = await context.dataSources.Tweet.find()
-      .sort({ createdAt: -1 })
-      .exec();
+  getTweets: async () => {
+    const tweets = await getTweetsUseCase.execute();
 
     for (const [index, tweet] of tweets.entries()) {
-      const comments = await context.dataSources.Comment.find({
-        originalTweet: tweet._id,
-      });
+      const comments = await CommentFirebaseRepository.getCommentsByTweetId(tweet._id);
       tweets[index]["commentsCounter"] = comments.length;
     }
 
     return tweets;
   },
-  getTweetById: async (_, { _id }, context) => {
-    const tweet = await context.dataSources.Tweet.findOne({ _id });
-    const comments = await context.dataSources.Comment.find({
-      originalTweet: _id,
-    });
-    tweet["commentsCounter"] = comments.length;
-    return tweet;
+  getTweetById: async (_, { _id }) => {
+    const tweet = await getTweetByIdUseCase.execute(_id);
+    const comments = await CommentFirebaseRepository.getCommentsByTweetId(_id);
+    return { ...tweet, commentsCounter: comments.length };
   },
 };
 
 export const tweetMutations: MutationResolvers = {
-  like: async (_, { _id, token }, context) => {
+  like: async (_, { _id, token }) => {
     try {
       const decoded = await verifyToken(token as string);
-      const findTweet = await context.dataSources.Tweet.findOne({ _id });
-      if (!findTweet) Error("Tweet não existe");
-      const likes = new Set(findTweet.likedBy);
-      likes.add((<TokenDecoded>decoded)._id);
-      findTweet.likedBy = [...likes];
-      
-      await context.dataSources.Tweet.findOneAndUpdate({ _id }, findTweet);
-      return await context.dataSources.Tweet.findOne({ _id });
+      return await likeTweetUseCase.execute(_id as string, (<TokenDecoded>decoded)._id as string);
     } catch (err: any) {
       throw Error(err);
     }
   },
-  deslike: async (_, { _id, token }, context) => {
+  deslike: async (_, { _id, token }) => {
     try {
       const decoded = await verifyToken(token as string);
-      const findTweet = await context.dataSources.Tweet.findOne({ _id });
-      if (!findTweet) Error("Tweet não existe");
-      const newLikedBy = findTweet.likedBy.filter(
-        (id: string) => id !== (<TokenDecoded>decoded)._id
+      return await deslikeTweetUseCase.execute(_id as string, (<TokenDecoded>decoded)._id as string);
+    } catch (err: any) {
+      throw Error(err);
+    }
+  },
+  getTweetByUserID: async (_, { _id }) => {
+    return await getTweetsByUserIdUseCase.execute(_id);
+  },
+  getMyFriendsTweets: async (_, { _id }) => {
+    return await getFriendsTweetsUseCase.execute(_id);
+  },
+  newTweet: async (_, { content, token }) => {
+    try {
+      const decoded = await verifyToken(token as string);
+      const { userName, name, color } = await UserFirebaseRepository.getUserById(
+        (<TokenDecoded>decoded)._id as string,
       );
-      findTweet.likedBy = newLikedBy;
-      await context.dataSources.Tweet.findOneAndUpdate({ _id }, findTweet);
-      return await context.dataSources.Tweet.findOne({ _id });
-    } catch (err: any) {
-      throw Error(err);
-    }
-  },
-  getTweetByUserID: async (_, { _id }, context) => {
-    return await context.dataSources.Tweet.find({ authorId: _id })
-      .sort({ createdAt: -1 })
-      .exec();
-  },
-  getMyFriendsTweets: async (_, { _id }, context) => {
-    return await context.dataSources.Tweet.find({ authorId: { $ne: _id } });
-  },
-  newTweet: async (_, { content, token }, context) => {
-    try {
-      const decoded = await verifyToken(token as string);
-      const { userName, name, color } = await context.dataSources.User.findOne({
-        _id: (<TokenDecoded>decoded)._id,
-      });
-      const tweet = {
-        authorId: (<TokenDecoded>decoded)._id,
-        createdAt: new Date().toISOString(),
-        content,
-        avatarColor: color,
-        userName,
+      const tweet = await newTweetUseCase.execute({
+        authorId: (<TokenDecoded>decoded)._id as string,
+        content: content as string,
         name,
-      };
+        userName,
+        avatarColor: color,
+      });
       pubsub.publish("A_NEW_TWEET_HAS_BEEN_CREATED", { hasANewTweet: tweet });
-      return await new context.dataSources.Tweet(tweet).save();
+      return tweet;
     } catch (err: any) {
       throw Error(err);
     }
   },
-  deleteTweet: async (_, { _id, token }, context) => {
+  deleteTweet: async (_, { _id, token }) => {
     try {
-      const decoded = await verifyToken(token as string);
-      await context.dataSources.User.findOne({
-        _id: (<TokenDecoded>decoded)._id,
-      });
-      await context.dataSources.Tweet.deleteOne({ _id });
-      await context.dataSources.Comment.deleteMany({ originalTweet: _id });
+      await verifyToken(token as string);
+      await deleteTweetUseCase.execute(_id as string);
+      await CommentFirebaseRepository.deleteCommentsByTweetId(_id as string);
       return true;
     } catch (err: any) {
       throw Error(err);

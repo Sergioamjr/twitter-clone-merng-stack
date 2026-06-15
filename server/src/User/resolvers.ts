@@ -2,6 +2,8 @@ import { QueryResolvers, MutationResolvers } from "./../generated/graphql";
 import jwt from "jsonwebtoken";
 import getRandomUser from "./utils/randomUser";
 import { GetUserUseCase } from "./application/get-user-use-case";
+import TweetFirebaseRepository from "../Tweet/infrastructure/firebase.repository";
+import CommentFirebaseRepository from "../Comment/infrastructure/firebase.repository";
 import { GetUserByIdUseCase } from "./application/get-user-by-id-use-case";
 import { CreateUserUseCase } from "./application/create-user-use-case";
 import { SaveUserUseCase } from "./application/save-user-use-case";
@@ -41,15 +43,13 @@ export const userQueries: QueryResolvers = {
   getUsers: async () => {
     return await getUserUseCase.execute();
   },
-  getUserById: async (_, { _id }, context) => {
+  getUserById: async (_, { _id }) => {
     try {
       const user = await getUserByIdUseCase.execute(_id);
-      const tweets = await context.dataSources.Tweet.find({ authorId: _id });
+      const tweets = await TweetFirebaseRepository.getTweetsByAuthorId(_id);
 
       for (const [index, tweet] of tweets.entries()) {
-        const comments = await context.dataSources.Comment.find({
-          originalTweet: tweet._id,
-        });
+        const comments = await CommentFirebaseRepository.getCommentsByTweetId(tweet._id);
         tweets[index]["commentsCounter"] = comments.length;
       }
 
