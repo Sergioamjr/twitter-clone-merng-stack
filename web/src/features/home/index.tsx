@@ -95,7 +95,7 @@ export default function Home({
           onClick={() => onResetTweetsCounter()}
         />
       )}
-      {tweets.length && (
+      {!!tweets.length && (
         <TweetCard
           _id=""
           avatarColor="#d03c3c"
